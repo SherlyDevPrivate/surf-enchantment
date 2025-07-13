@@ -20,21 +20,17 @@ object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
         pdc: PersistentDataContainerView,
         itemStack: ItemStack
     ) {
-        val enchantments = mutableObject2IntMapOf<Enchantment>()
-
-        itemStack.getData(DataComponentTypes.ENCHANTMENTS)?.let { data ->
-            enchantments.putAll(data.enchantments())
-        }
-
-        itemStack.getData(DataComponentTypes.STORED_ENCHANTMENTS)?.let { data ->
-            enchantments.putAll(data.enchantments())
+        val enchantments = mutableObject2IntMapOf<Enchantment>().apply {
+            itemStack.getData(DataComponentTypes.ENCHANTMENTS)?.enchantments()?.let { putAll(it) }
+            itemStack.getData(DataComponentTypes.STORED_ENCHANTMENTS)?.enchantments()
+                ?.let { putAll(it) }
         }
 
         if (enchantments.isEmpty()) return
 
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_STORED_ENCHANTS)
 
-        val enchantables = enchantments.object2IntEntrySet()
+        enchantments.object2IntEntrySet().asSequence()
             .mapNotNull {
                 val enchantment = VanillaEnchantment.getByKey(it.key.key)
                     ?: EnchantmentManager.getByBukkitEnchantment(it.key) ?: return@mapNotNull null
@@ -43,13 +39,12 @@ object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
             }
             .sortedBy { PlainTextComponentSerializer.plainText().serialize(it.first.displayName) }
             .sortedBy { it.first.rarity }
+            .forEachIndexed { index, (enchantment, level) ->
+                if (index > 0) {
+                    loreToDisplay.add(Component.empty())
+                }
 
-        enchantables.forEachIndexed { index, (enchantment, level) ->
-            if (index > 0) {
-                loreToDisplay.add(Component.empty())
+                loreToDisplay.addAll(enchantment.buildLore(level))
             }
-
-            loreToDisplay.addAll(enchantment.buildLore(level))
-        }
     }
 }

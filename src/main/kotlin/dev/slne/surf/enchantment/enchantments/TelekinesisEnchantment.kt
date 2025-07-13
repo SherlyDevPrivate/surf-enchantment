@@ -4,7 +4,6 @@ package dev.slne.surf.enchantment.enchantments
 
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.utils.CustomItemTypeTags
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.EnchantmentKeys
@@ -15,26 +14,18 @@ import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.inventory.ItemRarity
 
 object TelekinesisEnchantment : CustomEnchantment(
-    key("surf", "telekinesis"),
-    buildText { warning("Telekinesis") },
-    ItemRarity.UNCOMMON,
+    key = key("surf", "telekinesis"),
+    displayName = { warning("Telekinesis") },
+    rarity = ItemRarity.UNCOMMON,
     description = {
-        line {
-            darkSpacer("Test Beschreibung")
-        }
+        line { darkSpacer("Test Beschreibung") }
     },
     supportedItems = CustomItemTypeTags.TOOLS_KEY.tagKey,
-    exclusiveWith = objectSetOf(
-        EnchantmentKeys.MENDING
-    ),
-    tags = objectSetOf(
-        EnchantmentTagKeys.CURSE
-    ),
-    listeners = objectSetOf(
-        TelekinesisListener
-    )
+    exclusiveWith = objectSetOf(EnchantmentKeys.MENDING),
+    tags = objectSetOf(EnchantmentTagKeys.CURSE),
+    listeners = objectSetOf(Handler)
 ) {
-    object TelekinesisListener : Listener {
+    object Handler : Listener {
         @EventHandler
         fun onBlockBreak(event: BlockDropItemEvent) {
             val player = event.player
