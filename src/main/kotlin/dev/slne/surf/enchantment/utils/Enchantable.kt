@@ -13,9 +13,7 @@ interface Enchantable {
     val rarity: ItemRarity
 
     fun buildLore(level: Int) = LoreBuilder().apply {
-        line {
-            append(displayName)
-        }
+        line { append(displayName) }
         description(level)
     }.build()
 

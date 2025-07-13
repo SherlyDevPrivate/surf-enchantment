@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.utils
 
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
+import dev.slne.surf.surfapi.core.api.messages.builder.SurfComponentBuilder
 import io.papermc.paper.registry.keys.EnchantmentKeys
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
@@ -9,20 +9,21 @@ import org.bukkit.inventory.ItemRarity
 
 enum class VanillaEnchantment(
     override val key: Key,
-    override val displayName: Component,
+    displayName: SurfComponentBuilder.() -> Unit,
     override val description: LoreBuilder.(Int) -> Unit,
-    override val rarity: ItemRarity
+    override val rarity: ItemRarity = ItemRarity.COMMON,
 ) : Enchantable {
     UNBREAKING(
         EnchantmentKeys.UNBREAKING,
-        displayName = buildText { spacer("Unbreaking") },
+        displayName = { spacer("Unbreaking") },
         description = { level ->
             line {
                 darkSpacer("Erhöht die Haltbarkeit von Gegenständen um $level%")
             }
         },
-        rarity = ItemRarity.COMMON,
     );
+
+    override val displayName: Component = SurfComponentBuilder(displayName)
 
     companion object {
         fun getByKey(key: Key) = entries.find { it.key.asString() == key.asString() }
