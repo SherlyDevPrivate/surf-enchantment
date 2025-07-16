@@ -1,6 +1,7 @@
 package dev.slne.surf.enchantment
 
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
+import dev.slne.surf.enchantment.commands.surfEnchantmentCommand
 import dev.slne.surf.enchantment.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.lore.SurfEnchantmentPacketLoreHandler
 import dev.slne.surf.surfapi.bukkit.api.packet.surfBukkitPacketApi
@@ -18,6 +19,8 @@ class SurfEnchantment : SuspendingJavaPlugin() {
         EnchantmentManager.registerEnchantmentListeners()
 
         surfBukkitPacketApi.registerPacketLoreListenerGlobal(this, SurfEnchantmentPacketLoreHandler)
+
+        surfEnchantmentCommand()
     }
 
 }

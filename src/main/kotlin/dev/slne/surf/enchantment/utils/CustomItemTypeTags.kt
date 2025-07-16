@@ -16,6 +16,13 @@ enum class CustomItemTypeTags(
     val tagEntries: ObjectSet<TagEntry<ItemType>>
 ) {
 
+    SHEARS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "shears")),
+        objectSetOf(
+            TagEntry.valueEntry(ItemTypeKeys.SHEARS)
+        )
+    ),
+
     WOODEN_TOOLS_KEY(
         TagKey.create(RegistryKey.ITEM, Key.key("surf", "wooden_tools")),
         objectSetOf(
@@ -23,6 +30,14 @@ enum class CustomItemTypeTags(
             TagEntry.valueEntry(ItemTypeKeys.WOODEN_AXE),
             TagEntry.valueEntry(ItemTypeKeys.WOODEN_SHOVEL),
             TagEntry.valueEntry(ItemTypeKeys.WOODEN_HOE),
+        )
+    ),
+
+    WOODEN_TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "wooden_tools_and_swords")),
+        objectSetOf(
+            *WOODEN_TOOLS_KEY.tagEntries.toTypedArray(),
+            TagEntry.valueEntry(ItemTypeKeys.WOODEN_SWORD)
         )
     ),
 
@@ -36,6 +51,14 @@ enum class CustomItemTypeTags(
         )
     ),
 
+    IRON_TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "iron_tools_and_swords")),
+        objectSetOf(
+            *IRON_TOOLS_KEY.tagEntries.toTypedArray(),
+            TagEntry.valueEntry(ItemTypeKeys.IRON_SWORD)
+        )
+    ),
+
     GOLD_TOOLS_KEY(
         TagKey.create(RegistryKey.ITEM, Key.key("surf", "gold_tools")),
         objectSetOf(
@@ -43,6 +66,14 @@ enum class CustomItemTypeTags(
             TagEntry.valueEntry(ItemTypeKeys.GOLDEN_AXE),
             TagEntry.valueEntry(ItemTypeKeys.GOLDEN_SHOVEL),
             TagEntry.valueEntry(ItemTypeKeys.GOLDEN_HOE),
+        )
+    ),
+
+    GOLD_TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "gold_tools_and_swords")),
+        objectSetOf(
+            *GOLD_TOOLS_KEY.tagEntries.toTypedArray(),
+            TagEntry.valueEntry(ItemTypeKeys.GOLDEN_SWORD)
         )
     ),
 
@@ -56,6 +87,14 @@ enum class CustomItemTypeTags(
         )
     ),
 
+    DIAMOND_TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "diamond_tools_and_swords")),
+        objectSetOf(
+            *DIAMOND_TOOLS_KEY.tagEntries.toTypedArray(),
+            TagEntry.valueEntry(ItemTypeKeys.DIAMOND_SWORD)
+        )
+    ),
+
     NETHERITE_TOOLS_KEY(
         TagKey.create(RegistryKey.ITEM, Key.key("surf", "netherite_tools")),
         objectSetOf(
@@ -66,11 +105,34 @@ enum class CustomItemTypeTags(
         )
     ),
 
+    NETHERITE_TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "netherite_tools_and_swords")),
+        objectSetOf(
+            *NETHERITE_TOOLS_KEY.tagEntries.toTypedArray(),
+            TagEntry.valueEntry(ItemTypeKeys.NETHERITE_SWORD)
+        )
+    ),
+
     TOOLS_KEY(
         TagKey.create(RegistryKey.ITEM, Key.key("surf", "tools")),
         objectSetOf(
-            DIAMOND_TOOLS_KEY.tagEntries
+            *WOODEN_TOOLS_KEY.tagEntries.toTypedArray(),
+            *IRON_TOOLS_KEY.tagEntries.toTypedArray(),
+            *GOLD_TOOLS_KEY.tagEntries.toTypedArray(),
+            *DIAMOND_TOOLS_KEY.tagEntries.toTypedArray(),
+            *NETHERITE_TOOLS_KEY.tagEntries.toTypedArray(),
         )
-    )
+    ),
+
+    TOOLS_AND_SWORDS_KEY(
+        TagKey.create(RegistryKey.ITEM, Key.key("surf", "tools_and_swords")),
+        objectSetOf(
+            *WOODEN_TOOLS_AND_SWORDS_KEY.tagEntries.toTypedArray(),
+            *IRON_TOOLS_AND_SWORDS_KEY.tagEntries.toTypedArray(),
+            *GOLD_TOOLS_AND_SWORDS_KEY.tagEntries.toTypedArray(),
+            *DIAMOND_TOOLS_AND_SWORDS_KEY.tagEntries.toTypedArray(),
+            *NETHERITE_TOOLS_AND_SWORDS_KEY.tagEntries.toTypedArray(),
+        )
+    );
 
 }

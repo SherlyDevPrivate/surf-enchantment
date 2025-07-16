@@ -14,7 +14,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
+internal object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
     override fun handleLore(
         loreToDisplay: MutableList<Component>,
         pdc: PersistentDataContainerView,
@@ -42,7 +42,9 @@ object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
                 enchantment to it.intValue
             }
             .sortedBy { PlainTextComponentSerializer.plainText().serialize(it.first.displayName) }
+            .reversed()
             .sortedBy { it.first.rarity }
+            .reversed()
 
         enchantables.forEachIndexed { index, (enchantment, level) ->
             if (index > 0) {
