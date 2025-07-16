@@ -26,11 +26,9 @@ object SheepnesisEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE
     ),
-    listeners = objectSetOf(
-        SheepnesisListener
-    )
+    listeners = objectSetOf(Handler)
 ) {
-    object SheepnesisListener : Listener {
+    object Handler : Listener {
         @EventHandler
         fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
             val player = event.player

@@ -30,11 +30,9 @@ object TelekinesisEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE
     ),
-    listeners = objectSetOf(
-        TelekinesisListener
-    )
+    listeners = objectSetOf(Handler)
 ) {
-    object TelekinesisListener : Listener {
+    object Handler : Listener {
 
         @EventHandler
         fun onBlockBreak(event: BlockBreakEvent) {

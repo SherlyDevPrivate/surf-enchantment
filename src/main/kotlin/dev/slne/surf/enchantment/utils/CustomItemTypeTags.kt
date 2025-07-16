@@ -20,6 +20,15 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         valueEntry(ItemTypeKeys.SHEARS)
     ),
 
+    HOES_KEY(
+        key("surf", "hoes"),
+        valueEntry(ItemTypeKeys.WOODEN_HOE),
+        valueEntry(ItemTypeKeys.IRON_HOE),
+        valueEntry(ItemTypeKeys.GOLDEN_HOE),
+        valueEntry(ItemTypeKeys.DIAMOND_HOE),
+        valueEntry(ItemTypeKeys.NETHERITE_HOE)
+    ),
+
     WOODEN_TOOLS_KEY(
         key("surf", "wooden_tools"),
         valueEntry(ItemTypeKeys.WOODEN_PICKAXE),
@@ -63,7 +72,7 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
     ),
 
     DIAMOND_TOOLS_KEY(
-       key("surf", "diamond_tools"),
+        key("surf", "diamond_tools"),
         valueEntry(ItemTypeKeys.DIAMOND_PICKAXE),
         valueEntry(ItemTypeKeys.DIAMOND_AXE),
         valueEntry(ItemTypeKeys.DIAMOND_SHOVEL),
@@ -77,7 +86,7 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
     ),
 
     NETHERITE_TOOLS_KEY(
-       key("surf", "netherite_tools"),
+        key("surf", "netherite_tools"),
         valueEntry(ItemTypeKeys.NETHERITE_PICKAXE),
         valueEntry(ItemTypeKeys.NETHERITE_AXE),
         valueEntry(ItemTypeKeys.NETHERITE_SHOVEL),

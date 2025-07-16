@@ -27,15 +27,13 @@ object ReplenishEnchantment : CustomEnchantment(
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
         }
     },
-    supportedItems = CustomItemTypeTags.TOOLS_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.HOES_KEY.tagKey,
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE
     ),
-    listeners = objectSetOf(
-        ReplenishListener
-    )
+    listeners = objectSetOf(Handler)
 ) {
-    object ReplenishListener : Listener {
+    object Handler : Listener {
         private val seedMap = object2ObjectMapOf(
             Material.WHEAT to Material.WHEAT_SEEDS,
             Material.POTATO to Material.POTATO,
@@ -46,17 +44,17 @@ object ReplenishEnchantment : CustomEnchantment(
         @EventHandler(priority = EventPriority.LOWEST)
         fun onBlockBreak(event: BlockDropItemEvent) {
             val player = event.player
+            val brokenBlockType = event.blockState.type
 
             if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
 
-            val brokenBlockType = event.block.type
             val seedType = seedMap[brokenBlockType] ?: return
             val seedItemStack = ItemStack(seedType, 1)
 
             val hasSeedInInventory = player.inventory.containsAtLeast(seedItemStack, 1)
             if (hasSeedInInventory) {
                 player.inventory.removeItem(seedItemStack)
-                event.block.type = seedType
+                event.block.type = brokenBlockType
 
                 Particle.HAPPY_VILLAGER.builder()
                     .location(event.block.location)

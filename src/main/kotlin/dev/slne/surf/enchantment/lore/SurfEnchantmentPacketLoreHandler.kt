@@ -30,7 +30,7 @@ internal object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
 
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_STORED_ENCHANTS)
 
-        enchantments.object2IntEntrySet().asSequence()
+        enchantments.object2IntEntrySet()
             .mapNotNull {
                 val enchantment = VanillaEnchantment.getByKey(it.key.key)
                     ?: EnchantmentManager.getByBukkitEnchantment(it.key) ?: return@mapNotNull null
