@@ -8,18 +8,10 @@ import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObject2ObjectMapOf
 import net.kyori.adventure.key.Key
 import org.bukkit.enchantments.Enchantment
+import java.util.concurrent.atomic.AtomicBoolean
 
 object EnchantmentManager {
-
-    internal var bootstrapped = false
-        set(value) {
-            if (field) {
-                error("The enchantment registry is already bootstrapped. Cannot change the bootstrapped state.")
-            }
-
-            field = value
-        }
-
+    private val frozen = AtomicBoolean(false)
     private val _enchantments = mutableObject2ObjectMapOf<Key, CustomEnchantment>()
     val enchantments get() = _enchantments.freeze()
 
@@ -37,14 +29,15 @@ object EnchantmentManager {
         }
     }
 
-    fun getByBukkitEnchantment(enchantment: Enchantment) =
-        enchantments[enchantment.key]
+    internal fun freeze() {
+        frozen.set(true)
+    }
+
+    fun getByBukkitEnchantment(enchantment: Enchantment) = enchantments[enchantment.key]
 
     fun register(enchantment: CustomEnchantment) {
-        if (bootstrapped) {
-            error("The enchantment registry is locked after the plugin is bootstrapped. Please register all enchantments before the plugin starts.")
-        }
-
-        _enchantments.putIfAbsent(enchantment.key, enchantment)
+        require(!frozen.get()) { "Cannot register enchantments after the registry is frozen." }
+        val added = _enchantments.putIfAbsent(enchantment.key, enchantment) == null
+        require(added) { "Enchantment with key ${enchantment.key} is already registered." }
     }
 }

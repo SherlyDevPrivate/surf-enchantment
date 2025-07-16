@@ -7,20 +7,17 @@ import dev.slne.surf.enchantment.lore.SurfEnchantmentPacketLoreHandler
 import dev.slne.surf.surfapi.bukkit.api.packet.surfBukkitPacketApi
 import org.bukkit.plugin.java.JavaPlugin
 
-val plugin get() = JavaPlugin.getPlugin(SurfEnchantment::class.java)
-
 class SurfEnchantment : SuspendingJavaPlugin() {
-
     override suspend fun onLoadAsync() {
-        EnchantmentManager.bootstrapped = true
+        EnchantmentManager.freeze()
     }
 
     override suspend fun onEnableAsync() {
         EnchantmentManager.registerEnchantmentListeners()
-
         surfBukkitPacketApi.registerPacketLoreListenerGlobal(this, SurfEnchantmentPacketLoreHandler)
 
         surfEnchantmentCommand()
     }
-
 }
+
+val plugin get() = JavaPlugin.getPlugin(SurfEnchantment::class.java)
