@@ -2,6 +2,7 @@
 
 package dev.slne.surf.enchantment.enchantments
 
+import dev.slne.surf.enchantment.SurfEnchantment
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
@@ -37,15 +38,14 @@ object BeheadingEnchantment : CustomEnchantment(
     object Handler : Listener {
         @EventHandler
         fun onEntityDeath(event: EntityDeathEvent) {
+            val entity = event.entity
             val killer = event.entity.killer ?: return
+            val handBeheadingLevel = killer.inventory.itemInMainHand.enchantments[bukkitEnchantment] ?: return
+            val chance = handBeheadingLevel * 2
 
-            if(!checkItemStackHasEnchantment(killer.inventory.itemInMainHand)) {
-                return
+            if ((0..99).random() < chance) {
+                event.drops.add(entity.type.getHead())
             }
-
-
-
-
         }
     }
 
