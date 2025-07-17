@@ -108,6 +108,77 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         *NETHERITE_TOOLS_KEY.tags,
     ),
 
+    LEATHER_ARMOR_KEY(
+        key("surf", "leather_armor"),
+        valueEntry(ItemTypeKeys.LEATHER_HELMET),
+        valueEntry(ItemTypeKeys.LEATHER_CHESTPLATE),
+        valueEntry(ItemTypeKeys.LEATHER_LEGGINGS),
+        valueEntry(ItemTypeKeys.LEATHER_BOOTS),
+    ),
+
+    CHAIN_ARMOR_KEY(
+        key("surf", "chain_armor"),
+        valueEntry(ItemTypeKeys.CHAINMAIL_HELMET),
+        valueEntry(ItemTypeKeys.CHAINMAIL_CHESTPLATE),
+        valueEntry(ItemTypeKeys.CHAINMAIL_LEGGINGS),
+        valueEntry(ItemTypeKeys.CHAINMAIL_BOOTS),
+    ),
+
+    IRON_ARMOR_KEY(
+        key("surf", "iron_armor"),
+        valueEntry(ItemTypeKeys.IRON_HELMET),
+        valueEntry(ItemTypeKeys.IRON_CHESTPLATE),
+        valueEntry(ItemTypeKeys.IRON_LEGGINGS),
+        valueEntry(ItemTypeKeys.IRON_BOOTS),
+    ),
+
+    GOLD_ARMOR_KEY(
+        key("surf", "gold_armor"),
+        valueEntry(ItemTypeKeys.GOLDEN_HELMET),
+        valueEntry(ItemTypeKeys.GOLDEN_CHESTPLATE),
+        valueEntry(ItemTypeKeys.GOLDEN_LEGGINGS),
+        valueEntry(ItemTypeKeys.GOLDEN_BOOTS),
+    ),
+
+    DIAMOND_ARMOR_KEY(
+        key("surf", "diamond_armor"),
+        valueEntry(ItemTypeKeys.DIAMOND_HELMET),
+        valueEntry(ItemTypeKeys.DIAMOND_CHESTPLATE),
+        valueEntry(ItemTypeKeys.DIAMOND_LEGGINGS),
+        valueEntry(ItemTypeKeys.DIAMOND_BOOTS),
+    ),
+
+    NETHERITE_ARMOR_KEY(
+        key("surf", "netherite_armor"),
+        valueEntry(ItemTypeKeys.NETHERITE_HELMET),
+        valueEntry(ItemTypeKeys.NETHERITE_CHESTPLATE),
+        valueEntry(ItemTypeKeys.NETHERITE_LEGGINGS),
+        valueEntry(ItemTypeKeys.NETHERITE_BOOTS),
+    ),
+
+    OTHER_TOOLS_KEY(
+        key("surf", "other_tools"),
+        valueEntry(ItemTypeKeys.MACE),
+        valueEntry(ItemTypeKeys.SHIELD),
+        valueEntry(ItemTypeKeys.BOW),
+        valueEntry(ItemTypeKeys.FISHING_ROD),
+        valueEntry(ItemTypeKeys.CROSSBOW),
+        valueEntry(ItemTypeKeys.TRIDENT),
+        valueEntry(ItemTypeKeys.FLINT_AND_STEEL),
+        valueEntry(ItemTypeKeys.BRUSH),
+        valueEntry(ItemTypeKeys.ELYTRA),
+    ),
+
+    ARMORS_KEY(
+        key("surf", "armors"),
+        *LEATHER_ARMOR_KEY.tags,
+        *CHAIN_ARMOR_KEY.tags,
+        *IRON_ARMOR_KEY.tags,
+        *GOLD_ARMOR_KEY.tags,
+        *DIAMOND_ARMOR_KEY.tags,
+        *NETHERITE_ARMOR_KEY.tags,
+    ),
+
     TOOLS_AND_SWORDS_KEY(
         key("surf", "tools_and_swords"),
         *WOODEN_TOOLS_AND_SWORDS_KEY.tags,
@@ -115,7 +186,16 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         *GOLD_TOOLS_AND_SWORDS_KEY.tags,
         *DIAMOND_TOOLS_AND_SWORDS_KEY.tags,
         *NETHERITE_TOOLS_AND_SWORDS_KEY.tags,
+    ),
+
+    EVERY_KEY(
+        key("surf", "every"),
+        *TOOLS_AND_SWORDS_KEY.tags,
+        *ARMORS_KEY.tags,
+        *SHEARS_KEY.tags,
+        *OTHER_TOOLS_KEY.tags,
     );
+
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
     val tagEntries: ObjectSet<TagEntry<ItemType>> = objectSetOf(*tags)
