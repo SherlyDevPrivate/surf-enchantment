@@ -29,8 +29,9 @@ object ReplenishEnchantment : CustomEnchantment(
     },
     supportedItems = CustomItemTypeTags.HOES_KEY.tagKey,
     tags = objectSetOf(
-        EnchantmentTagKeys.IN_ENCHANTING_TABLE
+        EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
     ),
+    maxLevel = 1,
     listeners = objectSetOf(Handler)
 ) {
     object Handler : Listener {

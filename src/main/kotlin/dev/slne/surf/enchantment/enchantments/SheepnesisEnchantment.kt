@@ -22,6 +22,7 @@ object SheepnesisEnchantment : CustomEnchantment(
             darkSpacer("Drops und Erfahrung gehen direkt in dein Inventar")
         }
     },
+    maxLevel = 1,
     supportedItems = CustomItemTypeTags.SHEARS_KEY.tagKey,
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE

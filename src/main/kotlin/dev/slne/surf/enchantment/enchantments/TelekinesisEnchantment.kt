@@ -30,6 +30,7 @@ object TelekinesisEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE
     ),
+    maxLevel = 1,
     listeners = objectSetOf(Handler)
 ) {
     object Handler : Listener {
