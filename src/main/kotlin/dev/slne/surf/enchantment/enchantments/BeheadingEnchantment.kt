@@ -8,9 +8,14 @@ import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
+import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
+import dev.slne.surf.surfapi.core.api.util.objectListOf
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
+import it.unimi.dsi.fastutil.objects.ObjectArrayList
+import it.unimi.dsi.fastutil.objects.ObjectSet
 import org.bukkit.Material
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -33,6 +38,7 @@ object BeheadingEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
     ),
+    exclusiveWith = ObjectSet.of(Enchantment.LOOTING.key()),
     maxLevel = 3,
     listeners = objectSetOf(Handler)
 ) {
