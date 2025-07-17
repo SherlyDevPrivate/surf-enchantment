@@ -33,6 +33,7 @@ object BeheadingEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
     ),
+    maxLevel = 3,
     listeners = objectSetOf(Handler)
 ) {
     object Handler : Listener {
