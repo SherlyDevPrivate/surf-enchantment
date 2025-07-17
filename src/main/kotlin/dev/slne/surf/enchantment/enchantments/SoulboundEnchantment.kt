@@ -13,6 +13,8 @@ import dev.slne.surf.surfapi.core.api.util.objectListOf
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import it.unimi.dsi.fastutil.objects.ObjectList
+import it.unimi.dsi.fastutil.objects.ObjectSet
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
@@ -38,6 +40,7 @@ object SoulboundEnchantment : CustomEnchantment(
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
     ),
+    exclusiveWith = ObjectSet.of(Enchantment.BINDING_CURSE.key(), Enchantment.VANISHING_CURSE.key()),
     listeners = objectSetOf(Handler)
 ) {
     val soulboundKey = dev.slne.surf.surfapi.bukkit.api.util.key("soulbound")
