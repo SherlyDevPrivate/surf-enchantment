@@ -2,6 +2,7 @@ package dev.slne.surf.enchantment.enchantment
 
 import dev.slne.surf.enchantment.enchantments.ReplenishEnchantment
 import dev.slne.surf.enchantment.enchantments.SheepnesisEnchantment
+import dev.slne.surf.enchantment.enchantments.SilentNightEnchantment
 import dev.slne.surf.enchantment.enchantments.SoulboundEnchantment
 import dev.slne.surf.enchantment.enchantments.TelekinesisEnchantment
 import dev.slne.surf.surfapi.bukkit.api.event.register
@@ -21,6 +22,7 @@ object EnchantmentManager {
         register(SheepnesisEnchantment)
         register(ReplenishEnchantment)
         register(SoulboundEnchantment)
+        register(SilentNightEnchantment)
     }
 
     internal fun registerEnchantmentListeners() {

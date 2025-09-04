@@ -16,7 +16,9 @@ import it.unimi.dsi.fastutil.objects.ObjectSet
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Player
 import org.bukkit.event.Listener
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.EquipmentSlotGroup
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ItemType
@@ -44,9 +46,26 @@ abstract class CustomEnchantment(
         RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).getOrThrow(key)
     }
 
+    private val activeEquipmentSlots by lazy {
+        if (activeSlots == null) {
+            EquipmentSlot.entries.toSet()
+        } else {
+            EquipmentSlot.entries.filter { slot ->  activeSlots.any {it.test(slot)} }
+        }
+    }
+
     fun checkItemStackHasEnchantment(itemStack: ItemStack) =
         itemStack.getData(DataComponentTypes.ENCHANTMENTS)?.enchantments()
             ?.contains(bukkitEnchantment) == true
 
     fun ItemStack.hasThisEnchantment() = checkItemStackHasEnchantment(this)
+
+    fun hasEnchantmentActive(player: Player): Boolean {
+        val equipment = player.equipment
+        return activeEquipmentSlots.any { slot ->
+            equipment.getItem(slot).hasThisEnchantment()
+        }
+    }
+
+    fun Player.hasThisEnchantmentActive() = hasEnchantmentActive(this)
 }

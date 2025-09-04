@@ -2,19 +2,19 @@
 
 package dev.slne.surf.enchantment.enchantments
 
-import com.destroystokyo.paper.event.entity.PhantomPreSpawnEvent
-import dev.slne.surf.enchantment.SurfEnchantment
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
-import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
+import dev.slne.surf.surfapi.bukkit.api.event.cancel
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
-import it.unimi.dsi.fastutil.objects.ObjectSet
-import org.bukkit.enchantments.Enchantment
+import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent
 
 object SilentNightEnchantment : CustomEnchantment(
     key("surf", "silent_night"),
@@ -25,18 +25,21 @@ object SilentNightEnchantment : CustomEnchantment(
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = CustomItemTypeTags.HELMET_KEY.tagKey,
-    tags = objectSetOf(
-        EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
+    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
+    tags = setOf(
+        EnchantmentTagKeys.IN_ENCHANTING_TABLE,
+        EnchantmentTagKeys.TREASURE
     ),
-    exclusiveWith = ObjectSet.of(Enchantment.LOOTING.key()),
+    exclusiveWith = setOf(EnchantmentKeys.LOOTING),
     maxLevel = 3,
-    listeners = objectSetOf(Handler)
+    listeners = setOf(Handler)
 ) {
     object Handler : Listener {
         @EventHandler
-        fun onEntitySpawn(event: PhantomPreSpawnEvent) {
-
+        fun onEntityTargetLivingEntity(event: EntityTargetLivingEntityEvent) {
+            val target = event.target as? Player ?: return
+            if (!target.hasThisEnchantmentActive()) return
+            event.cancel()
         }
     }
 }

@@ -35,7 +35,7 @@ fun enchantmentComposeHandler() = RegistryEvents.ENCHANTMENT.compose().newHandle
     }
 }
 
-private fun convertEnchantmentKeys(keys: ObjectSet<Key>) = RegistrySet.keySet(
+private fun convertEnchantmentKeys(keys: Set<Key>) = RegistrySet.keySet(
     RegistryKey.ENCHANTMENT,
     keys.map { TypedKey.create(RegistryKey.ENCHANTMENT, it) }
 )

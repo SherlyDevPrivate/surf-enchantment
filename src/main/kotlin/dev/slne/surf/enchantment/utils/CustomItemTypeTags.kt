@@ -22,11 +22,6 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         valueEntry(ItemTypeKeys.SHEARS)
     ),
 
-    HELMET_KEY(
-        key("surf", "helmets"),
-        *ItemTypeTagKeys.HEAD_ARMOR.entries()
-    ),
-
     HOES_KEY(
         key("surf", "hoes"),
         *ItemTypeTagKeys.HOES.entries(),
