@@ -4,8 +4,10 @@ package dev.slne.surf.enchantment.utils
 
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
 import io.papermc.paper.registry.keys.ItemTypeKeys
+import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import io.papermc.paper.registry.tag.TagKey
 import io.papermc.paper.tag.TagEntry
 import io.papermc.paper.tag.TagEntry.valueEntry
@@ -22,22 +24,12 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     HELMET_KEY(
         key("surf", "helmets"),
-        valueEntry(ItemTypeKeys.LEATHER_HELMET),
-        valueEntry(ItemTypeKeys.IRON_HELMET),
-        valueEntry(ItemTypeKeys.GOLDEN_HELMET),
-        valueEntry(ItemTypeKeys.CHAINMAIL_HELMET),
-        valueEntry(ItemTypeKeys.DIAMOND_HELMET),
-        valueEntry(ItemTypeKeys.NETHERITE_HELMET),
-        valueEntry(ItemTypeKeys.TURTLE_HELMET)
+        *ItemTypeTagKeys.HEAD_ARMOR.entries()
     ),
 
     HOES_KEY(
         key("surf", "hoes"),
-        valueEntry(ItemTypeKeys.WOODEN_HOE),
-        valueEntry(ItemTypeKeys.IRON_HOE),
-        valueEntry(ItemTypeKeys.GOLDEN_HOE),
-        valueEntry(ItemTypeKeys.DIAMOND_HOE),
-        valueEntry(ItemTypeKeys.NETHERITE_HOE)
+        *ItemTypeTagKeys.HOES.entries(),
     ),
 
     WOODEN_TOOLS_KEY(
@@ -205,9 +197,23 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         *ARMORS_KEY.tags,
         *SHEARS_KEY.tags,
         *OTHER_TOOLS_KEY.tags,
+    ),
+
+    TOOLS_AND_ARMOR_AND_EQUIPMENT_KEY(
+        key("surf", "tools_and_armor_and_equipment"),
+        *ItemTypeTagKeys.BREAKS_DECORATED_POTS.entries(), // tools
+        *ItemTypeTagKeys.ENCHANTABLE_ARMOR.entries(), // armor
+        *ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE.entries(),
+        *ItemTypeTagKeys.ENCHANTABLE_WEAPON.entries()
     );
 
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
     val tagEntries: ObjectSet<TagEntry<ItemType>> = objectSetOf(*tags)
 }
+
+private fun TagKey<ItemType>.entries() =
+    RegistryAccess.registryAccess().getRegistry(RegistryKey.ITEM)
+        .getTag(this)
+        .map { valueEntry(it) }
+        .toTypedArray()

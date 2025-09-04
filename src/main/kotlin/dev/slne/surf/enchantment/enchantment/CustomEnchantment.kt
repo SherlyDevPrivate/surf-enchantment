@@ -34,11 +34,11 @@ abstract class CustomEnchantment(
     val minimumCost: EnchantmentCost? = EnchantmentCost.of(0, 0),
     val maximumCost: EnchantmentCost? = EnchantmentCost.of(0, 0),
     val anvilCost: @Range(from = 1, to = Int.MAX_VALUE.toLong()) Int? = 1,
-    val activeSlots: ObjectSet<EquipmentSlotGroup>? = objectSetOf(EquipmentSlotGroup.ANY),
-    val exclusiveWith: ObjectSet<Key>? = null,
-    val tags: ObjectSet<TagKey<Enchantment>>? = objectSetOf(),
+    val activeSlots: Set<EquipmentSlotGroup>? = objectSetOf(EquipmentSlotGroup.ANY),
+    val exclusiveWith: Set<Key>? = null,
+    val tags: Set<TagKey<Enchantment>>? = objectSetOf(),
     val typedKey: TypedKey<Enchantment> = TypedKey.create(RegistryKey.ENCHANTMENT, key),
-    val listeners: ObjectSet<Listener> = objectSetOf()
+    val listeners: Set<Listener> = objectSetOf()
 ) : Enchantable {
     val bukkitEnchantment: Enchantment by lazy {
         RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).getOrThrow(key)
@@ -47,4 +47,6 @@ abstract class CustomEnchantment(
     fun checkItemStackHasEnchantment(itemStack: ItemStack) =
         itemStack.getData(DataComponentTypes.ENCHANTMENTS)?.enchantments()
             ?.contains(bukkitEnchantment) == true
+
+    fun ItemStack.hasThisEnchantment() = checkItemStackHasEnchantment(this)
 }
