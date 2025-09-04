@@ -2,43 +2,38 @@
 
 package dev.slne.surf.enchantment.enchantments
 
-import dev.slne.surf.enchantment.SurfEnchantment
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
-import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
-import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
-import dev.slne.surf.surfapi.core.api.util.objectListOf
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import dev.slne.surf.surfapi.core.api.util.random
+import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
-import it.unimi.dsi.fastutil.objects.ObjectArrayList
-import it.unimi.dsi.fastutil.objects.ObjectSet
-import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
+import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.block.BlockBreakEvent
-import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
-import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.EquipmentSlotGroup
+import org.bukkit.inventory.ItemType
 
 object BeheadingEnchantment : CustomEnchantment(
     key("surf", "beheading"),
     text("Beheading"),
-    EnchantmentRarity.LEGENDARY,
+    EnchantmentRarity.EPIC,
     description = {
         line {
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = CustomItemTypeTags.TOOLS_AND_SWORDS_KEY.tagKey,
+    supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
+    activeSlots = setOf(EquipmentSlotGroup.MAINHAND),
     tags = objectSetOf(
-        EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
+        EnchantmentTagKeys.IN_ENCHANTING_TABLE,
+        EnchantmentTagKeys.TREASURE
     ),
-    exclusiveWith = ObjectSet.of(Enchantment.LOOTING.key()),
+    exclusiveWith = setOf(EnchantmentKeys.LOOTING),
     maxLevel = 3,
     listeners = objectSetOf(Handler)
 ) {
@@ -47,22 +42,24 @@ object BeheadingEnchantment : CustomEnchantment(
         fun onEntityDeath(event: EntityDeathEvent) {
             val entity = event.entity
             val killer = event.entity.killer ?: return
-            val handBeheadingLevel = killer.inventory.itemInMainHand.enchantments[bukkitEnchantment] ?: return
-            val chance = handBeheadingLevel * 2
+            val (level) = killer.getThisActiveEnchantmentOrNull() ?: return
 
-            if ((0..99).random() < chance) {
-                event.drops.add(entity.type.getHead())
+            val chance = level * 2
+            if (random.nextInt(0, 100) < chance) {
+                event.drops.add(entity.type.getHead().createItemStack())
             }
+
+            ItemType.SKELETON_SKULL
         }
     }
 
-    fun EntityType.getHead() = when(this) {
-        EntityType.ZOMBIE -> ItemStack(Material.ZOMBIE_HEAD)
-        EntityType.CREEPER -> ItemStack(Material.CREEPER_HEAD)
-        EntityType.SKELETON -> ItemStack(Material.SKELETON_SKULL)
-        EntityType.PIGLIN -> ItemStack(Material.PIGLIN_HEAD)
-        EntityType.ENDER_DRAGON -> ItemStack(Material.DRAGON_HEAD)
-        EntityType.WITHER_SKELETON -> ItemStack(Material.WITHER_SKELETON_SKULL)
-        else -> ItemStack(Material.AIR)
+    fun EntityType.getHead() = when (this) {
+        EntityType.ZOMBIE -> ItemType.ZOMBIE_HEAD
+        EntityType.CREEPER -> ItemType.CREEPER_HEAD
+        EntityType.SKELETON -> ItemType.SKELETON_SKULL
+        EntityType.PIGLIN -> ItemType.PIGLIN_HEAD
+        EntityType.ENDER_DRAGON -> ItemType.DRAGON_HEAD
+        EntityType.WITHER_SKELETON -> ItemType.WITHER_SKELETON_SKULL
+        else -> ItemType.AIR
     }
 }
