@@ -2,6 +2,7 @@ package dev.slne.surf.enchantment.enchantment
 
 import dev.slne.surf.enchantment.enchantments.BeheadingEnchantment
 import dev.slne.surf.enchantment.enchantments.ReplenishEnchantment
+import dev.slne.surf.enchantment.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.enchantments.SheepnesisEnchantment
 import dev.slne.surf.enchantment.enchantments.SilentGazeEnchantment
 import dev.slne.surf.enchantment.enchantments.SilentNightEnchantment
@@ -27,6 +28,7 @@ object EnchantmentManager {
         register(SilentNightEnchantment)
         register(SilentGazeEnchantment)
         register(BeheadingEnchantment)
+        register(RocketSaverEnchantment)
     }
 
     internal fun registerEnchantmentListeners() {

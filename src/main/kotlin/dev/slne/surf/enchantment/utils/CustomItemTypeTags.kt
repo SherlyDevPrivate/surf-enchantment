@@ -200,7 +200,14 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         *ItemTypeTagKeys.ENCHANTABLE_ARMOR.entries(), // armor
         *ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE.entries(),
         *ItemTypeTagKeys.ENCHANTABLE_WEAPON.entries()
-    );
+    ),
+
+    ELYTRA_KEY(
+        key("surf", "elytra"),
+        valueEntry(ItemTypeKeys.ELYTRA)
+    )
+
+    ;
 
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
