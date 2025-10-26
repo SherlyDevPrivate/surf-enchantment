@@ -27,14 +27,6 @@ import java.util.concurrent.ConcurrentHashMap
 import net.kyori.adventure.sound.Sound as AdventureSound
 import org.bukkit.Sound as BukkitSound
 
-private val specialHappyGhastKey = NamespacedKey("surf", "special-ghast")
-private val happyGhastCooldownExpire: MutableMap<UUID, Long> = ConcurrentHashMap()
-private val ROCKET_PROPERTIES = mapOf(
-    1 to Triple(1.4, 0.5, 5L),
-    2 to Triple(1.9, 0.7, 10L),
-    3 to Triple(2.6, 0.9, 15L)
-)
-
 object HappyGhastBoostEnchantment : CustomEnchantment(
     key("surf", "happy_ghast"),
     text("Rocket Ride"),
@@ -52,6 +44,13 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
     listeners = objectSetOf(Handler)
 ) {
     object Handler : Listener {
+        private val specialHappyGhastKey = NamespacedKey("surf", "special-ghast")
+        private val happyGhastCooldownExpire: MutableMap<UUID, Long> = ConcurrentHashMap()
+        private val ROCKET_PROPERTIES = mapOf(
+            1 to Triple(1.4, 0.5, 5L),
+            2 to Triple(1.9, 0.7, 10L),
+            3 to Triple(2.6, 0.9, 15L)
+        )
 
         @EventHandler
         fun onAddHarness(event: PlayerInteractEntityEvent) {
