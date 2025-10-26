@@ -77,8 +77,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         @EventHandler
         fun onUseRocketToBoost(event: PlayerInteractEntityEvent) {
             val player = event.player
-            val entity = event.rightClicked
-            val happyGhast = entity as? HappyGhast ?: return
+            val happyGhast = event.rightClicked as? HappyGhast ?: return
             if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
 
             val item = player.inventory.itemInMainHand
