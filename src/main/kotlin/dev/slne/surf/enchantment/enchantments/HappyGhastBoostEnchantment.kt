@@ -41,7 +41,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
     EnchantmentRarity.EPIC,
     description = {
         line {
-            darkSpacer("Boostet den Ghast wenn du auf ihm eine Rakete zündest.")
+            darkSpacer("Boostet den Happy Ghast, wenn du auf ihm eine Rakete zündest.")
         }
     },
     supportedItems = ItemTypeTagKeys.HARNESSES,
