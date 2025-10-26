@@ -37,7 +37,7 @@ private val ROCKET_PROPERTIES = mapOf(
 
 object HappyGhastBoostEnchantment : CustomEnchantment(
     key("surf", "happy-ghast"),
-    text("Happy Ghast Boost"),
+    text("Rocket Ride"),
     EnchantmentRarity.EPIC,
     description = {
         line {
@@ -95,7 +95,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             val cooldownExpire = happyGhastCooldownExpire[happyGhast.uniqueId] ?: 0L
             val now = System.currentTimeMillis()
-            if(now < cooldownExpire){
+            if (now < cooldownExpire) {
                 val secondsLeft = ((cooldownExpire - now) / 1000L).toInt()
                 player.sendActionBar(
                     buildText {
