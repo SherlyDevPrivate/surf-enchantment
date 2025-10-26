@@ -56,20 +56,20 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         @EventHandler
         fun onAddHarness(event: PlayerInteractEntityEvent) {
             val player = event.player
-            val entity = event.rightClicked as? HappyGhast ?: return
+            val happyGhast = event.rightClicked as? HappyGhast ?: return
 
             val itemInMain = player.inventory.itemInMainHand
             if (!itemInMain.hasThisEnchantment()) return
 
-            entity.persistentDataContainer.set(specialHappyGhastKey, PersistentDataType.BYTE, 1)
+            happyGhast.persistentDataContainer.set(specialHappyGhastKey, PersistentDataType.BYTE, 1)
         }
 
         @EventHandler
         fun onEntityDropItem(event: EntityDropItemEvent) {
-            val entity = event.entity as? HappyGhast ?: return
+            val happyGhast = event.entity as? HappyGhast ?: return
 
-            if (!entity.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
-            entity.persistentDataContainer.remove(specialHappyGhastKey)
+            if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
+            happyGhast.persistentDataContainer.remove(specialHappyGhastKey)
 
             event.itemDrop.itemStack.addEnchantment(bukkitEnchantment, 1)
         }
