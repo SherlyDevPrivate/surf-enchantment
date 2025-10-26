@@ -11,7 +11,6 @@ import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
-import net.kyori.adventure.sound.Sound as AdventureSound
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -23,15 +22,17 @@ import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.inventory.meta.FireworkMeta
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.Vector
+import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import net.kyori.adventure.sound.Sound as AdventureSound
 import org.bukkit.Sound as BukkitSound
 
-
 private val entityKey = NamespacedKey("surf", "special-ghast")
-
+private val happyGhastCooldownExpire: MutableMap<UUID, Long> = ConcurrentHashMap()
 private val ROCKET_PROPERTIES = mapOf(
-    1 to Triple(1.4, 0.5, 5),
-    2 to Triple(1.9, 0.7, 10),
-    3 to Triple(2.6, 0.9, 15)
+    1 to Triple(1.4, 0.5, 5L),
+    2 to Triple(1.9, 0.7, 10L),
+    3 to Triple(2.6, 0.9, 15L)
 )
 
 object HappyGhastBoostEnchantment : CustomEnchantment(
@@ -100,14 +101,15 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
                 return
             }
 
-            val cooldownTicks = player.getCooldown(Material.FIREWORK_ROCKET)
-            if (cooldownTicks > 0) {
-                val secondsLeft = cooldownTicks / 20
+            val cooldownExpire = happyGhastCooldownExpire[happyGhast.uniqueId] ?: 0L
+            val now = System.currentTimeMillis()
+            if(now < cooldownExpire){
+                val secondsLeft = ((cooldownExpire - now) / 1000L).toInt()
                 player.sendActionBar(
                     buildText {
-                        error("Du kannst den Ghast erst wieder in ")
+                        error("Der Ghast kann erst wieder in ")
                         variableKey(secondsLeft)
-                        error(" Sekunden boosten!")
+                        error(" Sekunden geboostet werden!")
                     }
                 )
                 return
@@ -127,7 +129,9 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             if (player.gameMode != GameMode.CREATIVE) {
                 item.amount = item.amount - 1
             }
-            player.setCooldown(Material.FIREWORK_ROCKET, cooldownSeconds * 20)
+
+            var boostCooldown = ROCKET_PROPERTIES[tier]?.third ?: (ROCKET_PROPERTIES[1]!!.third * 1000L)
+            happyGhastCooldownExpire.put(happyGhast.uniqueId, now + boostCooldown)
 
             player.sendActionBar(
                 buildText {
