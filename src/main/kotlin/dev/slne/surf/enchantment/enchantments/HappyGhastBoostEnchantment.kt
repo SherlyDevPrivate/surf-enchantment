@@ -52,26 +52,20 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 ) {
     object Handler : Listener {
 
-        @EventHandler()
+        @EventHandler
         fun onAddHarness(event: PlayerInteractEntityEvent) {
             val player = event.player
             val entity = event.rightClicked
 
             if (entity !is HappyGhast) return
 
-            val main = player.inventory.itemInMainHand.hasThisEnchantment()
-            if (!main) return
+            val itemInMain = player.inventory.itemInMainHand
+            if (!itemInMain.hasThisEnchantment()) return
 
             entity.persistentDataContainer.set(entityKey, PersistentDataType.BYTE, 1)
-
-            player.sendActionBar (
-                buildText {
-                    success("Das Geschirr wurde dem Ghast angelegt!")
-                }
-            )
         }
 
-        @EventHandler()
+        @EventHandler
         fun onEntityDropItem(event: EntityDropItemEvent) {
             val entity = event.entity
 
@@ -98,7 +92,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             val happyGhastVehicle = happyGhast.vehicle ?: return
             if (happyGhastVehicle.passengers.firstOrNull() !== player) {
-                player.sendActionBar (
+                player.sendActionBar(
                     buildText {
                         error("Du hältst nicht die Zügel des Ghasts!")
                     }
