@@ -127,7 +127,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             player.sendActionBar(
                 buildText {
-                    success("Der Ghast wurde geboostet!")
+                    success("Der Happy Ghast wurde geboostet!")
                 }
             )
 
