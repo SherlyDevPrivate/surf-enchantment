@@ -36,7 +36,7 @@ private val ROCKET_PROPERTIES = mapOf(
 )
 
 object HappyGhastBoostEnchantment : CustomEnchantment(
-    key("surf", "happy-ghast"),
+    key("surf", "happy_ghast"),
     text("Rocket Ride"),
     EnchantmentRarity.EPIC,
     description = {
@@ -109,7 +109,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             val rocketMeta = item.itemMeta as? FireworkMeta ?: return
             val tier = rocketMeta.power.coerceIn(1, 3)
-            val (powerMultiply, upward, cooldownSeconds) = ROCKET_PROPERTIES[tier] ?: ROCKET_PROPERTIES[1]!!
+            val (powerMultiply, upward) = ROCKET_PROPERTIES[tier] ?: ROCKET_PROPERTIES[1]!!
 
             val look = player.location.direction.normalize()
             val basePower = 0.9
