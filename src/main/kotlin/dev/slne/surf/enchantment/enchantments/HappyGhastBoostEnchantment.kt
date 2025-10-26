@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap
 import net.kyori.adventure.sound.Sound as AdventureSound
 import org.bukkit.Sound as BukkitSound
 
-private val entityKey = NamespacedKey("surf", "special-ghast")
+private val specialHappyGhastKey = NamespacedKey("surf", "special-ghast")
 private val happyGhastCooldownExpire: MutableMap<UUID, Long> = ConcurrentHashMap()
 private val ROCKET_PROPERTIES = mapOf(
     1 to Triple(1.4, 0.5, 5L),
@@ -63,22 +63,19 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             val itemInMain = player.inventory.itemInMainHand
             if (!itemInMain.hasThisEnchantment()) return
 
-            entity.persistentDataContainer.set(entityKey, PersistentDataType.BYTE, 1)
+            entity.persistentDataContainer.set(specialHappyGhastKey, PersistentDataType.BYTE, 1)
         }
 
         @EventHandler
         fun onEntityDropItem(event: EntityDropItemEvent) {
             val entity = event.entity
-
             if (entity !is HappyGhast) return
 
-            if (!entity.persistentDataContainer.has(entityKey, PersistentDataType.BYTE)) return
+            if (!entity.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
 
-            entity.persistentDataContainer.remove(entityKey)
+            entity.persistentDataContainer.remove(specialHappyGhastKey)
 
-            val drop = event.itemDrop
-
-            // drop harness with enchantment
+            event.itemDrop.itemStack.addEnchantment(bukkitEnchantment, 1)
         }
 
         @EventHandler
@@ -86,7 +83,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             val player = event.player
             val entity = event.rightClicked
             val happyGhast = entity as? HappyGhast ?: return
-            if (!happyGhast.persistentDataContainer.has(entityKey, PersistentDataType.BYTE)) return
+            if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
 
             val item = player.inventory.itemInMainHand
             if (item.type != Material.FIREWORK_ROCKET) return
