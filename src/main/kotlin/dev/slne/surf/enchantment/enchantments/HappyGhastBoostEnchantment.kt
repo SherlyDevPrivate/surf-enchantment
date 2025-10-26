@@ -64,11 +64,11 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             entity.persistentDataContainer.set(entityKey, PersistentDataType.BYTE, 1)
 
-            player.sendActionBar {
+            player.sendActionBar (
                 buildText {
                     success("Das Geschirr wurde dem Ghast angelegt!")
                 }
-            }
+            )
         }
 
         @EventHandler()
@@ -98,24 +98,24 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
 
             val happyGhastVehicle = happyGhast.vehicle ?: return
             if (happyGhastVehicle.passengers.firstOrNull() !== player) {
-                player.sendActionBar {
+                player.sendActionBar (
                     buildText {
                         error("Du hältst nicht die Zügel des Ghasts!")
                     }
-                }
+                )
                 return
             }
 
             val cooldownTicks = player.getCooldown(Material.FIREWORK_ROCKET)
             if (cooldownTicks > 0) {
                 val secondsLeft = cooldownTicks / 20
-                player.sendActionBar {
+                player.sendActionBar(
                     buildText {
                         error("Du kannst den Ghast erst wieder in ")
                         variableKey(secondsLeft)
                         error(" Sekunden boosten!")
                     }
-                }
+                )
                 return
             }
 
@@ -135,11 +135,11 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             }
             player.setCooldown(Material.FIREWORK_ROCKET, cooldownSeconds * 20)
 
-            player.sendActionBar {
+            player.sendActionBar(
                 buildText {
                     success("Der Ghast wurde geboostet!")
                 }
-            }
+            )
 
             player.playSound {
                 type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
