@@ -56,7 +56,10 @@ abstract class CustomEnchantment(
 
     fun checkItemStackHasEnchantment(itemStack: ItemStack) = getThisEnchantmentOrNull(itemStack) != null
 
+    @JvmName("itemStackHasThisEnchantment")
     fun ItemStack.hasThisEnchantment() = checkItemStackHasEnchantment(this)
+
+    @JvmName("getThisEnchantmentOrNullFromItemStack")
     fun ItemStack.getThisEnchantmentOrNull() = getThisEnchantmentOrNull(this)
 
     fun getThisActiveEnchantmentOrNull(player: Player): Pair<Int, Enchantment>? {
@@ -73,6 +76,9 @@ abstract class CustomEnchantment(
         return getThisActiveEnchantmentOrNull(player) != null
     }
 
+    @JvmName("playerHasThisEnchantmentActive")
     fun Player.hasThisEnchantmentActive() = hasEnchantmentActive(this)
+
+    @JvmName("getThisActiveEnchantmentOrNullFromPlayer")
     fun Player.getThisActiveEnchantmentOrNull() = getThisActiveEnchantmentOrNull(this)
 }
