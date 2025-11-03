@@ -10,12 +10,15 @@ import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
+import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.block.BlockState
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
+import org.bukkit.inventory.EquipmentSlotGroup
 import org.bukkit.inventory.ItemStack
 
 object ReplenishEnchantment : CustomEnchantment(
@@ -27,12 +30,13 @@ object ReplenishEnchantment : CustomEnchantment(
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
         }
     },
-    supportedItems = CustomItemTypeTags.HOES_KEY.tagKey,
-    tags = objectSetOf(
+    supportedItems = ItemTypeTagKeys.HOES,
+    activeSlots = setOf(EquipmentSlotGroup.MAINHAND),
+    tags = setOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE
     ),
     maxLevel = 1,
-    listeners = objectSetOf(Handler)
+    listeners = setOf(Handler)
 ) {
     object Handler : Listener {
         private val seedMap = object2ObjectMapOf(
@@ -40,17 +44,20 @@ object ReplenishEnchantment : CustomEnchantment(
             Material.POTATO to Material.POTATO,
             Material.CARROT to Material.CARROT,
             Material.BEETROOT to Material.BEETROOT_SEEDS,
+            Material.NETHER_WART to Material.NETHER_WART,
+            Material.TORCHFLOWER to Material.TORCHFLOWER_SEEDS,
+
+
         )
 
         @EventHandler(priority = EventPriority.LOWEST)
         fun onBlockBreak(event: BlockDropItemEvent) {
             val player = event.player
+            if (!player.hasThisEnchantmentActive()) return
+
             val brokenBlockType = event.blockState.type
-
-            if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
-
             val seedType = seedMap[brokenBlockType] ?: return
-            val seedItemStack = ItemStack(seedType, 1)
+            val seedItemStack = ItemStack.of(seedType)
 
             val hasSeedInInventory = player.inventory.containsAtLeast(seedItemStack, 1)
             if (hasSeedInInventory) {
@@ -63,6 +70,5 @@ object ReplenishEnchantment : CustomEnchantment(
                     .spawn()
             }
         }
-
     }
 }

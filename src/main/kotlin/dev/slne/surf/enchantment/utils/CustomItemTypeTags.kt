@@ -194,6 +194,12 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
         *OTHER_TOOLS_KEY.tags,
     ),
 
+    TOOLS_AND_WEAPONS_KEY(
+        key("surf", "tools_and_weapons"),
+        *ItemTypeTagKeys.BREAKS_DECORATED_POTS.entries(),
+        *ItemTypeTagKeys.ENCHANTABLE_WEAPON.entries()
+    ),
+
     TOOLS_AND_ARMOR_AND_EQUIPMENT_KEY(
         key("surf", "tools_and_armor_and_equipment"),
         *ItemTypeTagKeys.BREAKS_DECORATED_POTS.entries(), // tools
