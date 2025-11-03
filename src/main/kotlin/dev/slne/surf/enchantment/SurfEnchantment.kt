@@ -20,5 +20,4 @@ class SurfEnchantment : SuspendingJavaPlugin() {
     }
 }
 
-
 val plugin get() = JavaPlugin.getPlugin(SurfEnchantment::class.java)
