@@ -11,13 +11,18 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.inventory.EquipmentSlotGroup
 
+private const val CHANCE_PER_LEVEL = 15
+
 object RocketSaverEnchantment : CustomEnchantment(
     key("surf", "rocket_saver"),
     text("Rocket Saver"),
     EnchantmentRarity.MYTHIC,
-    {
+    { level ->
         line {
-            text("Grants a chance to not consume fireworks when using Elytra.")
+            val chance = level * CHANCE_PER_LEVEL
+            text("Grants a ")
+            text("$chance %")
+            text(" chance to not consume fireworks when boosting with elytra")
         }
     },
     supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,
@@ -29,7 +34,7 @@ object RocketSaverEnchantment : CustomEnchantment(
         @EventHandler
         fun onPlayerElytraBoost(event: PlayerElytraBoostEvent) {
             val (level) = event.player.getThisActiveEnchantmentOrNull() ?: return
-            val chance = level * 15
+            val chance = level * CHANCE_PER_LEVEL
             if (random.nextInt(0, 100) < chance) {
                 event.setShouldConsume(false)
             }
