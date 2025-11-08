@@ -20,9 +20,9 @@ object RocketSaverEnchantment : CustomEnchantment(
     { level ->
         line {
             val chance = level * CHANCE_PER_LEVEL
-            text("Grants a ")
+            text("Gewährt eine ")
             text("$chance %")
-            text(" chance to not consume fireworks when boosting with elytra")
+            text(" Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit dem Elytra boostet")
         }
     },
     supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,
