@@ -77,14 +77,13 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         @EventHandler
         fun onUseRocketToBoost(event: PlayerInteractEvent) {
             val player = event.player
-            val happyGhast =  player.vehicle as? HappyGhast ?: return
+            val happyGhast = player.vehicle as? HappyGhast ?: return
             if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
 
             val item = player.inventory.itemInMainHand
             if (item.type != Material.FIREWORK_ROCKET) return
 
-            val happyGhastVehicle = happyGhast.vehicle ?: return
-            if (happyGhastVehicle.passengers.firstOrNull() !== player) {
+            if (happyGhast.passengers.firstOrNull() !== player) {
                 player.sendActionBar(
                     buildText {
                         error("Du hältst nicht die Zügel des Ghasts!")
@@ -125,16 +124,18 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             var boostCooldown = ROCKET_PROPERTIES[tier]?.third ?: (ROCKET_PROPERTIES[1]!!.third * 1000L)
             happyGhastCooldownExpire.put(happyGhast.uniqueId, now + boostCooldown)
 
-            player.sendActionBar(
-                buildText {
-                    success("Der Happy Ghast wurde geboostet!")
-                }
-            )
+            happyGhast.passengers.forEach { passanger ->
+                passanger.sendActionBar(
+                    buildText {
+                        success("Der Happy Ghast wurde geboostet!")
+                    }
+                )
 
-            player.playSound {
-                type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
-                source(AdventureSound.Source.NEUTRAL)
-                pitch(1.0f)
+                passanger.playSound {
+                    type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
+                    source(AdventureSound.Source.NEUTRAL)
+                    pitch(1.0f)
+                }
             }
         }
     }
