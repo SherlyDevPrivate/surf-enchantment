@@ -19,6 +19,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDropItemEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.meta.FireworkMeta
 import org.bukkit.persistence.PersistentDataType
 import org.bukkit.util.Vector
@@ -74,9 +75,9 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         }
 
         @EventHandler
-        fun onUseRocketToBoost(event: PlayerInteractEntityEvent) {
+        fun onUseRocketToBoost(event: PlayerInteractEvent) {
             val player = event.player
-            val happyGhast = event.rightClicked as? HappyGhast ?: return
+            val happyGhast =  player.vehicle as? HappyGhast ?: return
             if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
 
             val item = player.inventory.itemInMainHand
