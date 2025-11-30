@@ -8,10 +8,10 @@ import io.papermc.paper.registry.TypedKey
 import io.papermc.paper.registry.event.RegistryEvents
 import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.set.RegistrySet
-import it.unimi.dsi.fastutil.objects.ObjectSet
 import net.kyori.adventure.key.Key
 
 fun enchantmentComposeHandler() = RegistryEvents.ENCHANTMENT.compose().newHandler { event ->
+    EnchantmentManager.registerSelf()
     val registry = event.registry()
     for ((key, enchantment) in EnchantmentManager.enchantments) {
         registry.register(EnchantmentKeys.create(key)) { builder ->

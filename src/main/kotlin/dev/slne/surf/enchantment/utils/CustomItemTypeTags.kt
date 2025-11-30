@@ -10,6 +10,7 @@ import io.papermc.paper.registry.keys.ItemTypeKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import io.papermc.paper.registry.tag.TagKey
 import io.papermc.paper.tag.TagEntry
+import io.papermc.paper.tag.TagEntry.tagEntry
 import io.papermc.paper.tag.TagEntry.valueEntry
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import net.kyori.adventure.key.Key
@@ -24,7 +25,7 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     HOES_KEY(
         key("surf", "hoes"),
-        *ItemTypeTagKeys.HOES.entries(),
+        tagEntry(ItemTypeTagKeys.HOES),
     ),
 
     WOODEN_TOOLS_KEY(
@@ -37,7 +38,7 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     WOODEN_TOOLS_AND_SWORDS_KEY(
         key("surf", "wooden_tools_and_swords"),
-        *WOODEN_TOOLS_KEY.tags,
+        tagEntry(WOODEN_TOOLS_KEY.tagKey),
         valueEntry(ItemTypeKeys.WOODEN_SWORD)
     ),
 
@@ -51,8 +52,8 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     IRON_TOOLS_AND_SWORDS_KEY(
         key("surf", "iron_tools_and_swords"),
-        *IRON_TOOLS_KEY.tags,
-        TagEntry.valueEntry(ItemTypeKeys.IRON_SWORD)
+        tagEntry(IRON_TOOLS_KEY.tagKey),
+        valueEntry(ItemTypeKeys.IRON_SWORD)
     ),
 
     GOLD_TOOLS_KEY(
@@ -65,7 +66,7 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     GOLD_TOOLS_AND_SWORDS_KEY(
         key("surf", "gold_tools_and_swords"),
-        *GOLD_TOOLS_KEY.tags,
+        tagEntry(GOLD_TOOLS_KEY.tagKey),
         valueEntry(ItemTypeKeys.GOLDEN_SWORD)
     ),
 
@@ -79,8 +80,8 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     DIAMOND_TOOLS_AND_SWORDS_KEY(
         key("surf", "diamond_tools_and_swords"),
-        *DIAMOND_TOOLS_KEY.tags,
-        TagEntry.valueEntry(ItemTypeKeys.DIAMOND_SWORD)
+        tagEntry(DIAMOND_TOOLS_KEY.tagKey),
+        valueEntry(ItemTypeKeys.DIAMOND_SWORD)
     ),
 
     NETHERITE_TOOLS_KEY(
@@ -93,17 +94,17 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     NETHERITE_TOOLS_AND_SWORDS_KEY(
         key("surf", "netherite_tools_and_swords"),
-        *NETHERITE_TOOLS_KEY.tags,
-        TagEntry.valueEntry(ItemTypeKeys.NETHERITE_SWORD)
+        tagEntry(NETHERITE_TOOLS_KEY.tagKey),
+        valueEntry(ItemTypeKeys.NETHERITE_SWORD)
     ),
 
     TOOLS_KEY(
         key("surf", "tools"),
-        *WOODEN_TOOLS_KEY.tags,
-        *IRON_TOOLS_KEY.tags,
-        *GOLD_TOOLS_KEY.tags,
-        *DIAMOND_TOOLS_KEY.tags,
-        *NETHERITE_TOOLS_KEY.tags,
+        tagEntry(WOODEN_TOOLS_KEY.tagKey),
+        tagEntry(IRON_TOOLS_KEY.tagKey),
+        tagEntry(GOLD_TOOLS_KEY.tagKey),
+        tagEntry(DIAMOND_TOOLS_KEY.tagKey),
+        tagEntry(NETHERITE_TOOLS_KEY.tagKey),
     ),
 
     LEATHER_ARMOR_KEY(
@@ -169,59 +170,51 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
 
     ARMORS_KEY(
         key("surf", "armors"),
-        *LEATHER_ARMOR_KEY.tags,
-        *CHAIN_ARMOR_KEY.tags,
-        *IRON_ARMOR_KEY.tags,
-        *GOLD_ARMOR_KEY.tags,
-        *DIAMOND_ARMOR_KEY.tags,
-        *NETHERITE_ARMOR_KEY.tags,
+        tagEntry(LEATHER_ARMOR_KEY.tagKey),
+        tagEntry(CHAIN_ARMOR_KEY.tagKey),
+        tagEntry(IRON_ARMOR_KEY.tagKey),
+        tagEntry(GOLD_ARMOR_KEY.tagKey),
+        tagEntry(DIAMOND_ARMOR_KEY.tagKey),
+        tagEntry(NETHERITE_ARMOR_KEY.tagKey),
     ),
 
     TOOLS_AND_SWORDS_KEY(
         key("surf", "tools_and_swords"),
-        *WOODEN_TOOLS_AND_SWORDS_KEY.tags,
-        *IRON_TOOLS_AND_SWORDS_KEY.tags,
-        *GOLD_TOOLS_AND_SWORDS_KEY.tags,
-        *DIAMOND_TOOLS_AND_SWORDS_KEY.tags,
-        *NETHERITE_TOOLS_AND_SWORDS_KEY.tags,
+        tagEntry(WOODEN_TOOLS_AND_SWORDS_KEY.tagKey),
+        tagEntry(IRON_TOOLS_AND_SWORDS_KEY.tagKey),
+        tagEntry(GOLD_TOOLS_AND_SWORDS_KEY.tagKey),
+        tagEntry(DIAMOND_TOOLS_AND_SWORDS_KEY.tagKey),
+        tagEntry(NETHERITE_TOOLS_AND_SWORDS_KEY.tagKey),
     ),
 
     EVERY_KEY(
         key("surf", "every"),
-        *TOOLS_AND_SWORDS_KEY.tags,
-        *ARMORS_KEY.tags,
-        *SHEARS_KEY.tags,
-        *OTHER_TOOLS_KEY.tags,
+        tagEntry(TOOLS_AND_SWORDS_KEY.tagKey),
+        tagEntry(ARMORS_KEY.tagKey),
+        tagEntry(SHEARS_KEY.tagKey),
+        tagEntry(OTHER_TOOLS_KEY.tagKey),
     ),
 
     TOOLS_AND_WEAPONS_KEY(
         key("surf", "tools_and_weapons"),
-        *ItemTypeTagKeys.BREAKS_DECORATED_POTS.entries(),
-        *ItemTypeTagKeys.ENCHANTABLE_WEAPON.entries()
+        tagEntry(ItemTypeTagKeys.BREAKS_DECORATED_POTS),
+        tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
     ),
 
     TOOLS_AND_ARMOR_AND_EQUIPMENT_KEY(
         key("surf", "tools_and_armor_and_equipment"),
-        *ItemTypeTagKeys.BREAKS_DECORATED_POTS.entries(), // tools
-        *ItemTypeTagKeys.ENCHANTABLE_ARMOR.entries(), // armor
-        *ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE.entries(),
-        *ItemTypeTagKeys.ENCHANTABLE_WEAPON.entries()
+        tagEntry(ItemTypeTagKeys.BREAKS_DECORATED_POTS), // tools
+        tagEntry(ItemTypeTagKeys.ENCHANTABLE_ARMOR), // armor
+        tagEntry(ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE),
+        tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
     ),
 
     ELYTRA_KEY(
         key("surf", "elytra"),
         valueEntry(ItemTypeKeys.ELYTRA)
-    )
-
-    ;
+    );
 
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
     val tagEntries: ObjectSet<TagEntry<ItemType>> = objectSetOf(*tags)
 }
-
-private fun TagKey<ItemType>.entries() =
-    RegistryAccess.registryAccess().getRegistry(RegistryKey.ITEM)
-        .getTag(this)
-        .map { valueEntry(it) }
-        .toTypedArray()
