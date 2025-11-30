@@ -3,17 +3,15 @@
 package dev.slne.surf.enchantment.enchantments
 
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
-import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.Material
 import org.bukkit.Particle
-import org.bukkit.block.BlockState
+import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -46,8 +44,6 @@ object ReplenishEnchantment : CustomEnchantment(
             Material.BEETROOT to Material.BEETROOT_SEEDS,
             Material.NETHER_WART to Material.NETHER_WART,
             Material.TORCHFLOWER to Material.TORCHFLOWER_SEEDS,
-
-
         )
 
         @EventHandler(priority = EventPriority.LOWEST)
@@ -55,8 +51,12 @@ object ReplenishEnchantment : CustomEnchantment(
             val player = event.player
             if (!player.hasThisEnchantmentActive()) return
 
-            val brokenBlockType = event.blockState.type
+            val blockState = event.blockState
+            val brokenBlockType = blockState.type
             val seedType = seedMap[brokenBlockType] ?: return
+            val data = blockState.blockData
+            if (data is Ageable && data.age < data.maximumAge) return
+
             val seedItemStack = ItemStack.of(seedType)
 
             val hasSeedInInventory = player.inventory.containsAtLeast(seedItemStack, 1)

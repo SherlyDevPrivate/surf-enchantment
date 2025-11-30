@@ -1,15 +1,6 @@
 package dev.slne.surf.enchantment.enchantment
 
-import dev.slne.surf.enchantment.enchantments.BeheadingEnchantment
-import dev.slne.surf.enchantment.enchantments.ExperienceEnchantment
-import dev.slne.surf.enchantment.enchantments.HappyGhastBoostEnchantment
-import dev.slne.surf.enchantment.enchantments.ReplenishEnchantment
-import dev.slne.surf.enchantment.enchantments.RocketSaverEnchantment
-import dev.slne.surf.enchantment.enchantments.SheepnesisEnchantment
-import dev.slne.surf.enchantment.enchantments.SilentGazeEnchantment
-import dev.slne.surf.enchantment.enchantments.SilentNightEnchantment
-import dev.slne.surf.enchantment.enchantments.SoulboundEnchantment
-import dev.slne.surf.enchantment.enchantments.TelekinesisEnchantment
+import dev.slne.surf.enchantment.enchantments.*
 import dev.slne.surf.surfapi.bukkit.api.event.register
 import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObject2ObjectMapOf
@@ -20,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 object EnchantmentManager {
     private val frozen = AtomicBoolean(false)
     private val _enchantments = mutableObject2ObjectMapOf<Key, CustomEnchantment>()
-    val enchantments get() = _enchantments.freeze()
+    val enchantments = _enchantments.freeze()
 
     internal fun registerSelf() {
         register(TelekinesisEnchantment)

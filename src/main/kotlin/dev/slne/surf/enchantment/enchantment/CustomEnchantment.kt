@@ -45,7 +45,7 @@ abstract class CustomEnchantment(
     }
 
     private val activeEquipmentSlots by lazy {
-        EquipmentSlot.entries.filter { slot ->  activeSlots.any {it.test(slot)} }
+        EquipmentSlot.entries.filter { slot -> activeSlots.any { it.test(slot) } }
     }
 
     fun getThisEnchantmentOrNull(itemStack: ItemStack): Pair<Int, Enchantment>? {

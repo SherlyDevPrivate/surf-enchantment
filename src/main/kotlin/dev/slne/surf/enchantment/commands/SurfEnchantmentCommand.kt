@@ -18,7 +18,8 @@ fun surfEnchantmentCommand() = commandAPICommand("enchantment") {
         val enchantments = RegistryAccess
             .registryAccess()
             .getRegistry(RegistryKey.ENCHANTMENT)
-            .toObjectList().chunked(10)
+            .toObjectList()
+            .chunked(10)
 
         enchantments.forEachIndexed { index, chunk ->
             val item = ItemStack(Material.STICK) {

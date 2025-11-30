@@ -11,6 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent
+import org.bukkit.inventory.EquipmentSlotGroup
 
 object SilentGazeEnchantment : CustomEnchantment(
     key("surf", "silent_gaze"),
@@ -23,6 +24,7 @@ object SilentGazeEnchantment : CustomEnchantment(
     },
     ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
     exclusiveWith = setOf(SilentNightEnchantment.key),
+    activeSlots = setOf(EquipmentSlotGroup.HEAD),
     listeners = setOf(Handler),
 ) {
     object Handler : Listener {

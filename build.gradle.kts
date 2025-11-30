@@ -10,6 +10,7 @@ surfPaperPluginApi {
     mainClass("dev.slne.surf.enchantment.SurfEnchantment")
     bootstrapper("dev.slne.surf.enchantment.SurfEnchantmentBootstrap")
     generateLibraryLoader(false)
+    foliaSupported(true)
     authors.addAll("Ammo", "twisti")
 
     runServer {
