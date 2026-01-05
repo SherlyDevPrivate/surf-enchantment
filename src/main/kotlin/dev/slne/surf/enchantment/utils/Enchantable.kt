@@ -17,8 +17,12 @@ interface Enchantable {
     fun buildLore(level: Int) = LoreBuilder().apply {
         line {
             append(displayName.color(rarity.color))
-            appendSpace()
-            text(levelToRoman(level), rarity.color)
+
+            val max = maxLevel
+            if (max == null || max > 1) {
+                appendSpace()
+                text(levelToRoman(level), rarity.color)
+            }
         }
         description(level)
     }.build()
