@@ -83,7 +83,7 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             val item = player.inventory.itemInMainHand
             if (item.type != Material.FIREWORK_ROCKET) return
 
-            if (happyGhast.passengers.firstOrNull() !== player) {
+            if (happyGhast.passengers.firstOrNull() != player) {
                 player.sendActionBar(
                     buildText {
                         error("Du hältst nicht die Zügel des Ghasts!")
@@ -118,11 +118,11 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             happyGhast.velocity = Vector(vx, vy, vz)
 
             if (player.gameMode != GameMode.CREATIVE) {
-                item.amount = item.amount - 1
+                item.amount -= 1
             }
 
             var boostCooldown = ROCKET_PROPERTIES[tier]?.third ?: (ROCKET_PROPERTIES[1]!!.third * 1000L)
-            happyGhastCooldownExpire.put(happyGhast.uniqueId, now + boostCooldown)
+            happyGhastCooldownExpire[happyGhast.uniqueId] = now + boostCooldown
 
             happyGhast.passengers.forEach { passanger ->
                 passanger.sendActionBar(
