@@ -30,8 +30,8 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Erhöht die Haltbarkeit von Gegenständen")
-                    variableValue(" %placeholder%x")
+                    darkSpacer("Erhöht die Haltbarkeit von Gegenständen um den Faktor")
+                    variableValue(" %placeholder%")
                 }
             },
             placeholders = { level ->
@@ -362,7 +362,7 @@ enum class VanillaEnchantment(
         displayName = text("Multishot"),
         description = { _ ->
             line {
-                darkSpacer("Schießt 3 Pfeile anstelle von 1")
+                darkSpacer("Verschießt 3 Pfeile anstelle von 1")
             }
         },
         rarity = EnchantmentRarity.RARE,
@@ -432,9 +432,9 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Pfeile durchschlagen bis zu")
+                    darkSpacer("Pfeile durchdringen bis zu")
                     variableValue(" %placeholder% ")
-                    darkSpacer("Mobs")
+                    darkSpacer("Kreaturen")
                 }
             },
             placeholders = { level ->
@@ -474,7 +474,7 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Verringert die Verlangsamung beim Sneaken um")
+                    darkSpacer("Verringert die Verlangsamung beim Kriechen um")
                     variableValue(" %placeholder%%")
                 }
             },
@@ -491,7 +491,7 @@ enum class VanillaEnchantment(
         displayName = text("Mending"),
         description = { _ ->
             line {
-                darkSpacer("Repariere den Gegenstand, während du XP erhältst")
+                darkSpacer("Repariere den Gegenstand, während du Erfahrung erhältst")
             }
         },
         rarity = EnchantmentRarity.LEGENDARY,
@@ -520,7 +520,7 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Verringert die Zeit zum Anbeißen beim Fischen um")
+                    darkSpacer("Verringert die Anbeißzeit von Fischen um")
                     variableValue(" %placeholder% ")
                     darkSpacer("Sekunden")
                 }
@@ -577,9 +577,9 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Verleiht einen")
+                    darkSpacer("Verleiht einen Bonus von")
                     variableValue(" %placeholder%% ")
-                    darkSpacer("Bonus auf Pfeilschaden")
+                    darkSpacer("auf Pfeilschaden")
                 }
             },
             placeholders = { level ->
@@ -595,7 +595,7 @@ enum class VanillaEnchantment(
         displayName = text("Riptide"),
         description = { _ ->
             line {
-                darkSpacer("Der Dreizack boostet Spieler bei der Nutzung im Wasser oder bei Regen nach vorne")
+                darkSpacer("Schleudert den Spieler beim Werfen eines Drezacks im Wasser oder im Regen nach vorne")
             }
         },
         rarity = EnchantmentRarity.RARE,
@@ -606,7 +606,7 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Reduces effectiveness of the target's armor by")
+                    darkSpacer("Reduziert die Wirksamkeit der Rüstung des Ziels um")
                     variableValue(" %placeholder%%")
                 }
             },
@@ -624,7 +624,7 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Erhöht Chance auf viele Block Drops um")
+                    darkSpacer("Erhöht Chance auf viele Block-Drops um")
                     variableValue(" %placeholder%%")
                 }
             },
@@ -643,9 +643,9 @@ enum class VanillaEnchantment(
         description = levelBased(
             block = {
                 line {
-                    darkSpacer("Deals")
+                    darkSpacer("Verursacht")
                     variableValue(" %placeholder% ")
-                    darkSpacer("bonus damage per block fallen")
+                    darkSpacer("Bonusschaden pro gefallenem Block")
                 }
             },
             placeholders = { level ->
@@ -712,7 +712,7 @@ enum class VanillaEnchantment(
         displayName = text("Curse of Vanishing"),
         description = { _ ->
             line {
-                darkSpacer("Beim Tod verschwindet das Item direkt")
+                darkSpacer("Beim Tod verschwindet der Gegenstand direkt")
             }
         },
         rarity = EnchantmentRarity.EPIC,
@@ -732,7 +732,7 @@ enum class VanillaEnchantment(
         displayName = text("Flame"),
         description = { _ ->
             line {
-                darkSpacer("Pfeile setzen das Ziel")
+                darkSpacer("Pfeile setzen dem Ziel")
                 variableValue(" 5 ")
                 darkSpacer("Feuerschaden")
             }
