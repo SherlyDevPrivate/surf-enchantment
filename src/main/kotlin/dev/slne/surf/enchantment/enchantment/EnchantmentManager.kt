@@ -15,7 +15,6 @@ object EnchantmentManager {
 
     internal fun registerSelf() {
         register(TelekinesisEnchantment)
-        register(SheepnesisEnchantment)
         register(ReplenishEnchantment)
         register(SoulboundEnchantment)
         register(SilentNightEnchantment)

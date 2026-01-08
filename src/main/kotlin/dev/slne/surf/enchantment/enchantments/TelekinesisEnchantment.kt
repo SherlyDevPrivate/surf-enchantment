@@ -15,6 +15,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.player.PlayerShearEntityEvent
 import org.bukkit.inventory.ItemStack
 
 object TelekinesisEnchantment : CustomEnchantment(
@@ -64,6 +65,17 @@ object TelekinesisEnchantment : CustomEnchantment(
             event.droppedExp = 0
             event.drops.clear()
         }
+
+        @EventHandler
+        fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
+            val player = event.player
+
+            if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
+            addDropsToInventory(player, event.drops)
+
+            event.drops.clear()
+        }
+
 
         private fun addDropsToInventory(player: Player, drops: List<ItemStack>) {
             drops.forEach { drop ->
