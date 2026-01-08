@@ -115,7 +115,8 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
             val vx = look.x * basePower * powerMultiply
             val vy = look.y * basePower * powerMultiply + upward
             val vz = look.z * basePower * powerMultiply
-            happyGhast.velocity = Vector(vx, vy, vz)
+
+            happyGhast.velocity.add(Vector(vx, vy, vz))
 
             if (player.gameMode != GameMode.CREATIVE) {
                 item.amount -= 1
