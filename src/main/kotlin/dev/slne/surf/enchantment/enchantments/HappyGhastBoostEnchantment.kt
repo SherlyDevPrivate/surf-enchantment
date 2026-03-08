@@ -68,7 +68,11 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         fun onEntityDropItem(event: EntityDropItemEvent) {
             val happyGhast = event.entity as? HappyGhast ?: return
 
-            if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
+            if (!happyGhast.persistentDataContainer.has(
+                    specialHappyGhastKey,
+                    PersistentDataType.BYTE
+                )
+            ) return
             happyGhast.persistentDataContainer.remove(specialHappyGhastKey)
 
             event.itemDrop.itemStack.addEnchantment(bukkitEnchantment, 1)
@@ -78,7 +82,11 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
         fun onUseRocketToBoost(event: PlayerInteractEvent) {
             val player = event.player
             val happyGhast = player.vehicle as? HappyGhast ?: return
-            if (!happyGhast.persistentDataContainer.has(specialHappyGhastKey, PersistentDataType.BYTE)) return
+            if (!happyGhast.persistentDataContainer.has(
+                    specialHappyGhastKey,
+                    PersistentDataType.BYTE
+                )
+            ) return
 
             val item = player.inventory.itemInMainHand
             if (item.type != Material.FIREWORK_ROCKET) return
@@ -122,7 +130,8 @@ object HappyGhastBoostEnchantment : CustomEnchantment(
                 item.amount -= 1
             }
 
-            var boostCooldown = ROCKET_PROPERTIES[tier]?.third ?: (ROCKET_PROPERTIES[1]!!.third * 1000L)
+            var boostCooldown =
+                ROCKET_PROPERTIES[tier]?.third ?: (ROCKET_PROPERTIES[1]!!.third * 1000L)
             happyGhastCooldownExpire[happyGhast.uniqueId] = now + boostCooldown
 
             happyGhast.passengers.forEach { passanger ->
