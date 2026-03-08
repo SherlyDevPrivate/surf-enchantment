@@ -43,15 +43,13 @@ object ReplenishEnchantment : CustomEnchantment(
             Material.CARROTS to Material.CARROT,
             Material.BEETROOTS to Material.BEETROOT_SEEDS,
             Material.NETHER_WART to Material.NETHER_WART,
-            Material.TORCHFLOWER_CROP to Material.TORCHFLOWER_SEEDS,
+            Material.TORCHFLOWER to Material.TORCHFLOWER_SEEDS,
         )
 
         @EventHandler(priority = EventPriority.LOWEST)
         fun onBlockBreak(event: BlockDropItemEvent) {
             val player = event.player
             if (!player.hasThisEnchantmentActive()) return
-
-            println("${event.blockState.type}")
 
             val blockState = event.blockState
             val brokenBlockType = blockState.type
