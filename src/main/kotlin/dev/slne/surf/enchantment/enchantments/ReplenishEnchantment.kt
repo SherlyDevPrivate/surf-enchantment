@@ -43,7 +43,7 @@ object ReplenishEnchantment : CustomEnchantment(
             Material.CARROTS to Material.CARROT,
             Material.BEETROOTS to Material.BEETROOT_SEEDS,
             Material.NETHER_WART to Material.NETHER_WART,
-            Material.TORCHFLOWER to Material.TORCHFLOWER_SEEDS,
+            Material.TORCHFLOWER to Material.TORCHFLOWER_CROP,
         )
 
         @EventHandler(priority = EventPriority.LOWEST)
