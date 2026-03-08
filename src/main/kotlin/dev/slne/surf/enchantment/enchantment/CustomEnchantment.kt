@@ -56,6 +56,11 @@ abstract class CustomEnchantment(
 
     fun checkItemStackHasEnchantment(itemStack: ItemStack) = getThisEnchantmentOrNull(itemStack) != null
 
+
+    fun ItemStack.hasEnchantment(enchantment: CustomEnchantment): Boolean {
+        return enchantment.checkItemStackHasEnchantment(this)
+    }
+
     @JvmName("itemStackHasThisEnchantment")
     fun ItemStack.hasThisEnchantment() = checkItemStackHasEnchantment(this)
 
