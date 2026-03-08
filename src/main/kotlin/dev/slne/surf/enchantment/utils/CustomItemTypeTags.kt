@@ -48,6 +48,16 @@ enum class CustomItemTypeTags(key: Key, private vararg val tags: TagEntry<ItemTy
     ELYTRA_KEY(
         key("surf", "elytra"),
         valueEntry(ItemTypeKeys.ELYTRA)
+    ),
+    PICKAXES_KEY(
+        key("surf", "pickaxes"),
+        valueEntry(ItemTypeKeys.WOODEN_PICKAXE),
+        valueEntry(ItemTypeKeys.STONE_PICKAXE),
+        valueEntry(ItemTypeKeys.COPPER_PICKAXE),
+        valueEntry(ItemTypeKeys.IRON_PICKAXE),
+        valueEntry(ItemTypeKeys.GOLDEN_PICKAXE),
+        valueEntry(ItemTypeKeys.DIAMOND_PICKAXE),
+        valueEntry(ItemTypeKeys.NETHERITE_PICKAXE)
     );
 
 

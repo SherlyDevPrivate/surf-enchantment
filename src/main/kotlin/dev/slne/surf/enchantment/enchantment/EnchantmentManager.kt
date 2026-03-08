@@ -23,6 +23,7 @@ object EnchantmentManager {
         register(RocketSaverEnchantment)
         register(HappyGhastBoostEnchantment)
         register(ExperienceEnchantment)
+        register(VeinMinerEnchantment)
     }
 
     internal fun registerEnchantmentListeners() {
