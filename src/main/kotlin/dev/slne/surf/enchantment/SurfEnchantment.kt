@@ -14,9 +14,14 @@ class SurfEnchantment : SuspendingJavaPlugin() {
 
     override suspend fun onEnableAsync() {
         EnchantmentManager.registerEnchantmentListeners()
+        EnchantmentManager.startEnchantmentJobs()
         surfBukkitPacketApi.registerPacketLoreListenerGlobal(this, SurfEnchantmentPacketLoreHandler)
 
         surfEnchantmentCommand()
+    }
+
+    override suspend fun onDisableAsync() {
+        EnchantmentManager.stopEnchantmentJobs()
     }
 }
 
