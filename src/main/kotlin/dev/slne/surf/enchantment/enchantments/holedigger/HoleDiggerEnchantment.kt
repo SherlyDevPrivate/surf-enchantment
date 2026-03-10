@@ -60,7 +60,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
             .maximumSize(10_000)
             .build<UUID, OffsetDateTime>()
 
-        private val lastBlockBlockFace = Caffeine.newBuilder()
+        private val lastBlockFace = Caffeine.newBuilder()
             .expireAfterWrite(5.minutes)
             .build<UUID, BlockFace>()
 
@@ -69,7 +69,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
             .build<UUID, Unit>()
 
 
-        private val CUBE_SIZE = mapOf(
+        private val CUBE_SIZES = mapOf(
             Material.WOODEN_PICKAXE to 3,
             Material.STONE_PICKAXE to 4,
             Material.IRON_PICKAXE to 5,
@@ -97,9 +97,9 @@ object HoleDiggerEnchantment : CustomEnchantment(
 
         @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
         fun onInteract(event: PlayerInteractEvent) {
-            lastBlockBlockFace.put(event.player.uniqueId, event.blockFace)
+            lastBlockFace.put(event.player.uniqueId, event.blockFace)
         }
-
+//        Test to prevent breaking blocks near spawn
 //        @EventHandler
 //        fun onBreakTest(event: BlockBreakEvent) {
 //            val radius = 10
@@ -123,12 +123,12 @@ object HoleDiggerEnchantment : CustomEnchantment(
             val item = player.inventory.itemInMainHand
             if (!item.hasThisEnchantment()) return
 
-            val size = CUBE_SIZE[item.type] ?: 3
+            val size = CUBE_SIZES[item.type] ?: 3
             val telekinesis = item.hasEnchantment(TelekinesisEnchantment)
 
-            if (!event.checkCache()) return
+            if (!event.checkCooldown()) return
 
-            val blockFace = lastBlockBlockFace.getIfPresent(player.uniqueId) ?: return
+            val blockFace = lastBlockFace.getIfPresent(player.uniqueId) ?: return
             val calculatedBlocks = BlockCalculator.calculateBlocks(event.block, blockFace, size / 2)
             val blockResult = blockHandler.handleBlocks(player, calculatedBlocks)
 
@@ -136,7 +136,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
 
             if (blocks.isEmpty()) return
 
-            player.applyCache(blocks.sumOf { ceil(it.type.hardness).toInt() } / 20)
+            player.applyCooldown(blocks.sumOf { ceil(it.type.hardness).toInt() } / 20)
             event.applyItemDamage(blocks)
 
             val drops = blocks.flatMap { it.getDrops(item) }
@@ -158,7 +158,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
             }
         }
 
-        private fun BlockBreakEvent.checkCache(): Boolean {
+        private fun BlockBreakEvent.checkCooldown(): Boolean {
             if (lastUsage.getIfPresent(player.uniqueId) != null) {
                 if (lastMessage.getIfPresent(player.uniqueId) == null) {
                     player.sendText {
@@ -202,7 +202,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
             expToDrop = totalExp
         }
 
-        private fun Player.applyCache(cooldown: Int) {
+        private fun Player.applyCooldown(cooldown: Int) {
             lastUsage.put(uniqueId, OffsetDateTime.now().plusSeconds(cooldown.toLong()))
         }
     }
