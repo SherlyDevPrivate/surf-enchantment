@@ -90,7 +90,7 @@ object VeinMinerEnchantment : CustomEnchantment(
                         lastUsage.invalidate(uuid)
                         server.getPlayer(uuid)?.sendText {
                             appendSuccessPrefix()
-                            success("Der Vein Miner ist wieder bereit!")
+                            success("Vein Miner ist wieder bereit für den nächsten Schlag!")
                         }
                     }
                 }
@@ -169,11 +169,16 @@ object VeinMinerEnchantment : CustomEnchantment(
         }
 
         private fun BlockBreakEvent.checkCooldown(): Boolean {
-            if (lastUsage.getIfPresent(player.uniqueId) != null) {
+            val expireTime = lastUsage.getIfPresent(player.uniqueId)
+            if (expireTime != null) {
                 if (lastMessage.getIfPresent(player.uniqueId) == null) {
+                    val secondsLeft = expireTime.toEpochSecond() - OffsetDateTime.now().toEpochSecond()
                     player.sendText {
                         appendErrorPrefix()
-                        error("Der Vein Miner lädt noch auf!")
+                        error("Zu viele Erze auf einmal! Warte noch")
+                        appendSpace()
+                        variableValue("$secondsLeft Sekunden")
+                        error(".")
                     }
                     lastMessage.put(player.uniqueId, Unit)
                 }

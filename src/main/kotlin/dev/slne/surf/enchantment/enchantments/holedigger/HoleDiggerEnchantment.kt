@@ -88,7 +88,7 @@ object HoleDiggerEnchantment : CustomEnchantment(
 
                         server.getPlayer(uuid)?.sendText {
                             appendSuccessPrefix()
-                            success("Der Hole Digger ist wieder bereit!")
+                            success("Die Wucht des Hole Diggers ist zurückgekehrt!")
                         }
                     }
                 }
@@ -159,18 +159,22 @@ object HoleDiggerEnchantment : CustomEnchantment(
         }
 
         private fun BlockBreakEvent.checkCooldown(): Boolean {
-            if (lastUsage.getIfPresent(player.uniqueId) != null) {
+            val expireTime = lastUsage.getIfPresent(player.uniqueId)
+            if (expireTime != null) {
                 if (lastMessage.getIfPresent(player.uniqueId) == null) {
+                    val secondsLeft = expireTime.toEpochSecond() - OffsetDateTime.now().toEpochSecond()
+
                     player.sendText {
                         appendErrorPrefix()
-                        error("Der Hole Digger lädt noch auf!")
+                        error("Die Kraft des Hole Diggers ist erschöpft! Warte noch")
+                        appendSpace()
+                        variableValue("$secondsLeft Sekunden")
+                        error(".")
                     }
                     lastMessage.put(player.uniqueId, Unit)
                 }
-
                 return false
             }
-
             return true
         }
 
