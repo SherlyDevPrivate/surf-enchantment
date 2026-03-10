@@ -7,8 +7,9 @@ import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.enchantment.EnchantmentJob
 import dev.slne.surf.enchantment.enchantments.TelekinesisEnchantment
-import dev.slne.surf.enchantment.enchantments.VeinMinerEnchantment
+import dev.slne.surf.enchantment.enchantments.veinminer.VeinMinerEnchantment
 import dev.slne.surf.enchantment.utils.CustomItemTypeTags
+import dev.slne.surf.enchantment.utils.Dropper
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
 import dev.slne.surf.enchantment.utils.calculateDurability
 import dev.slne.surf.surfapi.bukkit.api.extensions.server

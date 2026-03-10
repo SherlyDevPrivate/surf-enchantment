@@ -1,4 +1,4 @@
-package dev.slne.surf.enchantment.enchantments.holedigger
+package dev.slne.surf.enchantment.utils
 
 import org.bukkit.Location
 import org.bukkit.inventory.ItemStack

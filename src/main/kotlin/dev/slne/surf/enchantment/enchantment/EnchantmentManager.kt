@@ -2,6 +2,7 @@ package dev.slne.surf.enchantment.enchantment
 
 import dev.slne.surf.enchantment.enchantments.*
 import dev.slne.surf.enchantment.enchantments.holedigger.HoleDiggerEnchantment
+import dev.slne.surf.enchantment.enchantments.veinminer.VeinMinerEnchantment
 import dev.slne.surf.surfapi.bukkit.api.event.register
 import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObject2ObjectMapOf
