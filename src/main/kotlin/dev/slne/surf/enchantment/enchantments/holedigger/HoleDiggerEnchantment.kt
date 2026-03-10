@@ -14,11 +14,13 @@ import dev.slne.surf.enchantment.utils.EnchantmentRarity
 import dev.slne.surf.enchantment.utils.calculateDurability
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
+import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.GameMode
 import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.enchantments.Enchantment
@@ -32,9 +34,13 @@ import org.bukkit.inventory.ItemStack
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.math.ceil
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
+import net.kyori.adventure.sound.Sound as AdventureSound
+import org.bukkit.Sound as BukkitSound
 
 object HoleDiggerEnchantment : CustomEnchantment(
     key("surf", "hole_digger"),
@@ -208,6 +214,55 @@ object HoleDiggerEnchantment : CustomEnchantment(
 
         private fun Player.applyCooldown(cooldown: Int) {
             lastUsage.put(uniqueId, OffsetDateTime.now().plusSeconds(cooldown.toLong()))
+        }
+
+
+        //TODO: implement this
+        private fun playSpiralEffect(centerBlock: Block, size: Int) {
+            val world = centerBlock.world
+            val center = centerBlock.location.clone().add(0.5, 0.5, 0.5)
+            val radius = size.toDouble() / 2.0
+            val points = 60
+            val iterations = 3
+
+            val nearbyPlayers = world.players.filter { player ->
+                player.location.distanceSquared(center) <= 20
+            }
+
+            for (i in 0 until points) {
+                val progress = i.toDouble() / points
+
+                val angle = 2 * Math.PI * iterations * progress
+
+                val x = cos(angle) * radius * progress
+                val z = sin(angle) * radius * progress
+                val y = (progress - 0.5) * size
+
+                val particleLoc = center.clone().add(x, y, z)
+
+
+                nearbyPlayers.forEach { player ->
+                    player.spawnParticle(
+                        Particle.TRIAL_SPAWNER_DETECTION,
+                        particleLoc,
+                        1,
+                        0.0, 0.0, 0.0, 0.0
+                    )
+
+                    player.spawnParticle(
+                        Particle.ENCHANT,
+                        particleLoc,
+                        1,
+                        0.02, 0.02, 0.02, 0.01
+                    )
+
+                    player.playSound(true) {
+                        type(BukkitSound.ENTITY_ZOMBIE_VILLAGER_CURE)
+                        source(AdventureSound.Source.NEUTRAL)
+                        pitch(0.5f)
+                    }
+                }
+            }
         }
     }
 }
