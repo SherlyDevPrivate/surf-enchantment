@@ -1,4 +1,3 @@
-import dev.slne.surf.surfapi.gradle.util.registerRequired
 import dev.slne.surf.surfapi.gradle.util.withSurfApiBukkit
 
 plugins {
@@ -14,14 +13,7 @@ surfPaperPluginApi {
     foliaSupported(true)
     authors.addAll("Ammo", "twisti", "Jo_field")
 
-    serverDependencies {
-        registerRequired("CoreProtect")
-    }
-
     runServer {
         withSurfApiBukkit()
     }
-}
-dependencies {
-    compileOnly("net.coreprotect:coreprotect:22.3")
 }
