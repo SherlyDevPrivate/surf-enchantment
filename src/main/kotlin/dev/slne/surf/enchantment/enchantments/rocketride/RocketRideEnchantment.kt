@@ -175,7 +175,7 @@ object RocketRideEnchantment : CustomEnchantment(
 
                 player.sendActionBar(
                     buildText {
-                        error("Der Ghast ist noch puste! Erst in")
+                        error("Der Ghast ist noch außer puste! Erst in")
                         appendSpace()
                         variableValue("$secondsLeft Sekunden")
                         appendSpace()
