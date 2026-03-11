@@ -15,7 +15,7 @@ import org.bukkit.event.entity.PlayerDeathEvent
 
 object SoulboundEnchantment : CustomEnchantment(
     key("surf", "soulbound"),
-    text("Soulbund"),
+    text("Soulbound"),
     EnchantmentRarity.LEGENDARY,
     description = {
         line {
