@@ -11,7 +11,7 @@ surfPaperPluginApi {
     bootstrapper("dev.slne.surf.enchantment.SurfEnchantmentBootstrap")
     generateLibraryLoader(false)
     foliaSupported(true)
-    authors.addAll("Ammo", "twisti")
+    authors.addAll("Ammo", "twisti", "Jo_field")
 
     runServer {
         withSurfApiBukkit()

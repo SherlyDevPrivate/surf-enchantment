@@ -38,7 +38,8 @@ abstract class CustomEnchantment(
     val exclusiveWith: Set<Key>? = null,
     val tags: Set<TagKey<Enchantment>>? = objectSetOf(),
     val typedKey: TypedKey<Enchantment> = TypedKey.create(RegistryKey.ENCHANTMENT, key),
-    val listeners: Set<Listener> = objectSetOf()
+    val listeners: Set<Listener> = objectSetOf(),
+    val jobs: Set<EnchantmentJob> = objectSetOf(),
 ) : Enchantable {
     val bukkitEnchantment: Enchantment by lazy {
         RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).getOrThrow(key)
