@@ -12,7 +12,7 @@ import io.papermc.paper.registry.set.RegistrySet
 import net.kyori.adventure.key.Key
 
 fun enchantmentComposeHandler() = RegistryEvents.ENCHANTMENT.compose().newHandler { event ->
-    enchantmentManagerImpl.registerSelf()
+    enchantmentManagerImpl.registerCustomEnchantments()
     val registry = event.registry()
     for (enchantment in EnchantmentManager.customEnchantments) {
         registry.register(EnchantmentKeys.create(enchantment.key)) { builder ->

@@ -35,7 +35,8 @@ class EnchantmentManagerImpl : EnchantmentManager {
     private val _vanillaEnchantments = mutableObjectSetOf<VanillaEnchantment>()
     override val vanillaEnchantments = _vanillaEnchantments.freeze()
 
-    init {
+    @InternalEnchantmentApi
+    internal fun registerVanillaEnchantments() {
         VanillaEnchantmentMap.entries.forEach { entry ->
             _vanillaEnchantments.add(
                 VanillaEnchantment(
@@ -50,7 +51,7 @@ class EnchantmentManagerImpl : EnchantmentManager {
     }
 
     @InternalEnchantmentApi
-    internal fun registerSelf() {
+    internal fun registerCustomEnchantments() {
         register(TelekinesisEnchantment)
         register(ReplenishEnchantment)
         register(SoulboundEnchantment)
@@ -81,7 +82,7 @@ class EnchantmentManagerImpl : EnchantmentManager {
         _customEnchantments.firstOrNull { it.key == key }
 
     override fun findCustomEnchantment(clazz: KClass<out CustomEnchantment>) =
-        _customEnchantments.firstOrNull { it::class == clazz }
+        _customEnchantments.firstOrNull { clazz.java.isAssignableFrom(it.javaClass) }
 
     override fun findVanillaEnchantmentByKey(key: TypedKey<Enchantment>) =
         _vanillaEnchantments.firstOrNull { it.key == key }
@@ -94,10 +95,12 @@ class EnchantmentManagerImpl : EnchantmentManager {
         return _vanillaEnchantments.firstOrNull { it.key == enchantment.key }
     }
 
+    @InternalEnchantmentApi
     internal fun freeze() {
         frozen.set(true)
     }
 
+    @InternalEnchantmentApi
     internal fun startEnchantmentJobs() {
         customEnchantments.forEach { enchantment ->
             enchantment.jobs.forEach { job ->
@@ -106,6 +109,7 @@ class EnchantmentManagerImpl : EnchantmentManager {
         }
     }
 
+    @InternalEnchantmentApi
     internal fun stopEnchantmentJobs() {
         customEnchantments.forEach { enchantment ->
             enchantment.jobs.forEach { job ->
