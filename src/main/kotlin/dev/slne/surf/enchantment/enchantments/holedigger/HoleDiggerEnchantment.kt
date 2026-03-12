@@ -3,21 +3,24 @@
 package dev.slne.surf.enchantment.enchantments.holedigger
 
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.ticks
 import com.sksamuel.aedile.core.expireAfterWrite
 import dev.slne.surf.enchantment.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.enchantment.EnchantmentJob
 import dev.slne.surf.enchantment.enchantments.TelekinesisEnchantment
 import dev.slne.surf.enchantment.enchantments.veinminer.VeinMinerEnchantment
+import dev.slne.surf.enchantment.plugin
 import dev.slne.surf.enchantment.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.utils.Dropper
 import dev.slne.surf.enchantment.utils.EnchantmentRarity
-import dev.slne.surf.enchantment.utils.calculateDurability
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
+import kotlinx.coroutines.delay
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -45,9 +48,9 @@ import org.bukkit.Sound as BukkitSound
 object HoleDiggerEnchantment : CustomEnchantment(
     key("surf", "hole_digger"),
     text("Hole Digger"),
-    EnchantmentRarity.LEGENDARY,
+    EnchantmentRarity.MYTHIC,
     description = {
-        line { darkSpacer("Gräbt ein Loch in definierter Größe") }
+        line { darkSpacer("Gräbt ein Loch in definierter Größe.") }
     },
     supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
     exclusiveWith = setOf(
@@ -58,6 +61,13 @@ object HoleDiggerEnchantment : CustomEnchantment(
     listeners = setOf(Handler),
     jobs = setOf(Handler.Job)
 ) {
+
+    data class PickaxeProperties(
+        val x: Int,
+        val y: Int,
+        val z: Int
+    )
+
     object Handler : Listener {
         private val blockHandler = BlockHandler()
 
@@ -75,13 +85,17 @@ object HoleDiggerEnchantment : CustomEnchantment(
             .build<UUID, Unit>()
 
 
-        private val CUBE_SIZES = mapOf(
-            Material.WOODEN_PICKAXE to 3,
-            Material.STONE_PICKAXE to 4,
-            Material.IRON_PICKAXE to 5,
-            Material.GOLDEN_PICKAXE to 6,
-            Material.DIAMOND_PICKAXE to 7,
-            Material.NETHERITE_PICKAXE to 8
+        private val CUBE_PROPERTIES = mapOf(
+            Material.WOODEN_PICKAXE to PickaxeProperties(3, 3, 3),
+            Material.STONE_PICKAXE to PickaxeProperties(3, 3, 3),
+
+            Material.IRON_PICKAXE to PickaxeProperties(5, 5, 5),
+            Material.COPPER_PICKAXE to PickaxeProperties(5, 5, 5),
+            Material.GOLDEN_PICKAXE to PickaxeProperties(5, 5, 5),
+
+            Material.DIAMOND_PICKAXE to PickaxeProperties(7, 7, 7),
+
+            Material.NETHERITE_PICKAXE to PickaxeProperties(9, 9, 9)
         )
 
         object Job : EnchantmentJob() {
@@ -129,21 +143,27 @@ object HoleDiggerEnchantment : CustomEnchantment(
             val item = player.inventory.itemInMainHand
             if (!item.hasThisEnchantment()) return
 
-            val size = CUBE_SIZES[item.type] ?: 3
-            val telekinesis = item.hasEnchantment(TelekinesisEnchantment)
+            if (player.gameMode != GameMode.CREATIVE) {
+                if (!event.checkCooldown()) return
+            }
 
-            if (!event.checkCooldown()) return
+            val props = CUBE_PROPERTIES[item.type] ?: PickaxeProperties(3, 3, 3)
 
             val blockFace = lastBlockFace.getIfPresent(player.uniqueId) ?: return
-            val calculatedBlocks = BlockCalculator.calculateBlocks(event.block, blockFace, size / 2)
-            val blockResult = blockHandler.handleBlocks(player, calculatedBlocks)
 
-            val blocks = blockResult.breakableBlocks.take(item.calculateDurability()).toMutableList()
+            val center = BlockCalculator.getCenterBlock(event.block, blockFace, props)
+            val allCalculatedBlocks = BlockCalculator.calculateBlocks(center, props)
+            val targetType = event.block.type
+            val sameTypeBlocks = allCalculatedBlocks.filter { it.type == targetType }
+            val blockResult = blockHandler.handleBlocks(player, sameTypeBlocks)
+            val blocks = blockResult.breakableBlocks.toMutableList()
 
             if (blocks.isEmpty()) return
 
-            player.applyCooldown(blocks.sumOf { ceil(it.type.hardness).toInt() } / 20)
-            event.applyItemDamage(blocks)
+            if (player.gameMode != GameMode.CREATIVE) {
+                player.applyCooldown(blocks.sumOf { ceil(it.type.hardness).toInt() } / 20)
+                event.applyItemDamage(blocks)
+            }
 
             val drops = blocks.flatMap { it.getDrops(item) }
             var totalExp = event.expToDrop
@@ -157,6 +177,9 @@ object HoleDiggerEnchantment : CustomEnchantment(
                 totalExp += breakEvent.expToDrop
             }
 
+            playSpiralEffect(center, props)
+
+            val telekinesis = item.hasEnchantment(TelekinesisEnchantment)
             if (telekinesis) {
                 event.handleTelekinesis(drops, totalExp)
             } else {
@@ -216,51 +239,60 @@ object HoleDiggerEnchantment : CustomEnchantment(
             lastUsage.put(uniqueId, OffsetDateTime.now().plusSeconds(cooldown.toLong()))
         }
 
+        private fun playSpiralEffect(centerBlock: Block, props: PickaxeProperties) {
+            val center = centerBlock.location.toCenterLocation()
 
-        //TODO: implement this
-        private fun playSpiralEffect(centerBlock: Block, size: Int) {
-            val world = centerBlock.world
-            val center = centerBlock.location.clone().add(0.5, 0.5, 0.5)
-            val radius = size.toDouble() / 2.0
-            val points = 60
-            val iterations = 3
+            val height = props.y.toDouble()
+            val radiusX = props.x / 2.0
+            val radiusZ = props.z / 2.0
 
-            val nearbyPlayers = world.players.filter { player ->
-                player.location.distanceSquared(center) <= 20
+            val points = 120
+            val iterations = 4
+            val pointsPerTick = 3
+
+            val nearbyPlayers = center.getNearbyPlayers(32.0)
+
+            nearbyPlayers.forEach { player ->
+                player.playSound(true) {
+                    type(BukkitSound.ENTITY_ZOMBIE_VILLAGER_CURE)
+                    source(AdventureSound.Source.NEUTRAL)
+                    pitch(0.5f)
+                }
             }
 
-            for (i in 0 until points) {
-                val progress = i.toDouble() / points
+            plugin.launch {
+                for (step in 0 until points step pointsPerTick) {
+                    for (subStep in 0 until pointsPerTick) {
+                        val currentStep = step + subStep
+                        if (currentStep >= points) break
 
-                val angle = 2 * Math.PI * iterations * progress
+                        val progress = currentStep.toDouble() / points
+                        val angle = 2 * Math.PI * iterations * progress
 
-                val x = cos(angle) * radius * progress
-                val z = sin(angle) * radius * progress
-                val y = (progress - 0.5) * size
+                        val x = cos(angle) * radiusX * progress
+                        val z = sin(angle) * radiusZ * progress
+                        val y = (progress - 0.5) * height
 
-                val particleLoc = center.clone().add(x, y, z)
+                        val particleLoc = center.clone().add(x, y, z)
 
+                        nearbyPlayers.forEach { player ->
+                            player.spawnParticle(
+                                Particle.ENCHANT,
+                                particleLoc,
+                                5,
+                                0.05, 0.05, 0.05, 0.01
+                            )
 
-                nearbyPlayers.forEach { player ->
-                    player.spawnParticle(
-                        Particle.TRIAL_SPAWNER_DETECTION,
-                        particleLoc,
-                        1,
-                        0.0, 0.0, 0.0, 0.0
-                    )
-
-                    player.spawnParticle(
-                        Particle.ENCHANT,
-                        particleLoc,
-                        1,
-                        0.02, 0.02, 0.02, 0.01
-                    )
-
-                    player.playSound(true) {
-                        type(BukkitSound.ENTITY_ZOMBIE_VILLAGER_CURE)
-                        source(AdventureSound.Source.NEUTRAL)
-                        pitch(0.5f)
+                            player.spawnParticle(
+                                Particle.TRIAL_SPAWNER_DETECTION,
+                                particleLoc,
+                                1,
+                                0.0, 0.0, 0.0, 0.0
+                            )
+                        }
                     }
+
+                    delay(1.ticks)
                 }
             }
         }

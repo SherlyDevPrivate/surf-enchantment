@@ -3,6 +3,7 @@ package dev.slne.surf.enchantment.enchantment
 import dev.slne.surf.enchantment.enchantments.*
 import dev.slne.surf.enchantment.enchantments.holedigger.HoleDiggerEnchantment
 import dev.slne.surf.enchantment.enchantments.rocketride.RocketRideEnchantment
+import dev.slne.surf.enchantment.enchantments.unbreakable.UnbreakableEnchantment
 import dev.slne.surf.enchantment.enchantments.veinminer.VeinMinerEnchantment
 import dev.slne.surf.surfapi.bukkit.api.event.register
 import dev.slne.surf.surfapi.core.api.util.freeze
@@ -28,6 +29,7 @@ object EnchantmentManager {
         register(ExperienceEnchantment)
         register(VeinMinerEnchantment)
         register(HoleDiggerEnchantment)
+        register(UnbreakableEnchantment)
     }
 
     internal fun startEnchantmentJobs() {
