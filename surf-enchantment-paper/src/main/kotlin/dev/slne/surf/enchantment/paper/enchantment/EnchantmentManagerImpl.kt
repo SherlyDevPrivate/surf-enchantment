@@ -84,7 +84,10 @@ class EnchantmentManagerImpl : EnchantmentManager {
     override fun findCustomEnchantment(clazz: KClass<out CustomEnchantment>) =
         _customEnchantments.firstOrNull { clazz.java.isAssignableFrom(it.javaClass) }
 
-    override fun findVanillaEnchantmentByKey(key: TypedKey<Enchantment>) =
+    override fun findVanillaEnchantmentByKey(key: Key) =
+        _vanillaEnchantments.firstOrNull { it.key == key }
+
+    override fun findVanillaEnchantmentByTypedKey(key: TypedKey<Enchantment>) =
         _vanillaEnchantments.firstOrNull { it.key == key }
 
     override fun findByBukkitEnchantment(enchantment: Enchantment): Enchantable? {

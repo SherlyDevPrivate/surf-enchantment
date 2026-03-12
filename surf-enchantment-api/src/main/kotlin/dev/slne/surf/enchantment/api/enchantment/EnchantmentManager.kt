@@ -26,10 +26,12 @@ interface EnchantmentManager {
 
     fun findCustomEnchantment(clazz: KClass<out CustomEnchantment>): CustomEnchantment?
 
+    fun findVanillaEnchantmentByKey(key: Key): VanillaEnchantment?
+
     /**
      * Find a vanilla enchantment by [io.papermc.paper.registry.keys.EnchantmentKeys]
      */
-    fun findVanillaEnchantmentByKey(key: TypedKey<Enchantment>): VanillaEnchantment?
+    fun findVanillaEnchantmentByTypedKey(key: TypedKey<Enchantment>): VanillaEnchantment?
 
     fun findByBukkitEnchantment(enchantment: Enchantment): Enchantable?
 
