@@ -2,7 +2,6 @@ package dev.slne.surf.enchantment.paper.enchantments.veinminer.listeners
 
 import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
-import dev.slne.surf.enchantment.paper.enchantments.holedigger.listeners.HoleDiggerListener
 import dev.slne.surf.enchantment.paper.enchantments.veinminer.VeinFinder
 import dev.slne.surf.enchantment.paper.enchantments.veinminer.VeinMinerAnimation
 import dev.slne.surf.enchantment.paper.enchantments.veinminer.VeinMinerEnchantmentImpl
@@ -55,7 +54,7 @@ object VeinMinerListener : Listener {
         if (block.type !in ORE_MATERIALS) return
 
         if (player.gameMode != GameMode.CREATIVE) {
-            if (!cooldownHandler.checkCooldown(player)) return
+            if (!cooldownHandler.checkCooldown(player.uniqueId)) return
         }
 
         val vein = VeinFinder.findVein(block)
@@ -67,7 +66,7 @@ object VeinMinerListener : Listener {
         BlockBreakHandler.handleBlockBreak(
             cooldown = (blocks.size * 2.toLong()).seconds,
             blocks = blocks,
-            cooldownHandler = HoleDiggerListener.cooldownHandler,
+            cooldownHandler = cooldownHandler,
             event = event,
             events = blockResult.events
         )

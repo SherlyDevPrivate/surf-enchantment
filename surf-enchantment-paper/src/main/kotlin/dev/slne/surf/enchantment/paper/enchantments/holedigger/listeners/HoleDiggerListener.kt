@@ -64,7 +64,7 @@ object HoleDiggerListener : Listener {
         if (!item.hasCustomEnchantment<HoleDiggerEnchantment>()) return
 
         if (player.gameMode != GameMode.CREATIVE) {
-            if (!cooldownHandler.checkCooldown(player)) return
+            if (!cooldownHandler.checkCooldown(player.uniqueId)) return
         }
 
         val props = CUBE_PROPERTIES[item.type] ?: PickaxeProperties(3, 3, 3)

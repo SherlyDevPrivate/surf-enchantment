@@ -27,5 +27,5 @@ class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
         EnchantmentTagKeys.TREASURE
     ),
     listeners = objectSetOf(RocketRideBoostListener),
-    jobs = objectSetOf(RocketRideBoostListener.RocketRideBoostJob)
+    jobs = objectSetOf(RocketRideBoostListener.cooldownHandler)
 ), RocketRideEnchantment

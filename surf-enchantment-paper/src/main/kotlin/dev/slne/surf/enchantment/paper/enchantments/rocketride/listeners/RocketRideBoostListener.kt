@@ -1,14 +1,15 @@
 package dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners
 
-import com.github.benmanes.caffeine.cache.Caffeine
-import dev.slne.surf.enchantment.api.enchantment.EnchantmentJob
+import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketBoost
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketRideBoostService
+import dev.slne.surf.enchantment.paper.utils.CooldownHandler
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
+import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -23,24 +24,40 @@ import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.meta.FireworkMeta
 import org.bukkit.persistence.PersistentDataType
-import java.time.OffsetDateTime
-import java.util.*
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toJavaDuration
 import org.bukkit.Sound as BukkitSound
 
 object RocketRideBoostListener : Listener {
     private val specialHappyGhastKey = NamespacedKey("surf", "rocket-ride-happy-ghast")
-
-    private val cooldowns = Caffeine.newBuilder()
-        .expireAfterWrite(30.seconds.toJavaDuration())
-        .build<UUID, OffsetDateTime>()
+    val cooldownHandler = CooldownHandler(notReadyMessage = { secondsLeft ->
+        error("Der Ghast ist noch außer puste! Er ist in")
+        appendSpace()
+        variableValue("$secondsLeft Sekunden")
+        appendSpace()
+        error("wieder fit.")
+    })
 
     private val ROCKET_PROPERTIES = mapOf(
         1 to RocketBoost(1.4, 0.5, 5),
         2 to RocketBoost(1.9, 0.7, 10),
         3 to RocketBoost(2.6, 0.9, 15)
     )
+
+    init {
+        cooldownHandler.registerExpirationListener { uuid ->
+            withContext(EnchantmentManager.globalRegionDispatcher) {
+                val entity = server.getEntity(uuid) ?: return@withContext
+
+                entity.passengers.filterIsInstance<Player>().forEach { passenger ->
+                    passenger.sendActionBar(
+                        buildText {
+                            success("Der Happy Ghast ist wieder fit!")
+                        }
+                    )
+                }
+            }
+        }
+    }
 
     @EventHandler
     fun onAddHarness(event: PlayerInteractEntityEvent) {
@@ -85,7 +102,7 @@ object RocketRideBoostListener : Listener {
             return
         }
 
-        if (!checkCooldown(player, happyGhast)) return
+        if (!cooldownHandler.checkCooldown(happyGhast.uniqueId, player)) return
 
         val rocketMeta = item.itemMeta as? FireworkMeta ?: return
         val tier = rocketMeta.power.coerceIn(1, 3)
@@ -103,7 +120,7 @@ object RocketRideBoostListener : Listener {
             item.amount -= 1
         }
 
-        applyCooldown(happyGhast, boost.cooldownSeconds)
+        cooldownHandler.applyCooldown(happyGhast.uniqueId, boost.cooldownSeconds.seconds)
 
         happyGhast.passengers.forEach { passenger ->
             passenger.sendActionBar(buildText { success("Der Happy Ghast wurde geboostet!") })
@@ -124,60 +141,10 @@ object RocketRideBoostListener : Listener {
             )
         ) return
 
-        if (!RocketRideBoostService.isBoosting(happyGhast)) return
-        RocketRideBoostService.stopBoost(happyGhast)
+        cooldownHandler.invalidateCooldown(happyGhast.uniqueId)
 
-        cooldowns.invalidate(happyGhast.uniqueId)
-    }
-
-    object RocketRideBoostJob : EnchantmentJob() {
-        override suspend fun tick() {
-            val now = OffsetDateTime.now()
-
-            cooldowns.asMap().forEach { (uuid, expireTime) ->
-                if (expireTime.isBefore(now)) {
-                    cooldowns.invalidate(uuid)
-
-                    val entity = server.getEntity(uuid) ?: return@forEach //TODO: use context
-
-                    entity.passengers.filterIsInstance<Player>().forEach { passenger ->
-                        passenger.sendActionBar(
-                            buildText {
-                                success("Der Happy Ghast ist wieder fit!")
-                            }
-                        )
-                    }
-                }
-            }
+        if (RocketRideBoostService.isBoosting(happyGhast)) {
+            RocketRideBoostService.stopBoost(happyGhast)
         }
-    }
-
-    private fun checkCooldown(player: Player, ghast: HappyGhast): Boolean {
-        val expire = cooldowns.getIfPresent(ghast.uniqueId) ?: return true
-
-        val now = OffsetDateTime.now()
-        if (expire.isAfter(now)) {
-            val secondsLeft = expire.toEpochSecond() - now.toEpochSecond()
-
-            player.sendActionBar(
-                buildText {
-                    error("Der Ghast ist noch außer puste! Erst in")
-                    appendSpace()
-                    variableValue("$secondsLeft Sekunden")
-                    appendSpace()
-                    error("wieder fit.")
-                }
-            )
-            return false
-        }
-
-        return true
-    }
-
-    private fun applyCooldown(ghast: HappyGhast, seconds: Long) {
-        cooldowns.put(
-            ghast.uniqueId,
-            OffsetDateTime.now().plusSeconds(seconds)
-        )
     }
 }

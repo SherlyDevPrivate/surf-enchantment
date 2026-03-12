@@ -18,9 +18,11 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
     description = { level ->
         line {
             val chance = level * CHANCE_PER_LEVEL
-            text("Gewährt eine ")
-            text("$chance %")
-            text(" Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit dem Elytra boostet")
+            darkSpacer("Gewährt eine")
+            appendSpace()
+            variableValue("$chance%")
+            appendSpace()
+            darkSpacer("Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit der Elytra boostet")
         }
     },
     supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,

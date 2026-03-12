@@ -23,7 +23,7 @@ object BlockBreakHandler {
 
         if (player.gameMode != GameMode.CREATIVE) {
             cooldownHandler.applyCooldown(
-                player,
+                player.uniqueId,
                 cooldown
             )
 
