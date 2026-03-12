@@ -1,19 +1,26 @@
-import dev.slne.surf.surfapi.gradle.util.withSurfApiBukkit
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmExtension
 
-plugins {
-    id("dev.slne.surf.surfapi.gradle.paper-plugin") version "1.21.11+"
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        maven("https://repo.slne.dev/repository/maven-public/") { name = "maven-public" }
+    }
+    dependencies {
+        classpath("dev.slne.surf:surf-api-gradle-plugin:1.21.11+")
+    }
 }
 
-group = "dev.slne.surf"
+allprojects {
+    group = "dev.slne.surf.enchantment"
+    version = findProperty("version") as String
+}
 
-surfPaperPluginApi {
-    mainClass("dev.slne.surf.enchantment.SurfEnchantment")
-    bootstrapper("dev.slne.surf.enchantment.SurfEnchantmentBootstrap")
-    generateLibraryLoader(false)
-    foliaSupported(true)
-    authors.addAll("Ammo", "twisti", "red", "jofield")
-
-    runServer {
-        withSurfApiBukkit()
+subprojects {
+    afterEvaluate {
+        extensions.findByType<KotlinJvmExtension>()?.apply {
+            compilerOptions {
+                optIn.add("dev.slne.surf.enchantment.api.utils.InternalEnchantmentApi")
+            }
+        }
     }
 }
