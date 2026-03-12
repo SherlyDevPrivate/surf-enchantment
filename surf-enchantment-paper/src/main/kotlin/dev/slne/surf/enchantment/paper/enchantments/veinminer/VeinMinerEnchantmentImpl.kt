@@ -39,5 +39,9 @@ class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
         EnchantmentTagKeys.TRADEABLE,
     ),
     listeners = setOf(VeinMinerListener),
-    jobs = setOf(VeinMinerListener.VeinMinerJob)
-), VeinMinerEnchantment
+    jobs = setOf(VeinMinerListener.cooldownHandler)
+), VeinMinerEnchantment {
+    companion object {
+        const val MAX_ORES_TO_MINE = 10
+    }
+}

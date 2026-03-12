@@ -29,5 +29,5 @@ class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     ),
     tags = setOf(EnchantmentTagKeys.TREASURE),
     listeners = setOf(HoleDiggerListener),
-    jobs = setOf(HoleDiggerListener.HoleDiggerJob)
+    jobs = setOf(HoleDiggerListener.cooldownHandler)
 ), HoleDiggerEnchantment
