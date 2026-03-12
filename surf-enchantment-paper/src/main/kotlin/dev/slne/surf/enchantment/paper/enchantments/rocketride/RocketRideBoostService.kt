@@ -1,9 +1,9 @@
-package dev.slne.surf.enchantment.enchantments.rocketride
+package dev.slne.surf.enchantment.paper.enchantments.rocketride
 
 import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.ticks
-import dev.slne.surf.enchantment.plugin
+import dev.slne.surf.enchantment.paper.plugin
 import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,7 +18,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-object HappyGhastBoostService {
+object RocketRideBoostService {
     private val activeBoosts = ConcurrentHashMap<UUID, Job>()
 
     fun isBoosting(ghast: HappyGhast): Boolean {
@@ -109,7 +109,7 @@ object HappyGhastBoostService {
         }
 
         sendProgressBar(ghast, boostTicks + slowTick, totalTicks)
-        
+
         ghast.velocity = startVelocity
     }
 

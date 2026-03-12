@@ -1,5 +1,10 @@
 package dev.slne.surf.enchantment.api.enchantments
 
 import dev.slne.surf.enchantment.api.enchantment.CustomEnchantment
+import dev.slne.surf.surfapi.core.api.util.requiredService
 
-interface RocketSaverEnchantment : CustomEnchantment
+private val impl = requiredService<RocketSaverEnchantment>()
+
+interface RocketSaverEnchantment : CustomEnchantment {
+    companion object : RocketSaverEnchantment by impl
+}

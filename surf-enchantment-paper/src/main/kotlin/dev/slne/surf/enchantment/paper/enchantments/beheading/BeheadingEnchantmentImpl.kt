@@ -1,5 +1,6 @@
 package dev.slne.surf.enchantment.paper.enchantments.beheading
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.BeheadingEnchantment
 import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
@@ -12,7 +13,8 @@ import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.inventory.EquipmentSlotGroup
 
-object BeheadingEnchantmentImpl : AbstractCustomEnchantment(
+@AutoService(BeheadingEnchantment::class)
+class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "beheading"),
     displayName = text("Beheading"),
     rarity = EnchantmentRarity.EPIC,

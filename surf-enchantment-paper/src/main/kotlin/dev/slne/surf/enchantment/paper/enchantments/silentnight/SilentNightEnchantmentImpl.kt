@@ -1,5 +1,6 @@
 package dev.slne.surf.enchantment.paper.enchantments.silentnight
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.SilentNightEnchantment
 import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
@@ -10,7 +11,8 @@ import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 
-object SilentNightEnchantmentImpl : AbstractCustomEnchantment(
+@AutoService(SilentNightEnchantment::class)
+class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "silent_night"),
     displayName = text("Silent Night"),
     rarity = EnchantmentRarity.LEGENDARY,

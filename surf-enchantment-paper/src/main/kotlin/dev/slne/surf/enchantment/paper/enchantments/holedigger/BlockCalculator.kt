@@ -1,4 +1,4 @@
-package dev.slne.surf.enchantment.enchantments.holedigger
+package dev.slne.surf.enchantment.paper.enchantments.holedigger
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList
 import it.unimi.dsi.fastutil.objects.ObjectList
@@ -7,13 +7,19 @@ import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 
 object BlockCalculator {
-
-    fun getCenterBlock(clickedBlock: Block, face: BlockFace, props: HoleDiggerEnchantment.PickaxeProperties): Block {
+    fun getCenterBlock(
+        clickedBlock: Block,
+        face: BlockFace,
+        props: PickaxeProperties
+    ): Block {
         val halfDepth = props.z / 2
         return clickedBlock.getRelative(face.oppositeFace, halfDepth)
     }
 
-    fun calculateBlocks(center: Block, props: HoleDiggerEnchantment.PickaxeProperties): ObjectList<Block> {
+    fun calculateBlocks(
+        center: Block,
+        props: PickaxeProperties
+    ): ObjectList<Block> {
         val result = ObjectArrayList<Block>()
         val world = center.world
 
@@ -36,6 +42,7 @@ object BlockCalculator {
                 }
             }
         }
+
         return result
     }
 }

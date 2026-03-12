@@ -35,6 +35,7 @@ interface CustomEnchantment : Enchantable {
     val activeEquipmentSlots: List<EquipmentSlot>
 
     val listeners: Set<Listener>
+    val jobs: Set<EnchantmentJob>
 
     fun getThisEnchantmentOrNull(itemStack: ItemStack): Pair<Int, Enchantment>?
     fun checkItemStackHasEnchantment(itemStack: ItemStack): Boolean

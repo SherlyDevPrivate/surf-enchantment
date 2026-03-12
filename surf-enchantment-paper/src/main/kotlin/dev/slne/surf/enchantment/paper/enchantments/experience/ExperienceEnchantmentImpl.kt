@@ -1,5 +1,6 @@
 package dev.slne.surf.enchantment.paper.enchantments.experience
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.ExperienceEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -11,7 +12,8 @@ import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.inventory.EquipmentSlotGroup
 
-object ExperienceEnchantmentImpl : AbstractCustomEnchantment(
+@AutoService(ExperienceEnchantment::class)
+class ExperienceEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "experience"),
     displayName = text("Experience"),
     rarity = EnchantmentRarity.LEGENDARY,

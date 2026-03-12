@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-package dev.slne.surf.enchantment.enchantments.holedigger
+package dev.slne.surf.enchantment.paper.enchantments.holedigger
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.sksamuel.aedile.core.expireAfterWrite

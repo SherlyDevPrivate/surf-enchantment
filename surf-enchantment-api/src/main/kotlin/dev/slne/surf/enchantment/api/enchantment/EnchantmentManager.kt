@@ -4,9 +4,15 @@ import dev.slne.surf.enchantment.api.utils.Enchantable
 import dev.slne.surf.surfapi.core.api.util.requiredService
 import io.papermc.paper.registry.TypedKey
 import it.unimi.dsi.fastutil.objects.ObjectSet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
 import net.kyori.adventure.key.Key
+import org.bukkit.Location
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Entity
 import org.jetbrains.annotations.Unmodifiable
+import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
 
 private val enchantmentManager = requiredService<EnchantmentManager>()
@@ -26,6 +32,19 @@ interface EnchantmentManager {
     fun findVanillaEnchantmentByKey(key: TypedKey<Enchantment>): VanillaEnchantment?
 
     fun findByBukkitEnchantment(enchantment: Enchantment): Enchantable?
+
+    val scope: CoroutineScope
+    val globalRegionDispatcher: CoroutineContext
+    val mainDispatcher: CoroutineContext
+    val asyncDispatcher: CoroutineContext
+    val entityDispatcher: (Entity) -> CoroutineContext
+    val regionDispatcher: (Location) -> CoroutineContext
+
+    fun launch(
+        context: CoroutineContext = mainDispatcher,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        block: suspend CoroutineScope.() -> Unit
+    ): Job
 
     companion object : EnchantmentManager by enchantmentManager {
         val INSTANCE get() = enchantmentManager

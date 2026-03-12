@@ -1,7 +1,5 @@
-package dev.slne.surf.enchantment.enchantment
+package dev.slne.surf.enchantment.api.enchantment
 
-import com.github.shynixn.mccoroutine.folia.launch
-import dev.slne.surf.enchantment.plugin
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -16,7 +14,7 @@ abstract class EnchantmentJob(
     abstract suspend fun tick()
 
     fun start() {
-        job = plugin.launch {
+        job = EnchantmentManager.launch {
             while (isActive) {
                 tick()
                 delay(delay)

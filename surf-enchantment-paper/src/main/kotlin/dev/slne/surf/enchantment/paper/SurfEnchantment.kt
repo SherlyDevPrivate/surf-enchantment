@@ -15,13 +15,13 @@ class SurfEnchantment : SuspendingJavaPlugin() {
     override suspend fun onEnableAsync() {
         enchantmentManagerImpl.registerEnchantmentListeners()
         surfBukkitPacketApi.registerPacketLoreListenerGlobal(this, SurfEnchantmentPacketLoreHandler)
-        EnchantmentManager.startEnchantmentJobs()
+        enchantmentManagerImpl.startEnchantmentJobs()
 
         surfEnchantmentCommand()
     }
 
     override suspend fun onDisableAsync() {
-        EnchantmentManager.stopEnchantmentJobs()
+        enchantmentManagerImpl.stopEnchantmentJobs()
     }
 }
 
