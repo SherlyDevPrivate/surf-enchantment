@@ -1,28 +1,28 @@
 package dev.slne.surf.enchantment.paper.enchantment
 
+import com.github.shynixn.mccoroutine.folia.*
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.api.enchantment.VanillaEnchantment
+import dev.slne.surf.enchantment.api.enchantments.*
 import dev.slne.surf.enchantment.api.utils.Enchantable
 import dev.slne.surf.enchantment.api.utils.InternalEnchantmentApi
-import dev.slne.surf.enchantment.paper.enchantments.beheading.BeheadingEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.experience.ExperienceEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.happyghastboost.HappyGhastBoostEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.replenish.ReplenishEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.rocketsaver.RocketSaverEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.silentgaze.SilentGazeEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.silentnight.SilentNightEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.soulbound.SoulboundEnchantmentImpl
-import dev.slne.surf.enchantment.paper.enchantments.telekinesis.TelekinesisEnchantmentImpl
+import dev.slne.surf.enchantment.paper.plugin
 import dev.slne.surf.enchantment.paper.utils.VanillaEnchantmentMap
 import dev.slne.surf.surfapi.bukkit.api.event.register
 import dev.slne.surf.surfapi.core.api.util.freeze
 import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import io.papermc.paper.registry.TypedKey
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
 import net.kyori.adventure.key.Key
+import org.bukkit.Location
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Entity
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
 
 @AutoService(EnchantmentManager::class)
@@ -35,7 +35,8 @@ class EnchantmentManagerImpl : EnchantmentManager {
     private val _vanillaEnchantments = mutableObjectSetOf<VanillaEnchantment>()
     override val vanillaEnchantments = _vanillaEnchantments.freeze()
 
-    init {
+    @InternalEnchantmentApi
+    internal fun registerVanillaEnchantments() {
         VanillaEnchantmentMap.entries.forEach { entry ->
             _vanillaEnchantments.add(
                 VanillaEnchantment(
@@ -50,16 +51,18 @@ class EnchantmentManagerImpl : EnchantmentManager {
     }
 
     @InternalEnchantmentApi
-    internal fun registerSelf() {
-        register(TelekinesisEnchantmentImpl)
-        register(ReplenishEnchantmentImpl)
-        register(SoulboundEnchantmentImpl)
-        register(SilentNightEnchantmentImpl)
-        register(SilentGazeEnchantmentImpl)
-        register(BeheadingEnchantmentImpl)
-        register(RocketSaverEnchantmentImpl)
-        register(HappyGhastBoostEnchantmentImpl)
-        register(ExperienceEnchantmentImpl)
+    internal fun registerCustomEnchantments() {
+        register(TelekinesisEnchantment)
+        register(ReplenishEnchantment)
+        register(SoulboundEnchantment)
+        register(SilentNightEnchantment)
+        register(SilentGazeEnchantment)
+        register(BeheadingEnchantment)
+        register(RocketSaverEnchantment)
+        register(RocketRideEnchantment)
+        register(ExperienceEnchantment)
+        register(HoleDiggerEnchantment)
+        register(VeinMinerEnchantment)
     }
 
     @InternalEnchantmentApi
@@ -79,9 +82,12 @@ class EnchantmentManagerImpl : EnchantmentManager {
         _customEnchantments.firstOrNull { it.key == key }
 
     override fun findCustomEnchantment(clazz: KClass<out CustomEnchantment>) =
-        _customEnchantments.firstOrNull { it::class == clazz }
+        _customEnchantments.firstOrNull { clazz.java.isAssignableFrom(it.javaClass) }
 
-    override fun findVanillaEnchantmentByKey(key: TypedKey<Enchantment>) =
+    override fun findVanillaEnchantmentByKey(key: Key) =
+        _vanillaEnchantments.firstOrNull { it.key == key }
+
+    override fun findVanillaEnchantmentByTypedKey(key: TypedKey<Enchantment>) =
         _vanillaEnchantments.firstOrNull { it.key == key }
 
     override fun findByBukkitEnchantment(enchantment: Enchantment): Enchantable? {
@@ -92,9 +98,45 @@ class EnchantmentManagerImpl : EnchantmentManager {
         return _vanillaEnchantments.firstOrNull { it.key == enchantment.key }
     }
 
+    @InternalEnchantmentApi
     internal fun freeze() {
         frozen.set(true)
     }
+
+    @InternalEnchantmentApi
+    internal fun startEnchantmentJobs() {
+        customEnchantments.forEach { enchantment ->
+            enchantment.jobs.forEach { job ->
+                job.start()
+            }
+        }
+    }
+
+    @InternalEnchantmentApi
+    internal fun stopEnchantmentJobs() {
+        customEnchantments.forEach { enchantment ->
+            enchantment.jobs.forEach { job ->
+                job.stop()
+            }
+        }
+    }
+
+    override val scope get() = plugin.scope
+    override val globalRegionDispatcher get() = plugin.globalRegionDispatcher
+    override val mainDispatcher get() = plugin.mainDispatcher
+    override val asyncDispatcher get() = plugin.asyncDispatcher
+
+    override val regionDispatcher: (Location) -> CoroutineContext
+        get() = { location -> plugin.regionDispatcher(location) }
+
+    override val entityDispatcher: (Entity) -> CoroutineContext
+        get() = { entity -> plugin.entityDispatcher(entity) }
+
+    override fun launch(
+        context: CoroutineContext,
+        start: CoroutineStart,
+        block: suspend CoroutineScope.() -> Unit
+    ): Job = plugin.launch(context, start, block)
 
     fun register(enchantment: CustomEnchantment) {
         require(!frozen.get()) { "Cannot register enchantments after the registry is frozen." }

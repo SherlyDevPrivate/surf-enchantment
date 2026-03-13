@@ -1,5 +1,6 @@
 package dev.slne.surf.enchantment.paper.enchantments.telekinesis
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -10,7 +11,8 @@ import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 
-object TelekinesisEnchantmentImpl : AbstractCustomEnchantment(
+@AutoService(TelekinesisEnchantment::class)
+class TelekinesisEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "telekinesis"),
     displayName = text("Telekinesis"),
     rarity = EnchantmentRarity.RARE,

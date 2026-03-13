@@ -1,6 +1,7 @@
 package dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners
 
-import dev.slne.surf.enchantment.paper.enchantments.experience.ExperienceEnchantmentImpl.checkItemStackHasEnchantment
+import dev.slne.surf.enchantment.api.enchantments.TelekinesisEnchantment
+import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -15,7 +16,7 @@ object TelekinesisListener : Listener {
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
 
-        if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
         player.giveExp(event.expToDrop, true)
     }
 
@@ -23,7 +24,7 @@ object TelekinesisListener : Listener {
     fun onBlockBreak(event: BlockDropItemEvent) {
         val player = event.player
 
-        if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
         addDropsToInventory(player, event.items.map { it.itemStack })
 
         event.items.clear()
@@ -33,7 +34,7 @@ object TelekinesisListener : Listener {
     fun onEntityDeath(event: EntityDeathEvent) {
         val player = event.entity.killer ?: return
 
-        if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
         addDropsToInventory(player, event.drops)
         player.giveExp(event.droppedExp, true)
 
@@ -45,7 +46,7 @@ object TelekinesisListener : Listener {
     fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
         val player = event.player
 
-        if (!checkItemStackHasEnchantment(player.inventory.itemInMainHand)) return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
         addDropsToInventory(player, event.drops)
 
         event.drops.clear()

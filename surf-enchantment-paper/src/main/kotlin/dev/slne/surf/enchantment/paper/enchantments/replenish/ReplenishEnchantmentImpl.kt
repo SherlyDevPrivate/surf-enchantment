@@ -1,5 +1,6 @@
 package dev.slne.surf.enchantment.paper.enchantments.replenish
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
@@ -10,7 +11,8 @@ import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.inventory.EquipmentSlotGroup
 
-object ReplenishEnchantmentImpl : AbstractCustomEnchantment(
+@AutoService(ReplenishEnchantment::class)
+class ReplenishEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "replenish"),
     displayName = text("Replenish"),
     rarity = EnchantmentRarity.EPIC,

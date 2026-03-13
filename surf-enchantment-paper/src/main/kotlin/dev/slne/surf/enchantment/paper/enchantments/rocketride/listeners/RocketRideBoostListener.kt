@@ -1,0 +1,150 @@
+package dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners
+
+import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
+import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
+import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketBoost
+import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketRideBoostService
+import dev.slne.surf.enchantment.paper.utils.CooldownHandler
+import dev.slne.surf.surfapi.bukkit.api.extensions.server
+import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
+import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
+import kotlinx.coroutines.withContext
+import net.kyori.adventure.sound.Sound
+import org.bukkit.GameMode
+import org.bukkit.Material
+import org.bukkit.NamespacedKey
+import org.bukkit.entity.HappyGhast
+import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.entity.EntityDropItemEvent
+import org.bukkit.event.player.PlayerInteractEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.inventory.meta.FireworkMeta
+import org.bukkit.persistence.PersistentDataType
+import kotlin.time.Duration.Companion.seconds
+import org.bukkit.Sound as BukkitSound
+
+object RocketRideBoostListener : Listener {
+    private val specialHappyGhastKey = NamespacedKey("surf", "rocket-ride-happy-ghast")
+    val cooldownHandler = CooldownHandler(notReadyMessage = { secondsLeft ->
+        error("Der Ghast ist noch außer puste! Er ist in")
+        appendSpace()
+        variableValue("$secondsLeft Sekunden")
+        appendSpace()
+        error("wieder fit.")
+    })
+
+    private val ROCKET_PROPERTIES = mapOf(
+        1 to RocketBoost(1.4, 0.5, 5),
+        2 to RocketBoost(1.9, 0.7, 10),
+        3 to RocketBoost(2.6, 0.9, 15)
+    )
+
+    init {
+        cooldownHandler.registerExpirationListener { uuid ->
+            withContext(EnchantmentManager.globalRegionDispatcher) {
+                val entity = server.getEntity(uuid) ?: return@withContext
+
+                entity.passengers.filterIsInstance<Player>().forEach { passenger ->
+                    passenger.sendActionBar(
+                        buildText {
+                            success("Der Happy Ghast ist wieder fit!")
+                        }
+                    )
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    fun onAddHarness(event: PlayerInteractEntityEvent) {
+        val player = event.player
+        val happyGhast = event.rightClicked as? HappyGhast ?: return
+
+        val itemInMain = player.inventory.itemInMainHand
+        if (!itemInMain.hasCustomEnchantment<RocketRideEnchantment>()) return
+
+        happyGhast.persistentDataContainer.set(specialHappyGhastKey, PersistentDataType.BYTE, 1)
+    }
+
+    @EventHandler
+    fun onRemoveHarness(event: EntityDropItemEvent) {
+        val happyGhast = event.entity as? HappyGhast ?: return
+
+        if (!happyGhast.persistentDataContainer.has(
+                specialHappyGhastKey,
+                PersistentDataType.BYTE
+            )
+        ) return
+        happyGhast.persistentDataContainer.remove(specialHappyGhastKey)
+
+        event.itemDrop.itemStack.addEnchantment(RocketRideEnchantment.bukkitEnchantment, 1)
+    }
+
+    @EventHandler
+    fun onUseRocketToBoost(event: PlayerInteractEvent) {
+        val player = event.player
+        val happyGhast = player.vehicle as? HappyGhast ?: return
+        if (!happyGhast.persistentDataContainer.has(
+                specialHappyGhastKey,
+                PersistentDataType.BYTE
+            )
+        ) return
+
+        val item = player.inventory.itemInMainHand
+        if (item.type != Material.FIREWORK_ROCKET) return
+
+        if (happyGhast.passengers.firstOrNull() != player) {
+            player.sendActionBar(buildText { error("Du hältst nicht die Zügel des Ghasts!") })
+            return
+        }
+
+        if (!cooldownHandler.checkCooldown(happyGhast.uniqueId, player)) return
+
+        val rocketMeta = item.itemMeta as? FireworkMeta ?: return
+        val tier = rocketMeta.power.coerceIn(1, 3)
+        val boost = ROCKET_PROPERTIES[tier] ?: ROCKET_PROPERTIES[1]!!
+
+        RocketRideBoostService.startBoost(
+            ghast = happyGhast,
+            rider = player,
+            power = 0.9 * boost.multiplier,
+            upward = boost.upward,
+            durationTicks = 20 + tier * 10
+        )
+
+        if (player.gameMode != GameMode.CREATIVE) {
+            item.amount -= 1
+        }
+
+        cooldownHandler.applyCooldown(happyGhast.uniqueId, boost.cooldownSeconds.seconds)
+
+        happyGhast.passengers.forEach { passenger ->
+            passenger.sendActionBar(buildText { success("Der Happy Ghast wurde geboostet!") })
+            passenger.playSound {
+                type(BukkitSound.ENTITY_FIREWORK_ROCKET_BLAST)
+                source(Sound.Source.NEUTRAL)
+                pitch(1.0f)
+            }
+        }
+    }
+
+    @EventHandler
+    fun onGhastDeath(event: EntityDeathEvent) {
+        val happyGhast = event.entity as? HappyGhast ?: return
+        if (!happyGhast.persistentDataContainer.has(
+                specialHappyGhastKey,
+                PersistentDataType.BYTE
+            )
+        ) return
+
+        cooldownHandler.invalidateCooldown(happyGhast.uniqueId)
+
+        if (RocketRideBoostService.isBoosting(happyGhast)) {
+            RocketRideBoostService.stopBoost(happyGhast)
+        }
+    }
+}

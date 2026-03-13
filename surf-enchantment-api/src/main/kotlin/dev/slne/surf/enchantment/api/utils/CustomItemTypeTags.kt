@@ -48,8 +48,18 @@ enum class CustomItemTypeTags(
     ELYTRA_KEY(
         key("surf", "elytra"),
         TagEntry.valueEntry(ItemTypeKeys.ELYTRA)
-    );
+    ),
 
+    PICKAXES_KEY(
+        key("surf", "pickaxes"),
+        TagEntry.valueEntry(ItemTypeKeys.WOODEN_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.STONE_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.COPPER_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.IRON_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.GOLDEN_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.DIAMOND_PICKAXE),
+        TagEntry.valueEntry(ItemTypeKeys.NETHERITE_PICKAXE)
+    );
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
     val tagEntries: ObjectSet<TagEntry<ItemType>> = objectSetOf(*tags)

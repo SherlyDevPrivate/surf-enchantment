@@ -10,13 +10,19 @@ import org.bukkit.plugin.java.JavaPlugin
 class SurfEnchantment : SuspendingJavaPlugin() {
     override suspend fun onLoadAsync() {
         enchantmentManagerImpl.freeze()
+        enchantmentManagerImpl.registerVanillaEnchantments()
     }
 
     override suspend fun onEnableAsync() {
         enchantmentManagerImpl.registerEnchantmentListeners()
         surfBukkitPacketApi.registerPacketLoreListenerGlobal(this, SurfEnchantmentPacketLoreHandler)
+        enchantmentManagerImpl.startEnchantmentJobs()
 
         surfEnchantmentCommand()
+    }
+
+    override suspend fun onDisableAsync() {
+        enchantmentManagerImpl.stopEnchantmentJobs()
     }
 }
 
