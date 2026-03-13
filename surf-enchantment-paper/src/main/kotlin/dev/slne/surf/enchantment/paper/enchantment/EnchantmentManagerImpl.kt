@@ -7,6 +7,7 @@ import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.api.enchantment.VanillaEnchantment
 import dev.slne.surf.enchantment.api.enchantments.*
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
+import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.Enchantable
 import dev.slne.surf.enchantment.api.utils.InternalEnchantmentApi
 import dev.slne.surf.enchantment.paper.plugin

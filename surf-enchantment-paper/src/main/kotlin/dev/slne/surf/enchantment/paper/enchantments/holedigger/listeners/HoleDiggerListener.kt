@@ -10,6 +10,7 @@ import dev.slne.surf.enchantment.paper.enchantments.holedigger.PickaxeProperties
 import dev.slne.surf.enchantment.paper.utils.BlockBreakHandler
 import dev.slne.surf.enchantment.paper.utils.BlockHandler
 import dev.slne.surf.enchantment.paper.utils.CooldownHandler
+import dev.slne.surf.enchantment.paper.utils.events.FakeBlockBreakEvent
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
@@ -57,7 +58,7 @@ object HoleDiggerListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onBreak(event: BlockBreakEvent) {
-        if (blockHandler.shouldAvoid(event)) return
+        if (event is FakeBlockBreakEvent) return
 
         val player = event.player
         val item = player.inventory.itemInMainHand

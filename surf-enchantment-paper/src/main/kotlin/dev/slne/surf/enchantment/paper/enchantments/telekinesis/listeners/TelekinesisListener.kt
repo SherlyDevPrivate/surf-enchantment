@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners
 
-import dev.slne.surf.enchantment.api.enchantments.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
+import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
