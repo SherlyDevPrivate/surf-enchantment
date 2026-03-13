@@ -13,7 +13,7 @@ class ReplenishBlockEvent(
     val block: Block,
     val seed: ItemStack,
     val items: MutableList<Item>,
-    var shouldConsumeSeed: Boolean = true
+    var shouldConsumeSeed: Boolean
 ) : Event(), Cancellable {
     private var cancelled = false
 
