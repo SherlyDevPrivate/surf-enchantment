@@ -1,6 +1,7 @@
 package dev.slne.surf.enchantment.api.utils
 
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
+import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import org.jetbrains.annotations.Range
@@ -9,7 +10,7 @@ interface Enchantable {
     val key: Key
     val displayName: Component
     val description: LoreBuilder.(Int) -> Unit
-    val rarity: EnchantmentRarity
+    val rarity: Rarity
     val maxLevel: @Range(from = 1, to = 255) Int?
 
     fun buildLore(level: Int) = LoreBuilder().apply {

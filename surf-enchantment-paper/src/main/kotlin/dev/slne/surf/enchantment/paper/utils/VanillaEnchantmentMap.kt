@@ -1,9 +1,9 @@
 package dev.slne.surf.enchantment.paper.utils
 
 import dev.slne.surf.enchantment.api.utils.Enchantable
-import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
+import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
@@ -19,7 +19,7 @@ enum class VanillaEnchantmentMap(
     override val key: Key,
     override val displayName: Component,
     override val description: LoreBuilder.(Int) -> Unit,
-    override val rarity: EnchantmentRarity,
+    override val rarity: Rarity,
     override val maxLevel: @Range(from = 1, to = 255) Int? = run {
         val enchantment =
             RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).getOrThrow(key)
@@ -43,7 +43,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     SMITE(
         EnchantmentKeys.SMITE,
@@ -62,7 +62,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     BANE_OF_ARTHROPODS(
         EnchantmentKeys.BANE_OF_ARTHROPODS,
@@ -87,7 +87,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     EFFICIENCY(
         EnchantmentKeys.EFFICIENCY,
@@ -105,7 +105,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     IMPALING(
         EnchantmentKeys.IMPALING,
@@ -124,7 +124,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     THORNS(
         EnchantmentKeys.THORNS,
@@ -143,7 +143,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     FEATHER_FALLING(
         EnchantmentKeys.FEATHER_FALLING,
@@ -161,7 +161,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     RESPIRATION(
         EnchantmentKeys.RESPIRATION,
@@ -186,7 +186,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     PROJECTILE_PROTECTION(
         EnchantmentKeys.PROJECTILE_PROTECTION,
@@ -204,7 +204,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     KNOCKBACK(
         EnchantmentKeys.KNOCKBACK,
@@ -223,7 +223,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     FIRE_ASPECT(
         EnchantmentKeys.FIRE_ASPECT,
@@ -244,7 +244,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     LUCK_OF_THE_SEA(
         EnchantmentKeys.LUCK_OF_THE_SEA,
@@ -262,7 +262,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     CHANNELING(
         EnchantmentKeys.CHANNELING,
@@ -272,7 +272,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Bei Gewitter wird ein Blitz die Landeposition des Dreizack treffen")
             }
         },
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     SHARPNESS(
         EnchantmentKeys.SHARPNESS,
@@ -291,7 +291,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     SOUL_SPEED(
         EnchantmentKeys.SOUL_SPEED,
@@ -309,7 +309,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     LOYALTY(
         EnchantmentKeys.LOYALTY,
@@ -319,7 +319,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Der Dreizack kehrt zurück, nachdem er geworfen wurde")
             }
         },
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     SILK_TOUCH(
         EnchantmentKeys.SILK_TOUCH,
@@ -329,7 +329,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Erlaubt es viele Blöcke in ihrer Urform abzubauen")
             }
         },
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     QUICK_CHARGE(
         EnchantmentKeys.QUICK_CHARGE,
@@ -348,7 +348,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     AQUA_AFFINITY(
         EnchantmentKeys.AQUA_AFFINITY,
@@ -358,7 +358,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Entfernt Geschwindigkeitseinbußen beim Unterwasserabbau")
             }
         },
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     MULTISHOT(
         EnchantmentKeys.MULTISHOT,
@@ -368,7 +368,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Verschießt 3 Pfeile anstelle von 1")
             }
         },
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     WIND_BURST(
         EnchantmentKeys.WIND_BURST,
@@ -386,7 +386,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.LEGENDARY,
+        rarity = Rarity.LEGENDARY,
     ),
     BLAST_PROTECTION(
         EnchantmentKeys.BLAST_PROTECTION,
@@ -409,7 +409,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     SWEEPING(
         EnchantmentKeys.SWEEPING_EDGE,
@@ -427,7 +427,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     PIERCING(
         EnchantmentKeys.PIERCING,
@@ -446,7 +446,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     FIRE_PROTECTION(
         EnchantmentKeys.FIRE_PROTECTION,
@@ -469,7 +469,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.UNCOMMON,
+        rarity = Rarity.UNCOMMON,
     ),
     SWIFT_SNEAK(
         EnchantmentKeys.SWIFT_SNEAK,
@@ -487,7 +487,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     MENDING(
         EnchantmentKeys.MENDING,
@@ -497,7 +497,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Repariere den Gegenstand, während du Erfahrung erhältst")
             }
         },
-        rarity = EnchantmentRarity.LEGENDARY,
+        rarity = Rarity.LEGENDARY,
     ),
     PROTECTION(
         EnchantmentKeys.PROTECTION,
@@ -515,7 +515,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     LURE(
         EnchantmentKeys.LURE,
@@ -534,7 +534,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     PUNCH(
         EnchantmentKeys.PUNCH,
@@ -553,7 +553,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     FROST_WALKER(
         EnchantmentKeys.FROST_WALKER,
@@ -572,7 +572,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     POWER(
         EnchantmentKeys.POWER,
@@ -591,7 +591,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     RIPTIDE(
         EnchantmentKeys.RIPTIDE,
@@ -601,7 +601,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Schleudert den Spieler beim Werfen eines Drezacks im Wasser oder im Regen nach vorne")
             }
         },
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     BREACH(
         EnchantmentKeys.BREACH,
@@ -619,7 +619,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     FORTUNE(
         EnchantmentKeys.FORTUNE,
@@ -638,7 +638,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     DENSITY(
         EnchantmentKeys.DENSITY,
@@ -657,7 +657,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.COMMON,
+        rarity = Rarity.COMMON,
     ),
     LOOTING(
         EnchantmentKeys.LOOTING,
@@ -680,7 +680,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     BINDING_CURSE(
         EnchantmentKeys.BINDING_CURSE,
@@ -690,7 +690,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Rüstung kann nicht mehr abgelegt werden")
             }
         },
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     DEPTH_STRIDER(
         EnchantmentKeys.DEPTH_STRIDER,
@@ -708,7 +708,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     ),
     VANISHING_CURSE(
         EnchantmentKeys.VANISHING_CURSE,
@@ -718,7 +718,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Beim Tod verschwindet der Gegenstand direkt")
             }
         },
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     INFINITY(
         EnchantmentKeys.INFINITY,
@@ -728,7 +728,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Verhindert, dass normale Pfeile beim Abschuss verbraucht werden")
             }
         },
-        rarity = EnchantmentRarity.EPIC,
+        rarity = Rarity.EPIC,
     ),
     FLAME(
         EnchantmentKeys.FLAME,
@@ -740,7 +740,7 @@ enum class VanillaEnchantmentMap(
                 darkSpacer("Feuerschaden")
             }
         },
-        rarity = EnchantmentRarity.RARE,
+        rarity = Rarity.RARE,
     );
 
     companion object {
