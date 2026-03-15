@@ -4,10 +4,10 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
-import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
 import dev.slne.surf.enchantment.paper.enchantments.veinminer.listeners.VeinMinerListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
+import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.enchantments.Enchantment
 
@@ -15,7 +15,7 @@ import org.bukkit.enchantments.Enchantment
 class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "vein_miner"),
     displayName = text("Vain Miner"),
-    rarity = EnchantmentRarity.EPIC,
+    rarity = Rarity.EPIC,
     description = {
         line { darkSpacer("Erzadern werden vollständig abgebaut") }
         line {

@@ -2,8 +2,8 @@
 
 package dev.slne.surf.enchantment.api.enchantment
 
-import dev.slne.surf.enchantment.api.utils.EnchantmentRarity
 import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
+import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Range
 abstract class AbstractCustomEnchantment(
     override val key: Key,
     override val displayName: Component,
-    override val rarity: EnchantmentRarity,
+    override val rarity: Rarity,
     override val description: LoreBuilder.(Int) -> Unit = {},
     override val supportedItems: TagKey<ItemType>? = null,
     override val primaryItems: TagKey<ItemType>? = null,
