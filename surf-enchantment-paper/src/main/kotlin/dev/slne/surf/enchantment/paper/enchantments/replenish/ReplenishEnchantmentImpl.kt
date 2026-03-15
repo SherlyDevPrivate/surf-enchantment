@@ -2,7 +2,7 @@ package dev.slne.surf.enchantment.paper.enchantments.replenish
 
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
-import dev.slne.surf.enchantment.api.enchantments.ReplenishEnchantment
+import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.paper.enchantments.replenish.listeners.ReplenishListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text

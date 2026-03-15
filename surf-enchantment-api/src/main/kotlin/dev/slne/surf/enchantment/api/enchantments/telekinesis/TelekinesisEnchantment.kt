@@ -1,4 +1,4 @@
-package dev.slne.surf.enchantment.api.enchantments
+package dev.slne.surf.enchantment.api.enchantments.telekinesis
 
 import dev.slne.surf.enchantment.api.enchantment.CustomEnchantment
 import dev.slne.surf.surfapi.core.api.util.requiredService

@@ -2,7 +2,7 @@ package dev.slne.surf.enchantment.paper.enchantments.telekinesis
 
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
-import dev.slne.surf.enchantment.api.enchantments.TelekinesisEnchantment
+import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners.TelekinesisListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key

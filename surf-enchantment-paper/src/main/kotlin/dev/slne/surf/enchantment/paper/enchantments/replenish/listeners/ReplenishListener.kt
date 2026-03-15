@@ -1,8 +1,10 @@
 package dev.slne.surf.enchantment.paper.enchantments.replenish.listeners
 
-import dev.slne.surf.enchantment.api.enchantments.ReplenishEnchantment
+import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishBlockEvent
+import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.utils.hasThisEnchantmentActive
 import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.block.data.Ageable
@@ -34,9 +36,31 @@ object ReplenishListener : Listener {
 
         val seedItemStack = ItemStack.of(seedType)
 
-        val hasSeedInInventory = player.inventory.containsAtLeast(seedItemStack, 1)
+        val hasSeedInInventory = player.inventory.containsAtLeast(
+            seedItemStack,
+            1
+        ) || player.gameMode == GameMode.CREATIVE
+
         if (hasSeedInInventory) {
-            player.inventory.removeItem(seedItemStack)
+            val replenishBlockEvent = ReplenishBlockEvent(
+                block = event.block,
+                seed = seedItemStack.clone(),
+                items = event.items.toMutableList(),
+                player = player,
+                shouldConsumeSeed = player.gameMode != GameMode.CREATIVE,
+            )
+
+            if (!replenishBlockEvent.callEvent()) {
+                return
+            }
+
+            event.items.clear()
+            event.items.addAll(replenishBlockEvent.items)
+
+            if (replenishBlockEvent.shouldConsumeSeed) {
+                player.inventory.removeItem(seedItemStack)
+            }
+
             event.block.type = brokenBlockType
 
             Particle.HAPPY_VILLAGER.builder()

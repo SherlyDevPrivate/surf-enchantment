@@ -1,6 +1,7 @@
 package dev.slne.surf.enchantment.paper.utils
 
 import dev.slne.surf.enchantment.api.utils.applyItemDamage
+import dev.slne.surf.enchantment.paper.utils.events.FakeBlockBreakEvent
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -14,7 +15,7 @@ object BlockBreakHandler {
         cooldownHandler: CooldownHandler,
         cooldown: Duration,
         event: BlockBreakEvent,
-        events: List<BlockBreakEvent>
+        events: List<FakeBlockBreakEvent>
     ) {
         val player = event.player
         val item = player.inventory.itemInMainHand

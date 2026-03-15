@@ -2,28 +2,20 @@
 
 package dev.slne.surf.enchantment.paper.utils
 
-import com.github.benmanes.caffeine.cache.Caffeine
-import com.sksamuel.aedile.core.expireAfterWrite
+import dev.slne.surf.enchantment.paper.utils.events.FakeBlockBreakEvent
 import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
 import dev.slne.surf.surfapi.core.api.util.toObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.bukkit.event.block.BlockBreakEvent
-import kotlin.time.Duration.Companion.minutes
 
 class BlockHandler {
-    private val avoidBlockBreakEvents = Caffeine.newBuilder()
-        .expireAfterWrite(10.minutes)
-        .build<BlockBreakEvent, Unit>()
-
     fun handleBlocks(player: Player, blocks: List<Block>): BlockResult {
         val breakableBlocks = mutableObjectListOf<Block>()
-        val events = mutableObjectListOf<BlockBreakEvent>()
+        val events = mutableObjectListOf<FakeBlockBreakEvent>()
 
         for (block in blocks) {
-            val event = BlockBreakEvent(block, player)
-            avoidBlockBreakEvents.put(event, Unit)
+            val event = FakeBlockBreakEvent(block, player)
 
             events.add(event)
 
@@ -39,13 +31,9 @@ class BlockHandler {
         )
     }
 
-    fun shouldAvoid(event: BlockBreakEvent): Boolean {
-        return avoidBlockBreakEvents.getIfPresent(event) != null
-    }
-
     data class BlockResult(
         val inputBlocks: ObjectList<Block>,
         val breakableBlocks: ObjectList<Block>,
-        val events: ObjectList<BlockBreakEvent>
+        val events: ObjectList<FakeBlockBreakEvent>
     )
 }

@@ -1,8 +1,10 @@
 package dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners
 
-import dev.slne.surf.enchantment.api.enchantments.TelekinesisEnchantment
+import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
+import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -25,7 +27,7 @@ object TelekinesisListener : Listener {
         val player = event.player
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.items.map { it.itemStack })
+        addDropsToInventory(player, event.items.map { it.itemStack }, event)
 
         event.items.clear()
     }
@@ -35,7 +37,7 @@ object TelekinesisListener : Listener {
         val player = event.entity.killer ?: return
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.drops)
+        addDropsToInventory(player, event.drops, event)
         player.giveExp(event.droppedExp, true)
 
         event.droppedExp = 0
@@ -47,14 +49,24 @@ object TelekinesisListener : Listener {
         val player = event.player
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.drops)
+        addDropsToInventory(player, event.drops, event)
 
         event.drops.clear()
     }
 
-    private fun addDropsToInventory(player: Player, drops: List<ItemStack>) {
+    private fun addDropsToInventory(player: Player, drops: List<ItemStack>, originEvent: Event) {
         drops.forEach { drop ->
             val notAdded = player.inventory.addItem(drop)
+
+            val postTelekinesisItemEvent = PostTelekinesisItemEvent(
+                player = player,
+                itemStack = drop,
+                notAddedToInventory = notAdded.toMap(),
+                originEvent = originEvent
+            )
+
+            notAdded.clear()
+            notAdded.putAll(postTelekinesisItemEvent.notAddedToInventory)
 
             notAdded.forEach { (_, item) ->
                 player.world.dropItem(player.location, item)
