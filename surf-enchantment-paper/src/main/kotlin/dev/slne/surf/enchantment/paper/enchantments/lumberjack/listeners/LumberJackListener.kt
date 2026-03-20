@@ -33,6 +33,8 @@ object LumberJackListener : Listener {
         if (event is FakeBlockBreakEvent) return
 
         val player = event.player
+        if (!player.isSneaking) return
+
         val item = player.inventory.itemInMainHand
 
         if (!item.hasCustomEnchantment<LumberJackEnchantment>()) return
