@@ -59,6 +59,17 @@ enum class CustomItemTypeTags(
         TagEntry.valueEntry(ItemTypeKeys.GOLDEN_PICKAXE),
         TagEntry.valueEntry(ItemTypeKeys.DIAMOND_PICKAXE),
         TagEntry.valueEntry(ItemTypeKeys.NETHERITE_PICKAXE)
+    ),
+
+    AXES_KEY(
+        key("surf", "axes"),
+        TagEntry.valueEntry(ItemTypeKeys.WOODEN_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.STONE_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.COPPER_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.IRON_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.GOLDEN_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.DIAMOND_AXE),
+        TagEntry.valueEntry(ItemTypeKeys.NETHERITE_AXE)
     );
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)
