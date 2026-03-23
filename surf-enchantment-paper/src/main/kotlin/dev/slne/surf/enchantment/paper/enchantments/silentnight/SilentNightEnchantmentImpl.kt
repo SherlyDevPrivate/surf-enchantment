@@ -18,7 +18,7 @@ class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
     rarity = Rarity.LEGENDARY,
     description = {
         line {
-            darkSpacer("Lässt den Kopf des Opfers fallen")
+            darkSpacer("Phantome werden dich nicht mehr angreifen")
         }
     },
     supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
@@ -27,6 +27,6 @@ class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
         EnchantmentTagKeys.TREASURE
     ),
     exclusiveWith = setOf(EnchantmentKeys.LOOTING),
-    maxLevel = 3,
+    maxLevel = 1,
     listeners = setOf(SilentNightListener)
 ), SilentNightEnchantment
