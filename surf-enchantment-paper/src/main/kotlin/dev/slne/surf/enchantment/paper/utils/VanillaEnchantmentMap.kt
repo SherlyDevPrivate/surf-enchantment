@@ -598,7 +598,7 @@ enum class VanillaEnchantmentMap(
         displayName = text("Riptide"),
         description = { _ ->
             line {
-                darkSpacer("Schleudert den Spieler beim Werfen eines Drezacks im Wasser oder im Regen nach vorne")
+                darkSpacer("Schleudert den Spieler beim Werfen eines Dreizacks im Wasser oder im Regen nach vorne")
             }
         },
         rarity = Rarity.RARE,
