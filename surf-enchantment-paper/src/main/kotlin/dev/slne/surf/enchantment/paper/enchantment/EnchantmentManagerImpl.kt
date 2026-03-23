@@ -60,11 +60,11 @@ class EnchantmentManagerImpl : EnchantmentManager {
         register(SilentNightEnchantment)
         register(SilentGazeEnchantment)
         register(BeheadingEnchantment)
-        register(RocketSaverEnchantment)
-        register(RocketRideEnchantment)
+        //register(RocketSaverEnchantment)
+        //register(RocketRideEnchantment)
         register(ExperienceEnchantment)
-        register(HoleDiggerEnchantment)
-        register(VeinMinerEnchantment)
+        //register(HoleDiggerEnchantment)
+        //register(VeinMinerEnchantment)
     }
 
     @InternalEnchantmentApi

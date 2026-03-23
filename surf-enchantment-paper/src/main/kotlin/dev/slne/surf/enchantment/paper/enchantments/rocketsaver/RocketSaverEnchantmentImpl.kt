@@ -10,7 +10,7 @@ import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import org.bukkit.inventory.EquipmentSlotGroup
 
-@AutoService(RocketSaverEnchantment::class)
+//@AutoService(RocketSaverEnchantment::class)
 class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "rocket_saver"),
     displayName = text("Rocket Saver"),

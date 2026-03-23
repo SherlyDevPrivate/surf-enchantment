@@ -11,7 +11,7 @@ import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.enchantments.Enchantment
 
-@AutoService(VeinMinerEnchantment::class)
+//@AutoService(VeinMinerEnchantment::class)
 class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "vein_miner"),
     displayName = text("Vain Miner"),

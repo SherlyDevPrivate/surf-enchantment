@@ -14,7 +14,7 @@ import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.enchantments.Enchantment
 
-@AutoService(HoleDiggerEnchantment::class)
+//@AutoService(HoleDiggerEnchantment::class)
 class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "hole_digger"),
     displayName = text("Hole Digger"),

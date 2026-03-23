@@ -11,7 +11,7 @@ import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 
-@AutoService(RocketRideEnchantment::class)
+//@AutoService(RocketRideEnchantment::class)
 class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
     key("surf", "rocket_ride"),
     text("Rocket Ride"),
