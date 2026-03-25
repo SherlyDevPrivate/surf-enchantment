@@ -18,8 +18,12 @@ fun enchantmentComposeHandler() = RegistryEvents.ENCHANTMENT.compose().newHandle
         registry.register(EnchantmentKeys.create(enchantment.key)) { builder ->
             with(enchantment) {
                 builder.description(displayName)
-                supportedItems?.let { builder.supportedItems(event.getOrCreateTag(it)) }
-                primaryItems?.let { builder.primaryItems(event.getOrCreateTag(it)) }
+                supportedItems?.forEach { tagKey ->
+                    builder.supportedItems(event.getOrCreateTag(tagKey))
+                }
+                primaryItems?.forEach { tagKey ->
+                    builder.primaryItems(event.getOrCreateTag(tagKey))
+                }
                 weight?.let { builder.weight(it) }
                 maxLevel?.let { builder.maxLevel(it) }
                 minimumCost?.let { builder.minimumCost(it) }

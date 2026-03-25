@@ -22,7 +22,7 @@ class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     description = {
         line { darkSpacer("Gräbt ein Loch in definierter Größe.") }
     },
-    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
+    supportedItems = setOf(CustomItemTypeTags.PICKAXES_KEY.tagKey),
     exclusiveWith = setOf(
         Enchantment.FORTUNE.key(),
         VeinMinerEnchantment.key

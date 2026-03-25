@@ -21,7 +21,7 @@ class ReplenishEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
         }
     },
-    supportedItems = ItemTypeTagKeys.HOES,
+    supportedItems = setOf(ItemTypeTagKeys.HOES),
     activeSlots = setOf(EquipmentSlotGroup.MAINHAND),
     tags = setOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE, EnchantmentTagKeys.TREASURE

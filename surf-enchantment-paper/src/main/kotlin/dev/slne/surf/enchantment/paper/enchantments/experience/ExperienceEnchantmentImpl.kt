@@ -22,7 +22,7 @@ class ExperienceEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Droppt dir mehr Erfahrung")
         }
     },
-    supportedItems = CustomItemTypeTags.TOOLS_AND_WEAPONS_KEY.tagKey,
+    supportedItems = setOf(CustomItemTypeTags.TOOLS_AND_WEAPONS_KEY.tagKey),
     tags = setOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE,
         EnchantmentTagKeys.TREASURE

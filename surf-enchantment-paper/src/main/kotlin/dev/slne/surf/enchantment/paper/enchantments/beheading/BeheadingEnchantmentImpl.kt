@@ -23,7 +23,7 @@ class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
+    supportedItems = setOf(ItemTypeTagKeys.ENCHANTABLE_WEAPON),
     activeSlots = setOf(EquipmentSlotGroup.MAINHAND),
     tags = objectSetOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE,

@@ -33,7 +33,7 @@ class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("pro abgebautem Block.")
         }
     },
-    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
+    supportedItems = setOf(CustomItemTypeTags.PICKAXES_KEY.tagKey),
     exclusiveWith = setOf(Enchantment.FORTUNE.key()),
     tags = setOf(
         EnchantmentTagKeys.TRADEABLE,

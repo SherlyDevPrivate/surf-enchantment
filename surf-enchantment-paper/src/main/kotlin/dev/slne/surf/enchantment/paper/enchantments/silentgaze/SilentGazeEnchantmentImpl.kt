@@ -21,7 +21,7 @@ class SilentGazeEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Ein Enderman wird dich nicht angreifen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
+    supportedItems = setOf(ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR),
     exclusiveWith = setOf(SilentNightEnchantment.key),
     activeSlots = setOf(EquipmentSlotGroup.HEAD),
     listeners = setOf(SilentGazeListener),
