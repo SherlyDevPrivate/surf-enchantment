@@ -75,7 +75,7 @@ object TelekinesisListener : Listener {
         drops.forEach { drop ->
             val notAdded = player.inventory.addItem(drop)
 
-            val postEvent = PostTelekinesisItemEvent(
+            val postTelekinesisItemEvent = PostTelekinesisItemEvent(
                 player = player,
                 itemStack = drop,
                 notAddedToInventory = notAdded.toMap(),
@@ -83,7 +83,7 @@ object TelekinesisListener : Listener {
             )
 
             notAdded.clear()
-            notAdded.putAll(postEvent.notAddedToInventory)
+            notAdded.putAll(postTelekinesisItemEvent.notAddedToInventory)
 
 
             notAdded.values.forEach { item ->
