@@ -603,6 +603,16 @@ enum class VanillaEnchantmentMap(
         },
         rarity = Rarity.RARE,
     ),
+    LUNGE(
+        EnchantmentKeys.LUNGE,
+        displayName = text("Lunge"),
+        description = { _ ->
+            line {
+                darkSpacer("Schleudert den Spieler beim Stoßangriffe eines Speers nach vorne")
+            }
+        },
+        rarity = Rarity.RARE,
+    ),
     BREACH(
         EnchantmentKeys.BREACH,
         displayName = text("Breach"),
