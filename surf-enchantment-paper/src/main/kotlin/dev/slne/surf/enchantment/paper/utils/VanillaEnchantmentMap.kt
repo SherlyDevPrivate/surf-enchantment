@@ -143,7 +143,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = Rarity.EPIC,
+        rarity = Rarity.RARE,
     ),
     FEATHER_FALLING(
         EnchantmentKeys.FEATHER_FALLING,
@@ -690,7 +690,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = Rarity.RARE,
+        rarity = Rarity.EPIC,
     ),
     BINDING_CURSE(
         EnchantmentKeys.BINDING_CURSE,
