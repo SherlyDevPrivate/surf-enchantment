@@ -27,7 +27,7 @@ class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
         }
     },
     supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
-    weight = 2,
+    weight = 1,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
         9

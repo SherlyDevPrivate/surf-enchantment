@@ -26,7 +26,7 @@ class ExperienceEnchantmentImpl : AbstractCustomEnchantment(
         }
     },
     supportedItems = CustomItemTypeTags.TOOLS_AND_WEAPONS_KEY.tagKey,
-    weight = 2,
+    weight = 1,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
         9
