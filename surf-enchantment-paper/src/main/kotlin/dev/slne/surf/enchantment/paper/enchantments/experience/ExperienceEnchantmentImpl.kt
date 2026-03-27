@@ -19,7 +19,7 @@ import org.bukkit.inventory.EquipmentSlotGroup
 class ExperienceEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "experience"),
     displayName = text("Experience"),
-    rarity = Rarity.LEGENDARY,
+    rarity = Rarity.EPIC,
     description = {
         line {
             darkSpacer("Droppt dir mehr Erfahrung")

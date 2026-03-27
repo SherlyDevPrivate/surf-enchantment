@@ -18,7 +18,7 @@ import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 class TelekinesisEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "telekinesis"),
     displayName = text("Telekinesis"),
-    rarity = Rarity.RARE,
+    rarity = Rarity.EPIC,
     description = {
         line {
             darkSpacer("Drops und Erfahrung gehen direkt in dein Inventar")

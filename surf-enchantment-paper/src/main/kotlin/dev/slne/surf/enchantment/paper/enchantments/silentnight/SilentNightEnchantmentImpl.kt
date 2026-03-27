@@ -18,7 +18,7 @@ import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "silent_night"),
     displayName = text("Silent Night"),
-    rarity = Rarity.LEGENDARY,
+    rarity = Rarity.EPIC,
     description = {
         line {
             darkSpacer("Phantome werden dich nicht mehr angreifen")

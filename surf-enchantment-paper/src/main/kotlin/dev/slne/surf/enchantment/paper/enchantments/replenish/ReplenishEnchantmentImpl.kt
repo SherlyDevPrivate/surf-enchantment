@@ -18,7 +18,7 @@ import org.bukkit.inventory.EquipmentSlotGroup
 class ReplenishEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "replenish"),
     displayName = text("Replenish"),
-    rarity = Rarity.EPIC,
+    rarity = Rarity.RARE,
     description = {
         line {
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
