@@ -603,6 +603,25 @@ enum class VanillaEnchantmentMap(
         },
         rarity = Rarity.RARE,
     ),
+    LUNGE(
+        EnchantmentKeys.LUNGE,
+        displayName = text("Lunge"),
+        description = levelBased(
+            block = {
+                line {
+                    darkSpacer("Schleudert den Spieler beim Stoßangriff eines Speers um")
+                    variableValue(" %boost%%")
+                    darkSpacer(" weiter nach vorne")
+                }
+            },
+            placeholders = { level ->
+                object2ObjectMapOf(
+                    "boost" to (20 * level).toString()
+                )
+            }
+        ),
+        rarity = Rarity.RARE,
+    ),
     BREACH(
         EnchantmentKeys.BREACH,
         displayName = text("Breach"),
