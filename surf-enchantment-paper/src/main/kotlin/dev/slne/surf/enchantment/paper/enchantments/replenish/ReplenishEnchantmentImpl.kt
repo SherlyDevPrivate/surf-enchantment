@@ -24,7 +24,7 @@ class ReplenishEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
         }
     },
-    supportedItems = ItemTypeTagKeys.HOES,
+    supportedItems = setOf(ItemTypeTagKeys.HOES),
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

@@ -24,7 +24,7 @@ class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Boostet den Happy Ghast, wenn du auf ihm eine Rakete zündest.")
         }
     },
-    supportedItems = ItemTypeTagKeys.HARNESSES,
+    supportedItems = setOf(ItemTypeTagKeys.HARNESSES),
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

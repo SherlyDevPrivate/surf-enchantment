@@ -54,6 +54,27 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_FISHING)
     ),
 
+    BUNDLE_KEY(
+        key("surf", "bundles"),
+        TagEntry.valueEntry(ItemTypeKeys.BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.WHITE_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.ORANGE_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.MAGENTA_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.LIGHT_BLUE_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.YELLOW_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.LIME_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.PINK_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.GRAY_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.LIGHT_GRAY_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.CYAN_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.PURPLE_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.BLUE_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.BROWN_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.GREEN_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.RED_BUNDLE),
+        TagEntry.valueEntry(ItemTypeKeys.BLACK_BUNDLE)
+    ),
+
     ELYTRA_KEY(
         key("surf", "elytra"),
         TagEntry.valueEntry(ItemTypeKeys.ELYTRA)

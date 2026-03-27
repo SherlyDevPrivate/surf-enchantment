@@ -28,7 +28,7 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit der Elytra boostet")
         }
     },
-    supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,
+    supportedItems = setOf(CustomItemTypeTags.ELYTRA_KEY.tagKey),
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

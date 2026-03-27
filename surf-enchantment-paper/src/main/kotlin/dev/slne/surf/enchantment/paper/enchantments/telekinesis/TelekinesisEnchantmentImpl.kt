@@ -24,7 +24,7 @@ class TelekinesisEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Drops und Erfahrung gehen direkt in dein Inventar")
         }
     },
-    supportedItems = CustomItemTypeTags.TOOLS_AND_SWORDS_KEY.tagKey,
+    supportedItems = setOf(CustomItemTypeTags.TOOLS_AND_SWORDS_KEY.tagKey),
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
