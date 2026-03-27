@@ -606,20 +606,11 @@ enum class VanillaEnchantmentMap(
     LUNGE(
         EnchantmentKeys.LUNGE,
         displayName = text("Lunge"),
-        description = levelBased(
-            block = {
-                line {
-                    darkSpacer("Schleudert den Spieler beim Stoßangriff eines Speers um")
-                    variableValue(" %boost%%")
-                    darkSpacer(" weiter nach vorne")
-                }
-            },
-            placeholders = { level ->
-                object2ObjectMapOf(
-                    "boost" to (20 * level).toString()
-                )
+        description = { _ ->
+            line {
+                darkSpacer("Schleudert den Spieler beim Stoßangriffe eines Speers nach vorne")
             }
-        ),
+        },
         rarity = Rarity.RARE,
     ),
     BREACH(
