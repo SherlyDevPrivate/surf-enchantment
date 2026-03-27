@@ -44,6 +44,15 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE),
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
     ),
+    TOOLS_AND_ARMOR_AND_EQUIPMENT_ESSENTIALS_KEY(
+        key("surf", "tools_and_armor_and_equipment_and_essentials"),
+        TagEntry.tagEntry(ItemTypeTagKeys.BREAKS_DECORATED_POTS), // tools
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_ARMOR), // armor
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON),
+        TagEntry.tagEntry(ItemTypeTagKeys.BUNDLES),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_FISHING)
+    ),
 
     BUNDLE_KEY(
         key("surf", "bundles"),
