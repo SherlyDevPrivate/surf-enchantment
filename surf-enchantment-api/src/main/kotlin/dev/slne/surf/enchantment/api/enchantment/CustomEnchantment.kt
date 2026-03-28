@@ -17,8 +17,8 @@ import org.bukkit.inventory.ItemType
 import org.jetbrains.annotations.Range
 
 interface CustomEnchantment : Enchantable {
-    val supportedItems: Set<TagKey<ItemType>>?
-    val primaryItems: Set<TagKey<ItemType>>?
+    val supportedItems: TagKey<ItemType>?
+    val primaryItems: TagKey<ItemType>?
 
     val weight: @Range(from = 1, to = 1024) Int?
 

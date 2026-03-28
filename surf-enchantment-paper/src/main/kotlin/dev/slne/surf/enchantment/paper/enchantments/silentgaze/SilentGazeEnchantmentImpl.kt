@@ -25,7 +25,7 @@ class SilentGazeEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Ein Enderman wird dich nicht angreifen")
         }
     },
-    supportedItems = setOf(ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR),
+    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

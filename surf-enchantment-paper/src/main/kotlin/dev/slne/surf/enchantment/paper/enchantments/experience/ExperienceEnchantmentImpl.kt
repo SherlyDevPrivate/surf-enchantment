@@ -25,7 +25,7 @@ class ExperienceEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Droppt dir mehr Erfahrung")
         }
     },
-    supportedItems = setOf(CustomItemTypeTags.TOOLS_AND_WEAPONS_KEY.tagKey),
+    supportedItems = CustomItemTypeTags.TOOLS_AND_WEAPONS_KEY.tagKey,
     weight = 1,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

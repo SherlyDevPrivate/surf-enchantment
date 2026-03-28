@@ -44,6 +44,11 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE),
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
     ),
+    SOULBOUND(
+        key("surf", "soulbound_items"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_DURABILITY),
+        TagEntry.tagEntry(ItemTypeTagKeys.BUNDLES)
+    ),
     TOOLS_AND_ARMOR_AND_EQUIPMENT_ESSENTIALS_KEY(
         key("surf", "tools_and_armor_and_equipment_and_essentials"),
         TagEntry.tagEntry(ItemTypeTagKeys.BREAKS_DECORATED_POTS), // tools
