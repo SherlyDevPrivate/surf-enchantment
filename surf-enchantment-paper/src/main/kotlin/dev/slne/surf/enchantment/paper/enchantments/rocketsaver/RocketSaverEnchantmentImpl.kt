@@ -2,7 +2,6 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.rocketsaver
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -28,7 +27,7 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit der Elytra boostet")
         }
     },
-    supportedItems = setOf(CustomItemTypeTags.ELYTRA_KEY.tagKey),
+    supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

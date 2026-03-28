@@ -2,7 +2,6 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.veinminer
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -36,7 +35,7 @@ class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("pro abgebautem Block.")
         }
     },
-    supportedItems = setOf(CustomItemTypeTags.PICKAXES_KEY.tagKey),
+    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

@@ -26,8 +26,8 @@ abstract class AbstractCustomEnchantment(
     override val displayName: Component,
     override val rarity: Rarity,
     override val description: LoreBuilder.(Int) -> Unit = {},
-    override val supportedItems: Set<TagKey<ItemType>>? = null,
-    override val primaryItems: Set<TagKey<ItemType>>? = null,
+    override val supportedItems: TagKey<ItemType>? = null,
+    override val primaryItems: TagKey<ItemType>? = null,
     override val weight: @Range(from = 1, to = 1024) Int? = 1,
     override val maxLevel: @Range(from = 1, to = 255) Int? = 1,
     override val minimumCost: EnchantmentRegistryEntry.EnchantmentCost? = EnchantmentRegistryEntry.EnchantmentCost.of(

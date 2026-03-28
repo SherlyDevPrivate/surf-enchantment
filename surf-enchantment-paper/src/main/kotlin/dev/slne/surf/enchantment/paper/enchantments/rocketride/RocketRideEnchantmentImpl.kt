@@ -2,7 +2,6 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.rocketride
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners.RocketRideBoostListener
@@ -24,7 +23,7 @@ class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Boostet den Happy Ghast, wenn du auf ihm eine Rakete zündest.")
         }
     },
-    supportedItems = setOf(ItemTypeTagKeys.HARNESSES),
+    supportedItems = ItemTypeTagKeys.HARNESSES,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

@@ -26,7 +26,7 @@ class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = setOf(ItemTypeTagKeys.ENCHANTABLE_WEAPON),
+    supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
     weight = 1,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

@@ -24,7 +24,7 @@ class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Phantome werden dich nicht mehr angreifen")
         }
     },
-    supportedItems = setOf(ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR),
+    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

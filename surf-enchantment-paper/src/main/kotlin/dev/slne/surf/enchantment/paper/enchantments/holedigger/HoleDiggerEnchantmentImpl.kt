@@ -2,7 +2,6 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.holedigger
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.HoleDiggerEnchantment
 import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
@@ -23,7 +22,7 @@ class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     description = {
         line { darkSpacer("Gräbt ein Loch in definierter Größe.") }
     },
-    supportedItems = setOf(CustomItemTypeTags.PICKAXES_KEY.tagKey),
+    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
