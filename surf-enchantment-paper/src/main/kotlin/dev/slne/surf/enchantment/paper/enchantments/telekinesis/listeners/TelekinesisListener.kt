@@ -3,6 +3,7 @@ package dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.paper.utils.VehicleDrops
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
@@ -12,6 +13,8 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
+import org.bukkit.event.vehicle.VehicleDestroyEvent
+import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 
 object TelekinesisListener : Listener {
@@ -54,6 +57,24 @@ object TelekinesisListener : Listener {
     }
 
     @EventHandler
+    fun onVehicleDestroy(event: VehicleDestroyEvent) {
+        val player = event.attacker as? Player ?: return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
+
+        val vehicle = event.vehicle
+        val dropLocation = vehicle.location.clone()
+        val drops = VehicleDrops.getDrops(vehicle)
+
+        event.isCancelled = true
+        if (vehicle is InventoryHolder) {
+            vehicle.inventory.clear()
+        }
+        vehicle.remove()
+
+        addDropsToInventory(player, drops, event, dropLocation)
+    }
+
+    @EventHandler
     fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
         val player = event.player
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
@@ -84,7 +105,6 @@ object TelekinesisListener : Listener {
 
             notAdded.clear()
             notAdded.putAll(postTelekinesisItemEvent.notAddedToInventory)
-
 
             notAdded.values.forEach { item ->
                 dropLocation.world.dropItemNaturally(dropLocation, item)
