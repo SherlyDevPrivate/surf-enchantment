@@ -30,17 +30,13 @@ import org.bukkit.Sound as BukkitSound
 object RocketRideBoostListener : Listener {
     private val specialHappyGhastKey = NamespacedKey("surf", "rocket-ride-happy-ghast")
     val cooldownHandler = CooldownHandler(notReadyMessage = { secondsLeft ->
-        error("Der Ghast ist noch außer puste! Er ist in")
-        appendSpace()
-        variableValue("$secondsLeft Sekunden")
-        appendSpace()
-        error("wieder fit.")
+        error("Der Ghast ist noch außer erschöpft!")
     })
 
     private val ROCKET_PROPERTIES = mapOf(
-        1 to RocketBoost(1.4, 0.5, 5),
-        2 to RocketBoost(1.9, 0.7, 10),
-        3 to RocketBoost(2.6, 0.9, 15)
+        1 to RocketBoost(1.4, 0.5, 10),
+        2 to RocketBoost(1.9, 0.7, 20),
+        3 to RocketBoost(2.6, 0.9, 30)
     )
 
     init {

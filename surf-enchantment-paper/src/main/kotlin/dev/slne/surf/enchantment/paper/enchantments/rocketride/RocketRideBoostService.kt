@@ -1,13 +1,10 @@
 package dev.slne.surf.enchantment.paper.enchantments.rocketride
 
-import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.ticks
-import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.enchantment.paper.plugin
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import org.bukkit.GameMode
 import org.bukkit.entity.HappyGhast
 import org.bukkit.entity.Player
@@ -19,119 +16,107 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 object RocketRideBoostService {
-    private val activeBoosts = ConcurrentHashMap<UUID, Job>()
 
-    fun isBoosting(ghast: HappyGhast): Boolean {
-        return activeBoosts[ghast.uniqueId]?.isActive == true
-    }
+    private val activeBoostStates = ConcurrentHashMap<UUID, BoostState>()
+    private var tickerJob: Job? = null
 
-    fun startBoost(
-        ghast: HappyGhast,
-        rider: Player,
-        power: Double,
-        upward: Double,
-        durationTicks: Int
-    ) {
+    private data class BoostState(
+        val ghast: HappyGhast,
+        val rider: Player,
+        val power: Double,
+        val upward: Double,
+        val totalTicks: Int,
+        val startVelocity: Vector,
+        val lookDirection: Vector,
+        var currentTick: Int = 0
+    )
 
+    fun isBoosting(ghast: HappyGhast): Boolean = activeBoostStates.containsKey(ghast.uniqueId)
+
+    fun startBoost(ghast: HappyGhast, rider: Player, power: Double, upward: Double, durationTicks: Int) {
         if (rider.gameMode == GameMode.SPECTATOR) return
 
-        activeBoosts[ghast.uniqueId]?.cancel()
+        val state = BoostState(
+            ghast = ghast,
+            rider = rider,
+            power = power,
+            upward = upward,
+            totalTicks = durationTicks,
+            startVelocity = ghast.velocity.clone(),
+            lookDirection = rider.location.direction.normalize()
+        )
 
-        val job = plugin.launch {
-            withContext(plugin.entityDispatcher(ghast)) {
-                try {
-                    runBoost(ghast, rider, power, upward, durationTicks)
-                } finally {
-                    activeBoosts.remove(ghast.uniqueId)
-                }
-            }
-        }
-
-        activeBoosts[ghast.uniqueId] = job
+        activeBoostStates[ghast.uniqueId] = state
+        ensureTickerStarted()
     }
 
-    private suspend fun runBoost(
-        ghast: HappyGhast,
-        rider: Player,
-        power: Double,
-        upward: Double,
-        totalTicks: Int
-    ) {
+    private fun ensureTickerStarted() {
+        if (tickerJob != null && tickerJob?.isActive == true) return
 
-        val boostTicks = (totalTicks * 0.75).toInt()
-        val slowTicks = totalTicks - boostTicks
+        tickerJob = plugin.launch {
+            while (activeBoostStates.isNotEmpty()) {
+                val iterator = activeBoostStates.values.iterator()
 
-        val look = rider.location.direction.normalize()
-        val startVelocity = ghast.velocity.clone()
-        var currentVelocity = startVelocity.clone()
+                while (iterator.hasNext()) {
+                    val state = iterator.next()
 
-        var tick = 0
-        while (tick < boostTicks && ghast.isValid && !ghast.isDead) {
+                    if (!state.ghast.isValid || state.ghast.isDead) {
+                        iterator.remove()
+                        continue
+                    }
 
-            val progress = tick.toDouble() / boostTicks
+                    if (state.currentTick >= state.totalTicks) {
+                        state.ghast.velocity = state.startVelocity
+                        iterator.remove()
+                        continue
+                    }
+
+                    updateGhast(state)
+                    state.currentTick++
+                }
+                delay(1.ticks)
+            }
+        }
+    }
+
+    private fun updateGhast(state: BoostState) {
+        val boostTicks = (state.totalTicks * 0.75).toInt()
+        val slowTicks = state.totalTicks - boostTicks
+
+        val newVelocity: Vector
+
+        if (state.currentTick < boostTicks) {
+
+            val progress = state.currentTick.toDouble() / boostTicks
             val multiplier = sin(progress * (PI / 2))
 
-            val boostVector = Vector(
-                look.x * power * multiplier,
-                look.y * power * multiplier + upward * multiplier,
-                look.z * power * multiplier
+            newVelocity = state.startVelocity.clone().add(
+                Vector(
+                    state.lookDirection.x * state.power * multiplier,
+                    state.lookDirection.y * state.power * multiplier + state.upward * multiplier,
+                    state.lookDirection.z * state.power * multiplier
+                )
             )
+        } else {
+            val slowProgress = (state.currentTick - boostTicks).toDouble() / slowTicks
+            val multiplier = cos(slowProgress * (PI / 2))
 
-            currentVelocity = startVelocity.clone().add(boostVector)
+            val peakMultiplier = 1.0
+            val boostVector = Vector(
+                state.lookDirection.x * state.power * peakMultiplier,
+                state.lookDirection.y * state.power * peakMultiplier + state.upward * peakMultiplier,
+                state.lookDirection.z * state.power * peakMultiplier
+            )
+            val peakVelocity = state.startVelocity.clone().add(boostVector)
 
-            ghast.velocity = currentVelocity
-            rider.fallDistance = 0f
-
-            sendProgressBar(ghast, tick, totalTicks)
-
-            tick++
-            delay(1.ticks)
+            newVelocity = peakVelocity.multiply(multiplier).add(state.startVelocity.clone().multiply(1 - multiplier))
         }
 
-        val peakVelocity = currentVelocity.clone()
-
-        var slowTick = 0
-        while (slowTick < slowTicks && ghast.isValid && !ghast.isDead) {
-
-            val progress = slowTick.toDouble() / slowTicks
-            val multiplier = cos(progress * (PI / 2))
-
-            val interpolated = peakVelocity.clone().multiply(multiplier)
-                .add(startVelocity.clone().multiply(1 - multiplier))
-
-            ghast.velocity = interpolated
-            rider.fallDistance = 0f
-
-            sendProgressBar(ghast, boostTicks + slowTick, totalTicks)
-
-            slowTick++
-            delay(1.ticks)
-        }
-
-        sendProgressBar(ghast, boostTicks + slowTick, totalTicks)
-
-        ghast.velocity = startVelocity
+        state.ghast.velocity = newVelocity
+        state.rider.fallDistance = 0f
     }
 
     fun stopBoost(ghast: HappyGhast) {
-        activeBoosts[ghast.uniqueId]?.cancel()
-        activeBoosts.remove(ghast.uniqueId)
-    }
-
-    private fun sendProgressBar(ghast: HappyGhast, current: Int, total: Int) {
-        val barLength = 20
-        val percent = current.toDouble() / total
-        val reachedBars = (percent * barLength).toInt().coerceIn(0, barLength)
-
-        val bar = buildText {
-            success("|".repeat(reachedBars))
-            spacer("|".repeat(barLength - reachedBars))
-        }
-
-        ghast.passengers.filterIsInstance<Player>().forEach { passenger ->
-            passenger.sendActionBar(buildText {
-                append(bar)
-            })
-        }
+        activeBoostStates.remove(ghast.uniqueId)
     }
 }

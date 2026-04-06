@@ -2,9 +2,11 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.rocketsaver
 
+import com.google.auto.service.AutoService
 import dev.slne.surf.api.core.messages.adventure.key
 import dev.slne.surf.api.core.messages.adventure.text
 import dev.slne.surf.api.core.rarity.Rarity
+import dev.slne.surf.api.core.util.objectSetOf
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -12,7 +14,7 @@ import dev.slne.surf.enchantment.paper.enchantments.rocketsaver.listeners.Rocket
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import org.bukkit.inventory.EquipmentSlotGroup
 
-//@AutoService(RocketSaverEnchantment::class)
+@AutoService(RocketSaverEnchantment::class)
 class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "rocket_saver"),
     displayName = text("Rocket Saver"),
@@ -37,6 +39,7 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
         65,
         9
     ),
+    tags = objectSetOf(),
     activeSlots = setOf(EquipmentSlotGroup.CHEST),
     maxLevel = 3,
     listeners = setOf(RocketSaverListener)

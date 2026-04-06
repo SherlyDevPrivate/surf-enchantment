@@ -3,6 +3,7 @@ package dev.slne.surf.enchantment.paper
 import com.github.shynixn.mccoroutine.folia.SuspendingJavaPlugin
 import dev.slne.surf.api.paper.packet.SurfPaperPacketApi
 import dev.slne.surf.enchantment.paper.commands.surfEnchantmentCommand
+import dev.slne.surf.enchantment.paper.commands.surfEnchantmentDebugLootTableCommand
 import dev.slne.surf.enchantment.paper.enchantment.enchantmentManagerImpl
 import dev.slne.surf.enchantment.paper.lore.SurfEnchantmentPacketLoreHandler
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,6 +20,7 @@ class SurfEnchantment : SuspendingJavaPlugin() {
         enchantmentManagerImpl.startEnchantmentJobs()
 
         surfEnchantmentCommand()
+        surfEnchantmentDebugLootTableCommand()
     }
 
     override suspend fun onDisableAsync() {
