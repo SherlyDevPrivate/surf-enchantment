@@ -37,6 +37,11 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES)
     ),
 
+    LUMBERJACK_KEY(
+        key("surf", "items_lumberjack"),
+        TagEntry.tagEntry(ItemTypeTagKeys.AXES)
+    ),
+
     REPLENISH_KEY(
         key("surf", "items_replenish"),
         TagEntry.tagEntry(ItemTypeTagKeys.HOES)
