@@ -22,7 +22,7 @@ class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     description = {
         line { darkSpacer("Gräbt ein Loch in definierter Größe.") }
     },
-    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.HOLE_DIGGER_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

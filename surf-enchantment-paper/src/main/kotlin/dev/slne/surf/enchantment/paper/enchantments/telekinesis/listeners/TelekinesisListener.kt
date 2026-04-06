@@ -8,6 +8,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
@@ -19,13 +20,14 @@ import org.bukkit.inventory.ItemStack
 
 object TelekinesisListener : Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
 
         player.giveExp(event.expToDrop, true)
+        event.expToDrop = 0
     }
 
     @EventHandler

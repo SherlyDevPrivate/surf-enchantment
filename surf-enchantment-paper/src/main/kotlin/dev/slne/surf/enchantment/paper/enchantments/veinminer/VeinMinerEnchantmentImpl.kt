@@ -35,7 +35,7 @@ class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("pro abgebautem Block.")
         }
     },
-    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.VEIN_MINER_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

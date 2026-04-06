@@ -5,6 +5,7 @@ package dev.slne.surf.enchantment.paper.enchantments.silentnight
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.SilentNightEnchantment
+import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.silentnight.listeners.SilentNightListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
@@ -24,7 +25,7 @@ class SilentNightEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Phantome werden dich nicht mehr angreifen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
+    supportedItems = CustomItemTypeTags.SILENT_NIGHT_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

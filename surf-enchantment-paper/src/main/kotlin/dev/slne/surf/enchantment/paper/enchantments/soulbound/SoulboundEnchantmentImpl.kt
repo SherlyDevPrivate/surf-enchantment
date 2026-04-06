@@ -23,7 +23,7 @@ class SoulboundEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Behalte das Item auch nach dem Tod")
         }
     },
-    supportedItems = CustomItemTypeTags.SOULBOUND.tagKey,
+    supportedItems = CustomItemTypeTags.SOULBOUND_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
