@@ -1,6 +1,7 @@
+@file:Suppress("UnstableApiUsage")
+
 package dev.slne.surf.enchantment.paper.enchantments.rocketsaver
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
@@ -8,9 +9,10 @@ import dev.slne.surf.enchantment.paper.enchantments.rocketsaver.listeners.Rocket
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.rarity.Rarity
+import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import org.bukkit.inventory.EquipmentSlotGroup
 
-@AutoService(RocketSaverEnchantment::class)
+//@AutoService(RocketSaverEnchantment::class)
 class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "rocket_saver"),
     displayName = text("Rocket Saver"),
@@ -25,7 +27,16 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit der Elytra boostet")
         }
     },
-    supportedItems = CustomItemTypeTags.ELYTRA_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.ROCKET_SAVER_KEY.tagKey,
+    weight = 2,
+    minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        15,
+        9
+    ),
+    maximumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        65,
+        9
+    ),
     activeSlots = setOf(EquipmentSlotGroup.CHEST),
     maxLevel = 3,
     listeners = setOf(RocketSaverListener)

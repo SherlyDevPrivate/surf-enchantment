@@ -143,7 +143,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = Rarity.EPIC,
+        rarity = Rarity.RARE,
     ),
     FEATHER_FALLING(
         EnchantmentKeys.FEATHER_FALLING,
@@ -603,6 +603,16 @@ enum class VanillaEnchantmentMap(
         },
         rarity = Rarity.RARE,
     ),
+    LUNGE(
+        EnchantmentKeys.LUNGE,
+        displayName = text("Lunge"),
+        description = { _ ->
+            line {
+                darkSpacer("Schleudert den Spieler beim Stoßangriffe eines Speers nach vorne")
+            }
+        },
+        rarity = Rarity.RARE,
+    ),
     BREACH(
         EnchantmentKeys.BREACH,
         displayName = text("Breach"),
@@ -680,7 +690,7 @@ enum class VanillaEnchantmentMap(
                 )
             }
         ),
-        rarity = Rarity.RARE,
+        rarity = Rarity.EPIC,
     ),
     BINDING_CURSE(
         EnchantmentKeys.BINDING_CURSE,

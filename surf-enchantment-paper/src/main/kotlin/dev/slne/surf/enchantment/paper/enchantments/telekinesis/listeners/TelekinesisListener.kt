@@ -3,31 +3,42 @@ package dev.slne.surf.enchantment.paper.enchantments.telekinesis.listeners
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisItemEvent
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.paper.utils.VehicleDrops
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
+import org.bukkit.event.vehicle.VehicleDestroyEvent
+import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
 
 object TelekinesisListener : Listener {
-    @EventHandler
+
+    @EventHandler(priority = EventPriority.LOW)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
+
         player.giveExp(event.expToDrop, true)
+        event.expToDrop = 0
     }
 
     @EventHandler
-    fun onBlockBreak(event: BlockDropItemEvent) {
+    fun onBlockDrop(event: BlockDropItemEvent) {
         val player = event.player
-
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.items.map { it.itemStack }, event)
+
+        val dropLocation = event.block.location.clone().add(0.5, 0.5, 0.5)
+        val drops = event.items.map { it.itemStack }
+
+        addDropsToInventory(player, drops, event, dropLocation)
 
         event.items.clear()
     }
@@ -35,26 +46,55 @@ object TelekinesisListener : Listener {
     @EventHandler
     fun onEntityDeath(event: EntityDeathEvent) {
         val player = event.entity.killer ?: return
-
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.drops, event)
-        player.giveExp(event.droppedExp, true)
 
+        val dropLocation = event.entity.location.clone()
+        val drops = event.drops.toList()
+
+        addDropsToInventory(player, drops, event, dropLocation)
+
+        player.giveExp(event.droppedExp, true)
         event.droppedExp = 0
         event.drops.clear()
     }
 
     @EventHandler
+    fun onVehicleDestroy(event: VehicleDestroyEvent) {
+        val player = event.attacker as? Player ?: return
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
+
+        val vehicle = event.vehicle
+        val dropLocation = vehicle.location.clone()
+        val drops = VehicleDrops.getDrops(vehicle)
+
+        event.isCancelled = true
+        if (vehicle is InventoryHolder) {
+            vehicle.inventory.clear()
+        }
+        vehicle.remove()
+
+        addDropsToInventory(player, drops, event, dropLocation)
+    }
+
+    @EventHandler
     fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
         val player = event.player
-
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
-        addDropsToInventory(player, event.drops, event)
+
+        val dropLocation = event.entity.location.clone()
+        val drops = event.drops.toList()
+
+        addDropsToInventory(player, drops, event, dropLocation)
 
         event.drops.clear()
     }
 
-    private fun addDropsToInventory(player: Player, drops: List<ItemStack>, originEvent: Event) {
+    private fun addDropsToInventory(
+        player: Player,
+        drops: List<ItemStack>,
+        originEvent: Event,
+        dropLocation: Location
+    ) {
         drops.forEach { drop ->
             val notAdded = player.inventory.addItem(drop)
 
@@ -68,8 +108,8 @@ object TelekinesisListener : Listener {
             notAdded.clear()
             notAdded.putAll(postTelekinesisItemEvent.notAddedToInventory)
 
-            notAdded.forEach { (_, item) ->
-                player.world.dropItem(player.location, item)
+            notAdded.values.forEach { item ->
+                dropLocation.world.dropItemNaturally(dropLocation, item)
             }
         }
     }

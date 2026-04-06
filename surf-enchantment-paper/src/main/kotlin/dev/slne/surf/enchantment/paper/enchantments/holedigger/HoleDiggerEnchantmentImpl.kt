@@ -2,7 +2,6 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.holedigger
 
-import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.HoleDiggerEnchantment
 import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
@@ -11,10 +10,11 @@ import dev.slne.surf.enchantment.paper.enchantments.holedigger.listeners.HoleDig
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.rarity.Rarity
+import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import org.bukkit.enchantments.Enchantment
 
-@AutoService(HoleDiggerEnchantment::class)
+//@AutoService(HoleDiggerEnchantment::class)
 class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "hole_digger"),
     displayName = text("Hole Digger"),
@@ -22,12 +22,21 @@ class HoleDiggerEnchantmentImpl : AbstractCustomEnchantment(
     description = {
         line { darkSpacer("Gräbt ein Loch in definierter Größe.") }
     },
-    supportedItems = CustomItemTypeTags.PICKAXES_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.HOLE_DIGGER_KEY.tagKey,
+    weight = 2,
+    minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        15,
+        9
+    ),
+    maximumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        65,
+        9
+    ),
     exclusiveWith = setOf(
         Enchantment.FORTUNE.key(),
         VeinMinerEnchantment.key
     ),
-    tags = setOf(EnchantmentTagKeys.TREASURE),
+    tags = setOf(EnchantmentTagKeys.TRADEABLE),
     listeners = setOf(HoleDiggerListener),
     jobs = setOf(HoleDiggerListener.cooldownHandler)
 ), HoleDiggerEnchantment

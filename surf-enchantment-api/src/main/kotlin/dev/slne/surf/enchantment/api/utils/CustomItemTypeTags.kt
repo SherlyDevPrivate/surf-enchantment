@@ -17,59 +17,71 @@ enum class CustomItemTypeTags(
     key: Key,
     vararg tags: TagEntry<ItemType>
 ) {
-    SHEARS_KEY(
-        key("surf", "shears"),
-        TagEntry.valueEntry(ItemTypeKeys.SHEARS)
+
+    BEHEADING_KEY(
+        key("surf", "items_beheading"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
     ),
 
-    TOOLS_AND_SWORDS_KEY(
-        key("surf", "tools_and_swords"),
+    EXPERIENCE_KEY(
+        key("surf", "items_experience"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON),
+        TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
+        TagEntry.tagEntry(ItemTypeTagKeys.AXES),
+        TagEntry.valueEntry(ItemTypeKeys.FISHING_ROD),
+        TagEntry.valueEntry(ItemTypeKeys.TRIDENT)
+    ),
+
+    HOLE_DIGGER_KEY(
+        key("surf", "items_hole_digger"),
+        TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES)
+    ),
+
+    REPLENISH_KEY(
+        key("surf", "items_replenish"),
+        TagEntry.tagEntry(ItemTypeTagKeys.HOES)
+    ),
+
+    ROCKET_RIDE_KEY(
+        key("surf", "items_rocket_ride"),
+        TagEntry.tagEntry(ItemTypeTagKeys.HARNESSES)
+    ),
+
+    ROCKET_SAVER_KEY(
+        key("surf", "items_rocket_saver"),
+        TagEntry.valueEntry(ItemTypeKeys.ELYTRA)
+    ),
+
+    SILENT_GAZE_KEY(
+        key("surf", "items_silent_gaze"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR)
+    ),
+
+    SILENT_NIGHT_KEY(
+        key("surf", "items_silent_night"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR)
+    ),
+
+    SOULBOUND_KEY(
+        key("surf", "items_soulbound"),
+        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_DURABILITY),
+        TagEntry.tagEntry(ItemTypeTagKeys.BUNDLES)
+    ),
+
+    TELEKINESIS_KEY(
+        key("surf", "items_telekinesis"),
+        TagEntry.valueEntry(ItemTypeKeys.SHEARS),
         TagEntry.tagEntry(ItemTypeTagKeys.AXES),
         TagEntry.tagEntry(ItemTypeTagKeys.HOES),
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
         TagEntry.tagEntry(ItemTypeTagKeys.SHOVELS),
         TagEntry.tagEntry(ItemTypeTagKeys.SWORDS),
+        TagEntry.valueEntry(ItemTypeKeys.TRIDENT)
     ),
 
-    TOOLS_AND_WEAPONS_KEY(
-        key("surf", "tools_and_weapons"),
-        TagEntry.tagEntry(TOOLS_AND_SWORDS_KEY.tagKey),
-        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
-    ),
-
-    TOOLS_AND_ARMOR_AND_EQUIPMENT_KEY(
-        key("surf", "tools_and_armor_and_equipment"),
-        TagEntry.tagEntry(ItemTypeTagKeys.BREAKS_DECORATED_POTS), // tools
-        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_ARMOR), // armor
-        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_EQUIPPABLE),
-        TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON)
-    ),
-
-    ELYTRA_KEY(
-        key("surf", "elytra"),
-        TagEntry.valueEntry(ItemTypeKeys.ELYTRA)
-    ),
-
-    PICKAXES_KEY(
-        key("surf", "pickaxes"),
-        TagEntry.valueEntry(ItemTypeKeys.WOODEN_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.STONE_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.COPPER_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.IRON_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.GOLDEN_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.DIAMOND_PICKAXE),
-        TagEntry.valueEntry(ItemTypeKeys.NETHERITE_PICKAXE)
-    ),
-
-    AXES_KEY(
-        key("surf", "axes"),
-        TagEntry.valueEntry(ItemTypeKeys.WOODEN_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.STONE_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.COPPER_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.IRON_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.GOLDEN_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.DIAMOND_AXE),
-        TagEntry.valueEntry(ItemTypeKeys.NETHERITE_AXE)
+    VEIN_MINER_KEY(
+        key("surf", "items_vein_miner"),
+        TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES)
     );
 
     val tagKey = TagKey.create(RegistryKey.ITEM, key)

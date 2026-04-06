@@ -1,13 +1,17 @@
+@file:Suppress("UnstableApiUsage")
+
 package dev.slne.surf.enchantment.paper.enchantments.beheading
 
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.BeheadingEnchantment
+import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.beheading.listeners.BeheadingListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
@@ -23,10 +27,20 @@ class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
+    supportedItems = CustomItemTypeTags.BEHEADING_KEY.tagKey,
+    weight = 1,
+    minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        15,
+        9
+    ),
+    maximumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
+        65,
+        9
+    ),
+
     activeSlots = setOf(EquipmentSlotGroup.MAINHAND),
     tags = objectSetOf(
-        EnchantmentTagKeys.IN_ENCHANTING_TABLE,
+        EnchantmentTagKeys.ON_RANDOM_LOOT,
         EnchantmentTagKeys.TREASURE
     ),
     exclusiveWith = setOf(EnchantmentKeys.LOOTING),
