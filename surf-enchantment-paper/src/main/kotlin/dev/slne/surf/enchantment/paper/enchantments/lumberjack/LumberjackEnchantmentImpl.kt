@@ -33,16 +33,16 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("pro abgebautem Block.")
         }
     },
-    supportedItems = CustomItemTypeTags.AXES_KEY.tagKey,
+    supportedItems = CustomItemTypeTags.LUMBERJACK_KEY.tagKey,
     exclusiveWith = setOf(Enchantment.FORTUNE.key()),
     tags = setOf(
-        EnchantmentTagKeys.TRADEABLE,
+        EnchantmentTagKeys.IN_ENCHANTING_TABLE,
     ),
     listeners = setOf(LumberJackListener),
     jobs = setOf(LumberJackListener.cooldownHandler)
 ), LumberJackEnchantment {
     companion object {
         const val MAX_BLOCKS_TO_MINE = 120
-        const val INCLUDE_LEAVES = true
+        const val INCLUDE_LEAVES = false
     }
 }

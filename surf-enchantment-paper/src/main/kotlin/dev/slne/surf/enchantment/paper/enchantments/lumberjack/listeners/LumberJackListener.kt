@@ -23,9 +23,10 @@ object LumberJackListener : Listener {
         success("Die Axt ist wieder geschärft!")
     }, { secondsLeft ->
         appendErrorPrefix()
-        error("Du bist noch erschöpft vom letzten Baum! Warte")
+        error("Die Axt ist noch stumpf vom letzten Baum! Warte noch")
         appendSpace()
         variableValue("$secondsLeft Sekunden")
+        error("!")
     })
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
