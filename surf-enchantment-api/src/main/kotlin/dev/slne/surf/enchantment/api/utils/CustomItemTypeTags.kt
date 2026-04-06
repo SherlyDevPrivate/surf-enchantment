@@ -28,7 +28,8 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.ENCHANTABLE_WEAPON),
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
         TagEntry.tagEntry(ItemTypeTagKeys.AXES),
-        TagEntry.valueEntry(ItemTypeKeys.FISHING_ROD)
+        TagEntry.valueEntry(ItemTypeKeys.FISHING_ROD),
+        TagEntry.valueEntry(ItemTypeKeys.TRIDENT)
     ),
 
     HOLE_DIGGER_KEY(
@@ -74,7 +75,8 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.HOES),
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
         TagEntry.tagEntry(ItemTypeTagKeys.SHOVELS),
-        TagEntry.tagEntry(ItemTypeTagKeys.SWORDS)
+        TagEntry.tagEntry(ItemTypeTagKeys.SWORDS),
+        TagEntry.valueEntry(ItemTypeKeys.TRIDENT)
     ),
 
     VEIN_MINER_KEY(
