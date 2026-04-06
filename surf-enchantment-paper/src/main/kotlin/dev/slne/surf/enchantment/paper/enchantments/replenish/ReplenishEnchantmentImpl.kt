@@ -5,6 +5,7 @@ package dev.slne.surf.enchantment.paper.enchantments.replenish
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
+import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.replenish.listeners.ReplenishListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
@@ -24,7 +25,7 @@ class ReplenishEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Nutzpflanzen werden nach dem Ernten automatisch nachgepflanzt")
         }
     },
-    supportedItems = ItemTypeTagKeys.HOES,
+    supportedItems = CustomItemTypeTags.REPLENISH_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

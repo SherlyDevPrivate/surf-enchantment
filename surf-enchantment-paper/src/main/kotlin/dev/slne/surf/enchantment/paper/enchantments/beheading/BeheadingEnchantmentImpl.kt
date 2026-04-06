@@ -5,6 +5,7 @@ package dev.slne.surf.enchantment.paper.enchantments.beheading
 import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.BeheadingEnchantment
+import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.beheading.listeners.BeheadingListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
@@ -26,7 +27,7 @@ class BeheadingEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Lässt den Kopf des Opfers fallen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_WEAPON,
+    supportedItems = CustomItemTypeTags.BEHEADING_KEY.tagKey,
     weight = 1,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,

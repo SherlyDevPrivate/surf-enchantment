@@ -6,13 +6,13 @@ import com.google.auto.service.AutoService
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.SilentGazeEnchantment
 import dev.slne.surf.enchantment.api.enchantments.SilentNightEnchantment
+import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.silentgaze.listeners.SilentGazeListener
 import dev.slne.surf.surfapi.core.api.messages.adventure.key
 import dev.slne.surf.surfapi.core.api.messages.adventure.text
 import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
-import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.inventory.EquipmentSlotGroup
 
 @AutoService(SilentGazeEnchantment::class)
@@ -25,7 +25,7 @@ class SilentGazeEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Ein Enderman wird dich nicht angreifen")
         }
     },
-    supportedItems = ItemTypeTagKeys.ENCHANTABLE_HEAD_ARMOR,
+    supportedItems = CustomItemTypeTags.SILENT_GAZE_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
         15,
