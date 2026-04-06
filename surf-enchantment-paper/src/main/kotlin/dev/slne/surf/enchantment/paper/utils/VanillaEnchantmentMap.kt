@@ -1,10 +1,10 @@
 package dev.slne.surf.enchantment.paper.utils
 
+import dev.slne.surf.api.core.messages.adventure.text
+import dev.slne.surf.api.core.rarity.Rarity
+import dev.slne.surf.api.core.util.object2ObjectMapOf
+import dev.slne.surf.api.paper.builder.LoreBuilder
 import dev.slne.surf.enchantment.api.utils.Enchantable
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
-import dev.slne.surf.surfapi.core.api.messages.adventure.text
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
-import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
 import io.papermc.paper.registry.keys.EnchantmentKeys

@@ -2,8 +2,8 @@
 
 package dev.slne.surf.enchantment.api.utils
 
-import dev.slne.surf.surfapi.core.api.messages.adventure.key
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import dev.slne.surf.api.core.messages.adventure.key
+import dev.slne.surf.api.core.util.objectSetOf
 import io.papermc.paper.registry.RegistryKey
 import io.papermc.paper.registry.keys.ItemTypeKeys
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys

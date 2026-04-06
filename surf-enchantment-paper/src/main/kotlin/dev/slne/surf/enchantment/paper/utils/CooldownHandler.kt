@@ -2,10 +2,10 @@ package dev.slne.surf.enchantment.paper.utils
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.sksamuel.aedile.core.expireAfterWrite
+import dev.slne.surf.api.core.messages.adventure.sendText
+import dev.slne.surf.api.core.messages.builder.SurfComponentBuilder
+import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentJob
-import dev.slne.surf.surfapi.bukkit.api.extensions.server
-import dev.slne.surf.surfapi.core.api.messages.adventure.sendText
-import dev.slne.surf.surfapi.core.api.messages.builder.SurfComponentBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
 import org.bukkit.entity.Player

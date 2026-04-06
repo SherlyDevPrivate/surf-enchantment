@@ -2,9 +2,9 @@
 
 package dev.slne.surf.enchantment.api.enchantment
 
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
+import dev.slne.surf.api.core.rarity.Rarity
+import dev.slne.surf.api.core.util.objectSetOf
+import dev.slne.surf.api.paper.builder.LoreBuilder
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
 import io.papermc.paper.registry.TypedKey

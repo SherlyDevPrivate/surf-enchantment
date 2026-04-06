@@ -2,9 +2,9 @@
 
 package dev.slne.surf.enchantment.paper.utils
 
+import dev.slne.surf.api.core.util.mutableObjectListOf
+import dev.slne.surf.api.core.util.toObjectList
 import dev.slne.surf.enchantment.paper.utils.events.FakeBlockBreakEvent
-import dev.slne.surf.surfapi.core.api.util.mutableObjectListOf
-import dev.slne.surf.surfapi.core.api.util.toObjectList
 import it.unimi.dsi.fastutil.objects.ObjectList
 import org.bukkit.block.Block
 import org.bukkit.entity.Player

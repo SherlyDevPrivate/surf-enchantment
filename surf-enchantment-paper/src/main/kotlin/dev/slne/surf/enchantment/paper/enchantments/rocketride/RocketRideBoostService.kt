@@ -3,8 +3,8 @@ package dev.slne.surf.enchantment.paper.enchantments.rocketride
 import com.github.shynixn.mccoroutine.folia.entityDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.ticks
+import dev.slne.surf.api.core.messages.adventure.buildText
 import dev.slne.surf.enchantment.paper.plugin
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

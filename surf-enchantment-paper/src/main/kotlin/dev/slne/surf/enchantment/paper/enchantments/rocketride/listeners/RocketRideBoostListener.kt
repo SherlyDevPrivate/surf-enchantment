@@ -1,14 +1,14 @@
 package dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners
 
+import dev.slne.surf.api.core.messages.adventure.buildText
+import dev.slne.surf.api.core.messages.adventure.playSound
+import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketBoost
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.RocketRideBoostService
 import dev.slne.surf.enchantment.paper.utils.CooldownHandler
-import dev.slne.surf.surfapi.bukkit.api.extensions.server
-import dev.slne.surf.surfapi.core.api.messages.adventure.buildText
-import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import kotlinx.coroutines.withContext
 import net.kyori.adventure.sound.Sound
 import org.bukkit.GameMode

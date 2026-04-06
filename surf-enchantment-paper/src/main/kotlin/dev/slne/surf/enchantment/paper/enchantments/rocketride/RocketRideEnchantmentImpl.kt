@@ -2,23 +2,22 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.rocketride
 
+import dev.slne.surf.api.core.messages.adventure.key
+import dev.slne.surf.api.core.messages.adventure.text
+import dev.slne.surf.api.core.rarity.Rarity
+import dev.slne.surf.api.core.util.objectSetOf
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners.RocketRideBoostListener
-import dev.slne.surf.surfapi.core.api.messages.adventure.key
-import dev.slne.surf.surfapi.core.api.messages.adventure.text
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
-import dev.slne.surf.surfapi.core.api.util.objectSetOf
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
-import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 
 //@AutoService(RocketRideEnchantment::class)
 class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
-    key("surf", "rocket_ride"),
-    text("Rocket Ride"),
-    Rarity.EPIC,
+    key = key("surf", "rocket_ride"),
+    displayName = text("Rocket Ride"),
+    rarity = Rarity.EPIC,
     description = {
         line {
             darkSpacer("Boostet den Happy Ghast, wenn du auf ihm eine Rakete zündest.")

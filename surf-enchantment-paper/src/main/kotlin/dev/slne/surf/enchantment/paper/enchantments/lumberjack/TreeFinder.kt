@@ -1,5 +1,6 @@
-import dev.slne.surf.enchantment.paper.enchantments.lumberjack.LumberjackEnchantmentImpl
-import dev.slne.surf.surfapi.core.api.util.objectListOf
+package dev.slne.surf.enchantment.paper.enchantments.lumberjack
+
+import dev.slne.surf.api.core.util.objectListOf
 import org.bukkit.Material
 import org.bukkit.Tag
 import org.bukkit.block.Block

@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.api.enchantment
 
+import dev.slne.surf.api.core.util.requiredService
 import dev.slne.surf.enchantment.api.utils.Enchantable
-import dev.slne.surf.surfapi.core.api.util.requiredService
 import io.papermc.paper.registry.TypedKey
 import it.unimi.dsi.fastutil.objects.ObjectSet
 import kotlinx.coroutines.CoroutineScope

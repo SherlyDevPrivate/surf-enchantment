@@ -2,10 +2,10 @@ package dev.slne.surf.enchantment.paper.commands
 
 import dev.jorel.commandapi.kotlindsl.commandAPICommand
 import dev.jorel.commandapi.kotlindsl.playerExecutor
+import dev.slne.surf.api.core.util.toObjectList
+import dev.slne.surf.api.paper.builder.ItemStack
+import dev.slne.surf.api.paper.builder.displayName
 import dev.slne.surf.enchantment.paper.utils.SurfEnchantmentPermissionRegistry
-import dev.slne.surf.surfapi.bukkit.api.builder.ItemStack
-import dev.slne.surf.surfapi.bukkit.api.builder.displayName
-import dev.slne.surf.surfapi.core.api.util.toObjectList
 import io.papermc.paper.registry.RegistryAccess
 import io.papermc.paper.registry.RegistryKey
 import org.bukkit.Material

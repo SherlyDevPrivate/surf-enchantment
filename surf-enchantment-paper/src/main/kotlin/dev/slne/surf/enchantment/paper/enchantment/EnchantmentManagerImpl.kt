@@ -2,6 +2,9 @@ package dev.slne.surf.enchantment.paper.enchantment
 
 import com.github.shynixn.mccoroutine.folia.*
 import com.google.auto.service.AutoService
+import dev.slne.surf.api.core.util.freeze
+import dev.slne.surf.api.core.util.mutableObjectSetOf
+import dev.slne.surf.api.paper.event.register
 import dev.slne.surf.enchantment.api.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.api.enchantment.VanillaEnchantment
@@ -12,9 +15,6 @@ import dev.slne.surf.enchantment.api.utils.Enchantable
 import dev.slne.surf.enchantment.api.utils.InternalEnchantmentApi
 import dev.slne.surf.enchantment.paper.plugin
 import dev.slne.surf.enchantment.paper.utils.VanillaEnchantmentMap
-import dev.slne.surf.surfapi.bukkit.api.event.register
-import dev.slne.surf.surfapi.core.api.util.freeze
-import dev.slne.surf.surfapi.core.api.util.mutableObjectSetOf
 import io.papermc.paper.registry.TypedKey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart

@@ -1,9 +1,9 @@
 package dev.slne.surf.enchantment.paper.enchantments.replenish.listeners
 
+import dev.slne.surf.api.core.util.object2ObjectMapOf
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishBlockEvent
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.utils.hasThisEnchantmentActive
-import dev.slne.surf.surfapi.core.api.util.object2ObjectMapOf
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.inventory.ItemStack
+
 object ReplenishListener : Listener {
 
     /**

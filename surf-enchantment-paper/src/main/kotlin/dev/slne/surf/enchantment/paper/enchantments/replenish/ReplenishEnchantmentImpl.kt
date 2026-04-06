@@ -3,16 +3,15 @@
 package dev.slne.surf.enchantment.paper.enchantments.replenish
 
 import com.google.auto.service.AutoService
+import dev.slne.surf.api.core.messages.adventure.key
+import dev.slne.surf.api.core.messages.adventure.text
+import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.replenish.ReplenishEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.replenish.listeners.ReplenishListener
-import dev.slne.surf.surfapi.core.api.messages.adventure.key
-import dev.slne.surf.surfapi.core.api.messages.adventure.text
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
-import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys
 import org.bukkit.inventory.EquipmentSlotGroup
 
 @AutoService(ReplenishEnchantment::class)

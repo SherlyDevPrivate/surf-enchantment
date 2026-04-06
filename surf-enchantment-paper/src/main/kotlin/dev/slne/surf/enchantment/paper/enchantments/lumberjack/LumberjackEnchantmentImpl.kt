@@ -1,14 +1,14 @@
 package dev.slne.surf.enchantment.paper.enchantments.lumberjack
 
 import com.google.auto.service.AutoService
+import dev.slne.surf.api.core.messages.adventure.key
+import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.LumberJackEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.lumberjack.listeners.LumberJackListener
-import dev.slne.surf.surfapi.core.api.messages.adventure.key
-import dev.slne.surf.surfapi.core.api.messages.adventure.text
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
+import net.kyori.adventure.text.Component.text
 import org.bukkit.enchantments.Enchantment
 
 @AutoService(LumberJackEnchantment::class)

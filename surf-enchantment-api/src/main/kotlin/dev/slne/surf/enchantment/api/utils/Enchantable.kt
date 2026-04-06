@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.api.utils
 
-import dev.slne.surf.surfapi.bukkit.api.builder.LoreBuilder
-import dev.slne.surf.surfapi.core.api.rarity.Rarity
+import dev.slne.surf.api.core.rarity.Rarity
+import dev.slne.surf.api.paper.builder.LoreBuilder
 import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import org.jetbrains.annotations.Range

@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.paper.utils
 
+import dev.slne.surf.api.paper.permission.PermissionRegistry
 import dev.slne.surf.enchantment.api.utils.InternalEnchantmentApi
-import dev.slne.surf.surfapi.bukkit.api.permission.PermissionRegistry
 
 @InternalEnchantmentApi
 internal object SurfEnchantmentPermissionRegistry : PermissionRegistry() {

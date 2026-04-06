@@ -1,8 +1,8 @@
 package dev.slne.surf.enchantment.paper.enchantments.lumberjack.listeners
 
-import TreeFinder
 import dev.slne.surf.enchantment.api.enchantments.LumberJackEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.paper.enchantments.lumberjack.TreeFinder
 import dev.slne.surf.enchantment.paper.utils.BlockBreakHandler
 import dev.slne.surf.enchantment.paper.utils.BlockHandler
 import dev.slne.surf.enchantment.paper.utils.CooldownHandler

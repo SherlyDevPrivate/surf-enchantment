@@ -1,8 +1,8 @@
 package dev.slne.surf.enchantment.paper.enchantments.silentgaze.listeners
 
+import dev.slne.surf.api.paper.event.cancel
 import dev.slne.surf.enchantment.api.enchantments.SilentGazeEnchantment
 import dev.slne.surf.enchantment.api.utils.hasThisEnchantmentActive
-import dev.slne.surf.surfapi.bukkit.api.event.cancel
 import org.bukkit.entity.Enderman
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler

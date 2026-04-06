@@ -2,9 +2,9 @@
 
 package dev.slne.surf.enchantment.paper.enchantments.beheading.listeners
 
+import dev.slne.surf.api.core.util.random
 import dev.slne.surf.enchantment.api.enchantments.BeheadingEnchantment
 import dev.slne.surf.enchantment.api.utils.getThisActiveEnchantmentOrNull
-import dev.slne.surf.surfapi.core.api.util.random
 import org.bukkit.entity.EntityType
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

@@ -2,10 +2,10 @@
 
 package dev.slne.surf.enchantment.paper.lore
 
+import dev.slne.surf.api.core.util.mutableObject2IntMapOf
+import dev.slne.surf.api.paper.packet.lore.SurfPaperPacketLoreHandler
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.paper.utils.VanillaEnchantmentMap
-import dev.slne.surf.surfapi.bukkit.api.packet.lore.SurfBukkitPacketLoreHandler
-import dev.slne.surf.surfapi.core.api.util.mutableObject2IntMapOf
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.persistence.PersistentDataContainerView
 import net.kyori.adventure.text.Component
@@ -14,7 +14,7 @@ import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-internal object SurfEnchantmentPacketLoreHandler : SurfBukkitPacketLoreHandler {
+internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
     override fun handleLore(
         loreToDisplay: MutableList<Component>,
         pdc: PersistentDataContainerView,

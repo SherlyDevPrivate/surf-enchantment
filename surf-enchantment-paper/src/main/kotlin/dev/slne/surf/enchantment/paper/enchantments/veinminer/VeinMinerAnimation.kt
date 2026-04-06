@@ -2,8 +2,8 @@ package dev.slne.surf.enchantment.paper.enchantments.veinminer
 
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.ticks
+import dev.slne.surf.api.core.messages.adventure.playSound
 import dev.slne.surf.enchantment.paper.plugin
-import dev.slne.surf.surfapi.core.api.messages.adventure.playSound
 import kotlinx.coroutines.delay
 import net.kyori.adventure.sound.Sound
 import org.bukkit.Location

@@ -1,10 +1,10 @@
 package dev.slne.surf.enchantment.paper.enchantments.rocketsaver.listeners
 
 import com.destroystokyo.paper.event.player.PlayerElytraBoostEvent
+import dev.slne.surf.api.core.util.random
 import dev.slne.surf.enchantment.api.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.api.utils.getThisActiveEnchantmentOrNull
 import dev.slne.surf.enchantment.paper.enchantments.rocketsaver.RocketSaverEnchantmentImpl
-import dev.slne.surf.surfapi.core.api.util.random
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
