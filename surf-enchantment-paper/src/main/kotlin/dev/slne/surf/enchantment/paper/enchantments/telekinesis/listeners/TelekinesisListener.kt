@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack
 
 object TelekinesisListener : Listener {
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
         val player = event.player
 

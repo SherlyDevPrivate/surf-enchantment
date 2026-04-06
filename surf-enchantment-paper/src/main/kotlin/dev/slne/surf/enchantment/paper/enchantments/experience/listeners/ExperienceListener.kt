@@ -19,8 +19,8 @@ object ExperienceListener : Listener {
         event.droppedExp = calculateDrops(event.droppedExp, level).toInt()
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    fun onEntityDeath(event: BlockBreakEvent) {
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    fun onBreakBlock(event: BlockBreakEvent) {
         val (level) = event.player.getThisActiveEnchantmentOrNull<ExperienceEnchantment>() ?: return
 
         event.expToDrop = calculateDrops(event.expToDrop, level).toInt()
