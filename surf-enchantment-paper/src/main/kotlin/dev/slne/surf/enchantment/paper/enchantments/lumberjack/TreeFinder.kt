@@ -37,7 +37,6 @@ object TreeFinder { //TODO: this logic may need to be optimized
 
             for (face in directions) {
                 val relative = current.getRelative(face)
-                if (result.contains(relative)) continue
 
                 val type = relative.type
                 val isLog = type == logType
@@ -48,8 +47,8 @@ object TreeFinder { //TODO: this logic may need to be optimized
                 }
 
                 if (includeLeaves && Tag.LEAVES.isTagged(type)) {
-                    val data = relative.blockData
-                    if (data is Leaves && data.distance < 7) {
+                    val data = relative.blockData as? Leaves ?: continue
+                    if (data.distance < 7) {
                         queue.add(relative)
                     }
                 }
@@ -60,17 +59,23 @@ object TreeFinder { //TODO: this logic may need to be optimized
     }
 
     private fun detect2x2(start: Block, logType: Material): List<Block> {
-        val offsets = listOf(
-            0 to 0,
-            1 to 0,
-            0 to 1,
-            1 to 1
+        val variants = listOf(
+            listOf(0 to 0, 1 to 0, 0 to 1, 1 to 1),
+            listOf(0 to 0, -1 to 0, 0 to 1, -1 to 1),
+            listOf(0 to 0, 1 to 0, 0 to -1, 1 to -1),
+            listOf(0 to 0, -1 to 0, 0 to -1, -1 to -1)
         )
 
-        val blocks = offsets.map { (dx, dz) ->
-            start.world.getBlockAt(start.x + dx, start.y, start.z + dz)
+        for (variant in variants) {
+            val blocks = variant.map { (dx, dz) ->
+                start.world.getBlockAt(start.x + dx, start.y, start.z + dz)
+            }
+
+            if (blocks.all { it.type == logType }) {
+                return blocks
+            }
         }
 
-        return if (blocks.all { it.type == logType }) blocks else emptyList()
+        return emptyList()
     }
 }
