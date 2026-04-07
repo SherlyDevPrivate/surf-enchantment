@@ -16,7 +16,7 @@ import org.bukkit.enchantments.Enchantment
 //@AutoService(VeinMinerEnchantment::class)
 class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "vein_miner"),
-    displayName = text("Vain Miner"),
+    displayName = text("Vein Miner"),
     rarity = Rarity.EPIC,
     description = {
         line { darkSpacer("Erzadern werden vollständig abgebaut") }
