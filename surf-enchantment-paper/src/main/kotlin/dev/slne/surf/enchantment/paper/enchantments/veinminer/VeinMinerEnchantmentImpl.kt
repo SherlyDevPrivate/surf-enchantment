@@ -9,9 +9,9 @@ import dev.slne.surf.enchantment.api.enchantments.VeinMinerEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
 import dev.slne.surf.enchantment.paper.enchantments.veinminer.listeners.VeinMinerListener
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
+import io.papermc.paper.registry.keys.EnchantmentKeys
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
 import net.kyori.adventure.text.Component.text
-import org.bukkit.enchantments.Enchantment
 
 //@AutoService(VeinMinerEnchantment::class)
 class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
@@ -45,10 +45,11 @@ class VeinMinerEnchantmentImpl : AbstractCustomEnchantment(
         65,
         9
     ),
-    exclusiveWith = setOf(Enchantment.FORTUNE.key()),
+    exclusiveWith = setOf(
+        EnchantmentKeys.FORTUNE
+    ),
     tags = setOf(
-        EnchantmentTagKeys.ON_RANDOM_LOOT,
-        EnchantmentTagKeys.IN_ENCHANTING_TABLE,
+        EnchantmentTagKeys.IN_ENCHANTING_TABLE
     ),
     listeners = setOf(VeinMinerListener),
     jobs = setOf(VeinMinerListener.cooldownHandler)
