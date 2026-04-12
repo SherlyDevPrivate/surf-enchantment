@@ -81,6 +81,9 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
         TagEntry.tagEntry(ItemTypeTagKeys.SHOVELS),
         TagEntry.tagEntry(ItemTypeTagKeys.SWORDS),
+        TagEntry.tagEntry(ItemTypeTagKeys.SPEARS),
+        TagEntry.valueEntry(ItemTypeKeys.BOW),
+        TagEntry.valueEntry(ItemTypeKeys.CROSSBOW),
         TagEntry.valueEntry(ItemTypeKeys.TRIDENT),
         TagEntry.valueEntry(ItemTypeKeys.MACE)
     ),
