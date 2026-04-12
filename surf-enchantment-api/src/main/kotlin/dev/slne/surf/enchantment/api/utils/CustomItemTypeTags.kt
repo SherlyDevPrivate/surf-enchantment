@@ -81,7 +81,8 @@ enum class CustomItemTypeTags(
         TagEntry.tagEntry(ItemTypeTagKeys.PICKAXES),
         TagEntry.tagEntry(ItemTypeTagKeys.SHOVELS),
         TagEntry.tagEntry(ItemTypeTagKeys.SWORDS),
-        TagEntry.valueEntry(ItemTypeKeys.TRIDENT)
+        TagEntry.valueEntry(ItemTypeKeys.TRIDENT),
+        TagEntry.valueEntry(ItemTypeKeys.MACE)
     ),
 
     VEIN_MINER_KEY(
