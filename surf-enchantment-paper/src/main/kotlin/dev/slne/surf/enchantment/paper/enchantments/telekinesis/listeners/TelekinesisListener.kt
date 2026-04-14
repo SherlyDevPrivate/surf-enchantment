@@ -111,7 +111,6 @@ object TelekinesisListener : Listener {
         }
     }
 
-
     @EventHandler
     fun onPlayerShearEntity(event: PlayerShearEntityEvent) {
         val player = event.player
