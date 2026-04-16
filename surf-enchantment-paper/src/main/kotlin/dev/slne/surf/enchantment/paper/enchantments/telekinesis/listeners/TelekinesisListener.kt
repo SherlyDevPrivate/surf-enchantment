@@ -7,7 +7,6 @@ import dev.slne.surf.enchantment.api.enchantments.telekinesis.PostTelekinesisIte
 import dev.slne.surf.enchantment.api.enchantments.telekinesis.TelekinesisEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
 import dev.slne.surf.enchantment.paper.plugin
-import dev.slne.surf.enchantment.paper.utils.VehicleDrops
 import dev.slne.surf.surfapi.bukkit.api.extensions.server
 import kotlinx.coroutines.delay
 import org.bukkit.Location
@@ -20,12 +19,10 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.ItemSpawnEvent
-import org.bukkit.event.inventory.InventoryPickupItemEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
-import org.bukkit.inventory.InventoryHolder
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -88,6 +85,7 @@ object TelekinesisListener : Listener {
             telekinesisTargets.remove(vehicle.uniqueId)
         }
     }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onItemSpawn(event: ItemSpawnEvent) {
         val loc = event.location
@@ -96,7 +94,7 @@ object TelekinesisListener : Listener {
             val (playerUuid, vehicleLocation) = entry.value
             val player = server.getPlayer(playerUuid) ?: continue
 
-            if (loc.world == player.world && loc.distanceSquared(vehicleLocation) < 4) {
+            if (loc.world == player.world && vehicleLocation.world == loc.world && loc.distanceSquared(vehicleLocation) < 4) {
                 val stack = event.entity.itemStack
                 val drops = listOf(stack)
 
