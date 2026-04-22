@@ -2,6 +2,7 @@ package dev.slne.surf.enchantment.paper.enchantments.lumberjack.listeners
 
 import dev.slne.surf.enchantment.api.enchantments.LumberJackEnchantment
 import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.paper.enchantments.lumberjack.LumberjackEnchantmentImpl
 import dev.slne.surf.enchantment.paper.enchantments.lumberjack.TreeFinder
 import dev.slne.surf.enchantment.paper.utils.BlockBreakHandler
 import dev.slne.surf.enchantment.paper.utils.BlockHandler
@@ -13,7 +14,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.milliseconds
 
 object LumberJackListener : Listener {
     private val blockHandler = BlockHandler()
@@ -23,10 +24,9 @@ object LumberJackListener : Listener {
         success("Die Axt ist wieder geschärft!")
     }, { secondsLeft ->
         appendErrorPrefix()
-        error("Die Axt ist noch stumpf vom letzten Baum! Warte noch")
+        error("Die Axt ist noch stumpf vom letzten Baum!")
         appendSpace()
-        variableValue("$secondsLeft Sekunden")
-        error("!")
+        error("Bitte warte noch einen Moment.")
     })
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -39,7 +39,8 @@ object LumberJackListener : Listener {
         val item = player.inventory.itemInMainHand
 
         if (!item.hasCustomEnchantment<LumberJackEnchantment>()) return
-        if (!Tag.LOGS.isTagged(event.block.type)) return
+        val blockToMine = event.block
+        if (!Tag.LOGS.isTagged(blockToMine.type)) return
 
         if (player.gameMode != GameMode.CREATIVE) {
             if (!cooldownHandler.checkCooldown(player.uniqueId)) return
@@ -53,7 +54,7 @@ object LumberJackListener : Listener {
         val blocksToMine = blockResult.breakableBlocks
 
         BlockBreakHandler.handleBlockBreak(
-            cooldown = (blocksToMine.size * 1.5.toLong()).seconds,
+            cooldown = (blocksToMine.size * LumberjackEnchantmentImpl.COOLDOWN_PER_BLOCK_MS).milliseconds,
             blocks = blocksToMine,
             cooldownHandler = cooldownHandler,
             event = event,

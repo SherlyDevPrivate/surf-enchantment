@@ -7,7 +7,7 @@ import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.type.Leaves
 
-object TreeFinder { //TODO: this logic may need to be optimized
+object TreeFinder {
 
     private val directions = objectListOf(
         BlockFace.UP, BlockFace.DOWN,
