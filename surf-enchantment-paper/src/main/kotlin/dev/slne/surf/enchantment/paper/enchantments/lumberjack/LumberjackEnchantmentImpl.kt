@@ -17,24 +17,31 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     displayName = text("Lumberjack"),
     rarity = Rarity.EPIC,
     description = {
-        line { darkSpacer("Erzadern werden vollständig abgebaut") }
+        line { darkSpacer("Bäume werden vollständig und mit einem Schlag abgebaut") }
         line {
             darkSpacer("Es werden maximal")
             appendSpace()
-            variableValue("10 Blöcke")
+            variableValue("$MAX_BLOCKS_TO_MINE Blöcke")
             appendSpace()
             darkSpacer("pro Nutzung abgebaut.")
         }
         line {
-            darkSpacer("Die Abklinzeit beträgt")
+            darkSpacer("Die Abklingzeit beträgt")
             appendSpace()
-            variableValue("2 Sekunden")
+            variableValue("1.5 Sekunden")
             appendSpace()
             darkSpacer("pro abgebautem Block.")
         }
+        line {
+            darkSpacer("Solltest du den")
+            appendSpace()
+            variableValue("Woodcutting Skill")
+            appendSpace()
+            darkSpacer("gelevelt haben, verkürzt sich der Cooldown.")
+        }
     },
     supportedItems = CustomItemTypeTags.LUMBERJACK_KEY.tagKey,
-    exclusiveWith = setOf(Enchantment.FORTUNE.key()),
+    exclusiveWith = setOf(Enchantment.SILK_TOUCH.key()),
     tags = setOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE,
     ),
@@ -43,6 +50,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
 ), LumberJackEnchantment {
     companion object {
         const val MAX_BLOCKS_TO_MINE = 120
+        const val COOLDOWN_PER_BLOCK_MS = 1500
         const val INCLUDE_LEAVES = false
     }
 }
