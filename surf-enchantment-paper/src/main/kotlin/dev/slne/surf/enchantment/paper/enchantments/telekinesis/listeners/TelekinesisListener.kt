@@ -95,7 +95,7 @@ object TelekinesisListener : Listener {
             val (playerUuid, vehicleLocation) = entry.value
             val player = server.getPlayer(playerUuid) ?: continue
 
-            if (loc.world == player.world && loc.distanceSquared(vehicleLocation) < 4) {
+            if (loc.world == player.world && loc.world == vehicleLocation.world && loc.distanceSquared(vehicleLocation) < 4) {
                 val stack = event.entity.itemStack
                 val drops = listOf(stack)
 
