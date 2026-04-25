@@ -99,6 +99,12 @@ object TelekinesisListener : Listener {
                 val stack = event.entity.itemStack
                 val drops = listOf(stack)
 
+                // Remove the entry and cancel the event BEFORE calling addDropsToInventory
+                // to prevent infinite recursion: if the inventory is full, dropItemNaturally
+                // would fire another ItemSpawnEvent at the same location, re-triggering this handler.
+                telekinesisTargets.remove(entry.key)
+                event.isCancelled = true
+
                 addDropsToInventory(
                     player = player,
                     drops = drops,
@@ -106,7 +112,7 @@ object TelekinesisListener : Listener {
                     dropLocation = vehicleLocation.clone()
                 )
 
-                event.isCancelled = true
+                break
             }
         }
     }
