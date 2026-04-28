@@ -43,7 +43,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
 ), LumberJackEnchantment {
     companion object {
         const val MAX_BLOCKS_TO_MINE = 120
-        const val COOLDOWN_PER_BLOCK_MS = 3000
+        const val COOLDOWN_PER_BLOCK_MS = 1500
         const val INCLUDE_LEAVES = false
     }
 }
