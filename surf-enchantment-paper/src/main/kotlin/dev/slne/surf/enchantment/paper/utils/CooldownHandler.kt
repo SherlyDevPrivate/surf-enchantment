@@ -6,19 +6,25 @@ import dev.slne.surf.api.core.messages.adventure.sendText
 import dev.slne.surf.api.core.messages.builder.SurfComponentBuilder
 import dev.slne.surf.api.paper.extensions.server
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentJob
+import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager.Companion.launch
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
+import org.bukkit.persistence.PersistentDataType
 import java.time.OffsetDateTime
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
+private val lumberJackReductionKey =
+    NamespacedKey("surf-skill-paper", "lumberjack_cooldown_reduction")
+
 class CooldownHandler(
     private val expirationMessage: SurfComponentBuilder.() -> Unit = {},
     private val notReadyMessage: SurfComponentBuilder.(Long) -> Unit = {},
-    cooldownExpiration: Duration = 5.minutes,
+    private val defaultCooldown: Duration = 5.minutes,
+    private val allowReduction: Boolean = false,
     lastMessageExpiration: Duration = 3.seconds
 ) : EnchantmentJob() {
     private val expirationListeners = mutableListOf<suspend CoroutineScope.(UUID) -> Unit>()
@@ -29,38 +35,41 @@ class CooldownHandler(
         .build<UUID, Unit>()
 
     private val cooldowns = Caffeine.newBuilder()
-        .expireAfterWrite(cooldownExpiration)
         .maximumSize(10_000)
         .build<UUID, OffsetDateTime>()
 
     override suspend fun tick() {
         val now = OffsetDateTime.now()
 
-        cooldowns.asMap().forEach { (uuid, expireTime) ->
-            if (expireTime.isBefore(now)) {
-                cooldowns.invalidate(uuid)
+        cooldowns.asMap().entries.removeIf { (uuid, expireTime) ->
+            if (expireTime.isAfter(now)) return@removeIf false
 
-                server.getPlayer(uuid)?.sendText(expirationMessage)
+            server.getPlayer(uuid)?.sendText(expirationMessage)
 
-                coroutineScope {
-                    expirationListeners.forEach { listener ->
-                        listener.invoke(this, uuid)
-                    }
+            expirationListeners.forEach { listener ->
+                launch {
+                    listener(uuid)
                 }
             }
+            true
         }
     }
 
     fun checkCooldown(uuid: UUID, receiverPlayer: Player? = null): Boolean {
         val expireTime = cooldowns.getIfPresent(uuid) ?: return true
 
-        if (lastMessage.getIfPresent(uuid) == null) {
-            val secondsLeft = expireTime.toEpochSecond() - OffsetDateTime.now().toEpochSecond()
+        val remaining = expireTime.toEpochSecond() - OffsetDateTime.now().toEpochSecond()
 
+        if (remaining <= 0) {
+            cooldowns.invalidate(uuid)
+            return true
+        }
+
+        if (lastMessage.getIfPresent(uuid) == null) {
             val player = receiverPlayer ?: server.getPlayer(uuid)
 
             player?.sendText {
-                notReadyMessage(this, secondsLeft)
+                notReadyMessage(this, remaining)
             }
 
             lastMessage.put(uuid, Unit)
@@ -69,8 +78,30 @@ class CooldownHandler(
         return false
     }
 
-    fun applyCooldown(uuid: UUID, cooldown: Duration) {
-        cooldowns.put(uuid, OffsetDateTime.now().plusSeconds(cooldown.inWholeSeconds))
+    fun applyCooldown(player: Player, cooldown: Duration = defaultCooldown) {
+        val uuid = player.uniqueId
+
+        if (!allowReduction) {
+            cooldowns.put(
+                uuid,
+                OffsetDateTime.now().plusSeconds(cooldown.inWholeSeconds)
+            )
+            return
+        }
+
+        val reductionSeconds = player.persistentDataContainer.get(
+            lumberJackReductionKey,
+            PersistentDataType.DOUBLE
+        ) ?: 0.0
+
+        val finalCooldown = cooldown
+            .minus(reductionSeconds.seconds)
+            .coerceAtLeast(0.seconds)
+
+        cooldowns.put(
+            uuid,
+            OffsetDateTime.now().plusSeconds(finalCooldown.inWholeSeconds)
+        )
     }
 
     fun invalidateCooldown(uuid: UUID) {

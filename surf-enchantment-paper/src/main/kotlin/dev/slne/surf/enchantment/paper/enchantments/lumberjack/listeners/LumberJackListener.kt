@@ -19,15 +19,20 @@ import kotlin.time.Duration.Companion.milliseconds
 object LumberJackListener : Listener {
     private val blockHandler = BlockHandler()
 
-    val cooldownHandler = CooldownHandler({
+    val cooldownHandler = CooldownHandler(
+        {
         appendSuccessPrefix()
         success("Die Axt ist wieder geschärft!")
     }, { secondsLeft ->
         appendErrorPrefix()
         error("Die Axt ist noch stumpf vom letzten Baum!")
         appendSpace()
-        error("Bitte warte noch einen Moment.")
-    })
+        error("Bitte warte noch ")
+        variableValue("$secondsLeft Sekunden")
+        error(".")
+    },
+        allowReduction = true
+    )
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onBreak(event: BlockBreakEvent) {

@@ -35,7 +35,7 @@ object HoleDiggerListener : Listener {
         appendSpace()
         variableValue("$secondsLeft Sekunden")
         error(".")
-    }, cooldownExpiration = 10.minutes)
+    }, defaultCooldown = 10.minutes)
 
     private val lastBlockFace = Caffeine.newBuilder()
         .expireAfterWrite(5.minutes)

@@ -24,7 +24,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.meta.FireworkMeta
 import org.bukkit.persistence.PersistentDataType
-import kotlin.time.Duration.Companion.seconds
 import org.bukkit.Sound as BukkitSound
 
 object RocketRideBoostListener : Listener {
@@ -120,7 +119,7 @@ object RocketRideBoostListener : Listener {
             item.amount -= 1
         }
 
-        cooldownHandler.applyCooldown(happyGhast.uniqueId, boost.cooldownSeconds.seconds)
+        //cooldownHandler.applyCooldown(player, happyGhast.uniqueId, boost.cooldownSeconds.seconds) TODO: Implement
 
         happyGhast.passengers.forEach { passenger ->
             passenger.sendActionBar(buildText { success("Der Happy Ghast wurde geboostet!") })
