@@ -1,7 +1,7 @@
 package dev.slne.surf.enchantment.paper.enchantments.lumberjack.listeners
 
 import dev.slne.surf.enchantment.api.enchantments.LumberJackEnchantment
-import dev.slne.surf.enchantment.api.utils.hasCustomEnchantment
+import dev.slne.surf.enchantment.api.utils.getThisEnchantmentOrNull
 import dev.slne.surf.enchantment.paper.enchantments.lumberjack.LumberjackEnchantmentImpl
 import dev.slne.surf.enchantment.paper.enchantments.lumberjack.TreeFinder
 import dev.slne.surf.enchantment.paper.utils.BlockBreakHandler
@@ -42,16 +42,21 @@ object LumberJackListener : Listener {
         if (!player.isSneaking) return
 
         val item = player.inventory.itemInMainHand
+        val enchantmentLevel = item.getThisEnchantmentOrNull<LumberJackEnchantment>()?.first ?: return
+        val blockLimit = enchantmentLevel.coerceIn(
+            1,
+            LumberjackEnchantmentImpl.MAX_LEVEL
+        ) * LumberjackEnchantmentImpl.BLOCKS_PER_LEVEL
 
-        if (!item.hasCustomEnchantment<LumberJackEnchantment>()) return
         val blockToMine = event.block
         if (!Tag.LOGS.isTagged(blockToMine.type)) return
+        if (!TreeFinder.isEligibleBlock(blockToMine)) return
 
         if (player.gameMode != GameMode.CREATIVE) {
             if (!cooldownHandler.checkCooldown(player.uniqueId)) return
         }
 
-        val treeBlocks = TreeFinder.findTree(event.block)
+        val treeBlocks = TreeFinder.findTree(event.block, maxBlocks = blockLimit)
 
         if (treeBlocks.size <= 1) return
 
@@ -59,7 +64,7 @@ object LumberJackListener : Listener {
         val blocksToMine = blockResult.breakableBlocks
 
         BlockBreakHandler.handleBlockBreak(
-            cooldown = (blocksToMine.size * LumberjackEnchantmentImpl.COOLDOWN_PER_BLOCK_MS).milliseconds,
+            cooldown = LumberjackEnchantmentImpl.COOLDOWN_MS.milliseconds,
             blocks = blocksToMine,
             cooldownHandler = cooldownHandler,
             event = event,
