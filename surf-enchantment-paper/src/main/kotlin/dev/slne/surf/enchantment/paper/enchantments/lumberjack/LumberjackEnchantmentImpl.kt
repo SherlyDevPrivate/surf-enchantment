@@ -18,21 +18,19 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     rarity = Rarity.EPIC,
     description = { level ->
         val blocksToMine = level.coerceIn(1, MAX_LEVEL) * BLOCKS_PER_LEVEL
+        val cooldownSeconds = COOLDOWN_MS / 1000
 
-        line { darkSpacer("Ermöglicht es dir alle 20 Sekunden") }
+        line {
+            darkSpacer("Ermöglicht es dir alle")
+            appendSpace()
+            variableValue("$cooldownSeconds Sekunden")
+        }
         line {
             darkSpacer("bis zu")
             appendSpace()
             variableValue("$blocksToMine Blöcke")
             appendSpace()
             darkSpacer("eines Baumes auf einmal abzubauen.")
-        }
-        line {
-            darkSpacer("Solltest du den")
-            appendSpace()
-            variableValue("Woodcutting Skill")
-            appendSpace()
-            darkSpacer("gelevelt haben, verkürzt sich der Cooldown.")
         }
     },
     supportedItems = CustomItemTypeTags.LUMBERJACK_KEY.tagKey,
@@ -46,7 +44,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
 ), LumberJackEnchantment {
     companion object {
         const val MAX_LEVEL = 5
-        const val BLOCKS_PER_LEVEL = 7
+        const val BLOCKS_PER_LEVEL = 10
         const val COOLDOWN_MS = 20_000
         const val INCLUDE_LEAVES = false
     }
