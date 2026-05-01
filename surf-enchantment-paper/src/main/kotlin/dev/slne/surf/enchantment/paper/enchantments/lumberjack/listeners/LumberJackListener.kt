@@ -45,10 +45,7 @@ object LumberJackListener : Listener {
 
         val item = player.inventory.itemInMainHand
         val enchantmentLevel = item.getThisEnchantmentOrNull<LumberJackEnchantment>()?.first ?: return
-        val blockLimit = enchantmentLevel.coerceIn(
-            1,
-            LumberjackEnchantmentImpl.MAX_LEVEL
-        ) * LumberjackEnchantmentImpl.BLOCKS_PER_LEVEL
+        val blockLimit = LumberjackEnchantmentImpl.blocksForLevel(enchantmentLevel)
 
         val blockToMine = event.block
         if (!Tag.LOGS.isTagged(blockToMine.type)) return
