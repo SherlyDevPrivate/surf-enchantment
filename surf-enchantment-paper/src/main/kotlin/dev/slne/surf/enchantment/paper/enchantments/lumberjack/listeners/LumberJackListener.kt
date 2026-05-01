@@ -8,6 +8,7 @@ import dev.slne.surf.enchantment.paper.utils.BlockBreakHandler
 import dev.slne.surf.enchantment.paper.utils.BlockHandler
 import dev.slne.surf.enchantment.paper.utils.CooldownHandler
 import dev.slne.surf.enchantment.paper.utils.events.FakeBlockBreakEvent
+import net.kyori.adventure.text.format.TextColor
 import org.bukkit.GameMode
 import org.bukkit.Tag
 import org.bukkit.event.EventHandler
@@ -18,18 +19,19 @@ import kotlin.time.Duration.Companion.milliseconds
 
 object LumberJackListener : Listener {
     private val blockHandler = BlockHandler()
+    private val messageColor = TextColor.color(0xee3d51)
+    private val variableColor = TextColor.color(0xf9c353)
 
     val cooldownHandler = CooldownHandler(
         {
         appendSuccessPrefix()
         success("Die Axt ist wieder geschärft!")
     }, { secondsLeft ->
-        appendErrorPrefix()
-        error("Die Axt ist noch stumpf vom letzten Baum!")
-        appendSpace()
-        error("Bitte warte noch ")
-        variableValue("$secondsLeft Sekunden")
-        error(".")
+        text("Du kannst ", messageColor)
+        text("Lumberjack", variableColor)
+        text(" erst in ", messageColor)
+        text(secondsLeft, variableColor)
+        text(" Sekunden wieder verwenden!", messageColor)
     },
         allowReduction = true
     )
