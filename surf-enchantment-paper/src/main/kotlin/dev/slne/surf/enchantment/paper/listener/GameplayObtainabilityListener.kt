@@ -33,7 +33,7 @@ object GameplayObtainabilityListener : Listener {
         .mapTo(mutableSetOf()) { it.bukkitEnchantment }
 
     private fun ItemStack.removeBlockedEnchantments(blockedEnchantments: Set<Enchantment>) {
-        for (enchantment in enchantments.keys) {
+        for (enchantment in enchantments.keys.toList()) {
             if (enchantment in blockedEnchantments) {
                 removeEnchantment(enchantment)
             }
@@ -41,7 +41,7 @@ object GameplayObtainabilityListener : Listener {
 
         val storageMeta = itemMeta as? EnchantmentStorageMeta ?: return
         var changed = false
-        for (enchantment in storageMeta.storedEnchants.keys) {
+        for (enchantment in storageMeta.storedEnchants.keys.toList()) {
             if (enchantment in blockedEnchantments) {
                 storageMeta.removeStoredEnchant(enchantment)
                 changed = true
