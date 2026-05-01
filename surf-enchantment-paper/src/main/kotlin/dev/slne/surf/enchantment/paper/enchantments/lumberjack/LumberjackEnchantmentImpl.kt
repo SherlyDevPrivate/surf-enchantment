@@ -17,7 +17,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     displayName = text("Lumberjack"),
     rarity = Rarity.EPIC,
     description = { level ->
-        val blocksToMine = level.coerceIn(1, MAX_LEVEL) * BLOCKS_PER_LEVEL
+        val blocksToMine = blocksForLevel(level)
         val cooldownSeconds = COOLDOWN_MS / 1000
 
         line {
@@ -47,5 +47,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
         const val BLOCKS_PER_LEVEL = 10
         const val COOLDOWN_MS = 20_000
         const val INCLUDE_LEAVES = false
+
+        fun blocksForLevel(level: Int) = level.coerceAtLeast(1) * BLOCKS_PER_LEVEL
     }
 }
