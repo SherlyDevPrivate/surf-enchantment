@@ -3,6 +3,7 @@
 package dev.slne.surf.enchantment.paper.bootstrap
 
 import dev.slne.surf.api.core.util.objectSetOf
+import dev.slne.surf.enchantment.api.enchantment.CustomEnchantment
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import io.papermc.paper.registry.RegistryKey
@@ -31,11 +32,7 @@ fun tagPostFlattenHandler() =
         }
     }
 
-private fun EnchantmentManager.CustomEnchantmentNotUsed() = Unit
-
-private fun dev.slne.surf.enchantment.api.enchantment.CustomEnchantment.validateGameplayTags(
-    tags: Set<TagKey<Enchantment>>
-) {
+private fun CustomEnchantment.validateGameplayTags(tags: Set<TagKey<Enchantment>>) {
     if (obtainableFromGameplay) return
 
     val blockedTags = tags.filter { it in GAMEPLAY_SOURCE_TAGS }
