@@ -42,6 +42,7 @@ abstract class AbstractCustomEnchantment(
     override val activeSlots: Set<EquipmentSlotGroup> = objectSetOf(EquipmentSlotGroup.ANY),
     override val exclusiveWith: Set<Key>? = null,
     override val tags: Set<TagKey<Enchantment>>? = objectSetOf(),
+    override val obtainableFromGameplay: Boolean = true,
     override val typedKey: TypedKey<Enchantment> = TypedKey.create(RegistryKey.ENCHANTMENT, key),
     override val listeners: Set<Listener> = objectSetOf(),
     override val jobs: Set<EnchantmentJob> = objectSetOf(),
