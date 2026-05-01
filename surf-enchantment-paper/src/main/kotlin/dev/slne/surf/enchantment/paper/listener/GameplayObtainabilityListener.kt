@@ -3,6 +3,7 @@ package dev.slne.surf.enchantment.paper.listener
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.enchantment.EnchantItemEvent
 import org.bukkit.event.world.LootGenerateEvent
@@ -10,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.EnchantmentStorageMeta
 
 object GameplayObtainabilityListener : Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onLootGenerate(event: LootGenerateEvent) {
         val blockedEnchantments = blockedGameplayEnchantments()
         if (blockedEnchantments.isEmpty()) return
@@ -20,7 +21,7 @@ object GameplayObtainabilityListener : Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onEnchantItem(event: EnchantItemEvent) {
         val blockedEnchantments = blockedGameplayEnchantments()
         if (blockedEnchantments.isEmpty()) return
