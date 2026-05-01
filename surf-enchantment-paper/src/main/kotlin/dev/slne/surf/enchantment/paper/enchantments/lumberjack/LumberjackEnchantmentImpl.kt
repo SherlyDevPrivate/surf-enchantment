@@ -16,14 +16,16 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     key = key("surf", "lumberjack"),
     displayName = text("Lumberjack"),
     rarity = Rarity.EPIC,
-    description = {
-        line { darkSpacer("Bäume werden vollständig und mit einem Schlag abgebaut") }
+    description = { level ->
+        val blocksToMine = level.coerceIn(1, MAX_LEVEL) * BLOCKS_PER_LEVEL
+
+        line { darkSpacer("Ermöglicht es dir alle 20 Sekunden") }
         line {
-            darkSpacer("Es werden maximal")
+            darkSpacer("bis zu")
             appendSpace()
-            variableValue("$MAX_BLOCKS_TO_MINE Blöcke")
+            variableValue("$blocksToMine Blöcke")
             appendSpace()
-            darkSpacer("pro Nutzung abgebaut.")
+            darkSpacer("eines Baumes auf einmal abzubauen.")
         }
         line {
             darkSpacer("Solltest du den")
@@ -38,12 +40,14 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     tags = setOf(
         EnchantmentTagKeys.IN_ENCHANTING_TABLE,
     ),
+    maxLevel = MAX_LEVEL,
     listeners = setOf(LumberJackListener),
     jobs = setOf(LumberJackListener.cooldownHandler)
 ), LumberJackEnchantment {
     companion object {
-        const val MAX_BLOCKS_TO_MINE = 120
-        const val COOLDOWN_PER_BLOCK_MS = 1500
+        const val MAX_LEVEL = 5
+        const val BLOCKS_PER_LEVEL = 7
+        const val COOLDOWN_MS = 20_000
         const val INCLUDE_LEAVES = false
     }
 }
