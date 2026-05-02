@@ -66,7 +66,7 @@ object ReplenishListener : Listener {
 
         if (hasSeedInInventory) {
             val replenishBlockEvent = ReplenishBlockEvent(
-                block = event.block,
+                block = event.blockState.block,
                 seed = seedItemStack.clone(),
                 items = event.items.toMutableList(),
                 player = player,
