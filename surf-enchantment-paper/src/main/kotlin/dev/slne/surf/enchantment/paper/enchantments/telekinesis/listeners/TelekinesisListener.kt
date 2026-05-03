@@ -22,6 +22,7 @@ import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.milliseconds
@@ -147,7 +148,7 @@ object TelekinesisListener : Listener {
             postTelekinesisItemEvent.callEvent()
 
             notAdded.values.forEach { item ->
-                dropLocation.world.dropItemNaturally(dropLocation, item)
+                dropLocation.world.dropItem(dropLocation, item).velocity = Vector(0, 0, 0)
             }
         }
     }
