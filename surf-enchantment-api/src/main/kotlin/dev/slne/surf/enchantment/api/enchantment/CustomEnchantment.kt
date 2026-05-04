@@ -37,7 +37,7 @@ interface CustomEnchantment : Enchantable {
      * Event-only enchantments should set this to false and must not be assigned
      * gameplay source tags.
      */
-    val obtainableFromGameplay: Boolean
+    val obtainableFromGameplay: Boolean get() = true
 
     val typedKey: TypedKey<Enchantment>
 
