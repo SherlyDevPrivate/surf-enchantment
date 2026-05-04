@@ -4,6 +4,7 @@ package dev.slne.surf.enchantment.paper.lore
 
 import dev.slne.surf.api.core.util.mutableObject2IntMapOf
 import dev.slne.surf.api.paper.packet.lore.SurfPaperPacketLoreHandler
+import dev.slne.surf.api.paper.packet.lore.SurfPaperPacketLorePriority
 import dev.slne.surf.enchantment.api.enchantment.EnchantmentManager
 import dev.slne.surf.enchantment.paper.utils.VanillaEnchantmentMap
 import io.papermc.paper.datacomponent.DataComponentTypes
@@ -15,6 +16,8 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
 internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
+    override val priority = SurfPaperPacketLorePriority.FIRST
+
     override fun handleLore(
         loreToDisplay: MutableList<Component>,
         pdc: PersistentDataContainerView,
