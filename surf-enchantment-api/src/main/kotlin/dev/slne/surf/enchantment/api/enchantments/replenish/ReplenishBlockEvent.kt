@@ -1,6 +1,6 @@
 package dev.slne.surf.enchantment.api.enchantments.replenish
 
-import org.bukkit.block.Block
+import org.bukkit.block.BlockState
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack
 
 class ReplenishBlockEvent(
     val player: Player,
-    val block: Block,
+    val blockState: BlockState,
     val seed: ItemStack,
     val items: MutableList<Item>,
     var shouldConsumeSeed: Boolean
