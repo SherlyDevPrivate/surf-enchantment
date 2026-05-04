@@ -35,7 +35,7 @@ fun tagPostFlattenHandler() =
 private fun CustomEnchantment.validateGameplayTags(tags: Set<TagKey<Enchantment>>) {
     if (obtainableFromGameplay) return
 
-    val blockedTags = tags.filter { it in GAMEPLAY_SOURCE_TAGS }
+    val blockedTags = tags.intersect(GAMEPLAY_SOURCE_TAGS)
     require(blockedTags.isEmpty()) {
         "Enchantment $key is marked as not obtainable from gameplay, but is assigned to gameplay source tags: $blockedTags"
     }
