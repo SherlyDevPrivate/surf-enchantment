@@ -42,7 +42,7 @@ object GameplayObtainabilityListener : Listener {
             val original = enchants.enchantments()
             val filtered = original.filterKeys { it !in blockedEnchantments }
             if (filtered.size < original.size) {
-                setData(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments(filtered, enchants.showInTooltip()))
+                setData(DataComponentTypes.ENCHANTMENTS, ItemEnchantments.itemEnchantments(filtered))
             }
         }
 
@@ -51,7 +51,7 @@ object GameplayObtainabilityListener : Listener {
             val original = storedEnchants.enchantments()
             val filtered = original.filterKeys { it !in blockedEnchantments }
             if (filtered.size < original.size) {
-                setData(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantments.itemEnchantments(filtered, storedEnchants.showInTooltip()))
+                setData(DataComponentTypes.STORED_ENCHANTMENTS, ItemEnchantments.itemEnchantments(filtered))
             }
         }
     }
