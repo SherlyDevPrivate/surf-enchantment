@@ -33,6 +33,8 @@ internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
 
         itemStack.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_STORED_ENCHANTS)
 
+        val shouldDisplayEnchantmentDescription = enchantments.size < 5
+
         enchantments.object2IntEntrySet()
             .mapNotNull {
                 val enchantment = VanillaEnchantmentMap.getByKey(it.key.key)
@@ -45,12 +47,8 @@ internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
             .reversed()
             .sortedBy { it.first.rarity }
             .reversed()
-            .forEachIndexed { index, (enchantment, level) ->
-                if (index > 0) {
-                    loreToDisplay.add(Component.empty())
-                }
-
-                loreToDisplay.addAll(enchantment.buildLore(level))
+            .forEach { (enchantment, level) ->
+                loreToDisplay.addAll(enchantment.buildLore(level, shouldDisplayEnchantmentDescription))
             }
     }
 }
