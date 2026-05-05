@@ -32,7 +32,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
             appendSpace()
             variableValue("$blocksToMine Blöcke")
             appendSpace()
-            darkSpacer("eines Baumes auf einmal abzubauen.")
+            darkSpacer("eines Baumes auf einmal abzubauen")
         }
     },
     supportedItems = CustomItemTypeTags.LUMBERJACK_KEY.tagKey,
