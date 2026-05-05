@@ -57,7 +57,7 @@ object TelekinesisListener : Listener {
         event.items.clear()
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     fun onEntityDeath(event: EntityDeathEvent) {
         val player = event.entity.killer ?: return
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
