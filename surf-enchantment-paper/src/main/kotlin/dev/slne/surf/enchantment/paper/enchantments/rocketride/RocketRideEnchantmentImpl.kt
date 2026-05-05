@@ -9,6 +9,7 @@ import dev.slne.surf.api.core.util.objectSetOf
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketRideEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
+import dev.slne.surf.enchantment.paper.enchantments.lumberjack.LumberjackEnchantmentImpl
 import dev.slne.surf.enchantment.paper.enchantments.rocketride.listeners.RocketRideBoostListener
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import io.papermc.paper.registry.keys.tags.EnchantmentTagKeys
@@ -37,8 +38,9 @@ class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
             appendSpace()
             darkSpacer("bis")
             appendSpace()
-            variableValue("${durationSecondsForLevel(MAX_LEVEL)} Sekunden")
-        }
+            variableValue("${durationSecondsForLevel(MAX_LEVEL)}")
+            appendSpace()
+            darkSpacer("Sekunden")        }
     },
     supportedItems = CustomItemTypeTags.ROCKET_RIDE_KEY.tagKey,
     weight = 2,
@@ -54,6 +56,7 @@ class RocketRideEnchantmentImpl : AbstractCustomEnchantment(
         EnchantmentTagKeys.ON_RANDOM_LOOT,
         EnchantmentTagKeys.TREASURE
     ),
+    maxLevel = MAX_LEVEL,
     listeners = objectSetOf(RocketRideBoostListener),
     jobs = objectSetOf(RocketRideBoostListener.cooldownHandler)
 ), RocketRideEnchantment {
