@@ -571,7 +571,7 @@ enum class VanillaEnchantmentMap(
 
                 }
                 line {
-                    variableValue("eines ")
+                    darkSpacer("eines")
                     variableValue(" %placeholder% ")
                     darkSpacer("Blockradius des Spielers in Eis")
                 }
