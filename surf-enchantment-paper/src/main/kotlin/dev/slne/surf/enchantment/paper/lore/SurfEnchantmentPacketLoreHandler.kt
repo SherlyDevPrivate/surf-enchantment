@@ -3,6 +3,7 @@
 package dev.slne.surf.enchantment.paper.lore
 
 import dev.slne.surf.api.core.messages.adventure.plain
+import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.api.core.util.mutableObject2IntMapOf
 import dev.slne.surf.api.paper.packet.lore.SurfPaperPacketLoreHandler
 import dev.slne.surf.api.paper.packet.lore.SurfPaperPacketLorePriority
@@ -12,6 +13,7 @@ import dev.slne.surf.enchantment.paper.utils.VanillaEnchantmentMap
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.persistence.PersistentDataContainerView
 import it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap
+import net.kyori.adventure.key.Key
 import net.kyori.adventure.text.Component
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemFlag
@@ -53,7 +55,7 @@ internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
                 ?: EnchantmentManager.findByBukkitEnchantment(entry.key)
                 ?: return
 
-            sortedEnchantments.put(customEnchantment, level)
+            sortedEnchantments.put(customEnchantment.withEffectiveRarity(level), level)
         })
 
         val iterator = sortedEnchantments.object2IntEntrySet().iterator()
@@ -63,5 +65,22 @@ internal object SurfEnchantmentPacketLoreHandler : SurfPaperPacketLoreHandler {
             val level = next.intValue
             loreToDisplay.addAll(enchantment.buildLore(level, shouldDisplayEnchantmentDescription))
         }
+    }
+
+    private fun Enchantable.withEffectiveRarity(level: Int): Enchantable {
+        val max = maxLevel ?: return this
+        if (level <= max) return this
+
+        return RarityOverrideEnchantable(this, Rarity.MYTHIC)
+    }
+
+    private class RarityOverrideEnchantable(
+        private val delegate: Enchantable,
+        override val rarity: Rarity,
+    ) : Enchantable {
+        override val key: Key get() = delegate.key
+        override val displayName: Component get() = delegate.displayName
+        override val description get() = delegate.description
+        override val maxLevel get() = delegate.maxLevel
     }
 }

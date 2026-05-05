@@ -9,6 +9,7 @@ import dev.slne.surf.api.core.rarity.Rarity
 import dev.slne.surf.enchantment.api.enchantment.AbstractCustomEnchantment
 import dev.slne.surf.enchantment.api.enchantments.RocketSaverEnchantment
 import dev.slne.surf.enchantment.api.utils.CustomItemTypeTags
+import dev.slne.surf.enchantment.paper.enchantments.beheading.BeheadingEnchantmentImpl.Companion.CHANCE_PER_LEVEL
 import dev.slne.surf.enchantment.paper.enchantments.rocketsaver.listeners.RocketSaverListener
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry
 import org.bukkit.inventory.EquipmentSlotGroup
@@ -25,7 +26,10 @@ class RocketSaverEnchantmentImpl : AbstractCustomEnchantment(
             appendSpace()
             variableValue("$chance%")
             appendSpace()
-            darkSpacer("Chance, um keine Feuerwerkskörper zu verbrauchen, wenn man mit der Elytra boostet")
+            darkSpacer("Chance, Beim Boost")
+        }
+        line {
+            darkSpacer("keine Feuerwerkskörper zu verbrauchen")
         }
     },
     supportedItems = CustomItemTypeTags.ROCKET_SAVER_KEY.tagKey,
