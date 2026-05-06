@@ -39,4 +39,3 @@ object ExperienceListener : Listener {
         return (xp * (level * ExperienceEnchantmentImpl.XP_BONUS_PERCENT_PER_LEVEL / 100.0)) + xp
     }
 }
-
