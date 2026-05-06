@@ -38,11 +38,11 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
     supportedItems = CustomItemTypeTags.LUMBERJACK_KEY.tagKey,
     weight = 2,
     minimumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
-        15,
-        9
+        9,
+        7
     ),
     maximumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
-        45,
+        65,
         9
     ),
     tags = setOf(

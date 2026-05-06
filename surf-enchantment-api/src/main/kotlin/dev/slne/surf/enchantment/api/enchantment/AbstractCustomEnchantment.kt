@@ -32,20 +32,17 @@ abstract class AbstractCustomEnchantment(
     override val maxLevel: @Range(from = 1, to = 255) Int? = 1,
 
     /**
-     * The [minimumCost] and [maximumCost] parameters define which enchantment levels
-     * are offered within the Enchanting Table based on the player's experience level.
+     * The enchantment cost determines the availability of enchantment levels in the Enchanting Table.
+     * * The cost for a specific level is calculated as:
+     * `base + (level - 1) * perLevelCost`
      *
-     * Format: `EnchantmentRegistryEntry.EnchantmentCost.of(base, minExperienceLevel)`
-     * - **base**: The base cost (higher values increase rarity/difficulty to obtain high levels).
-     * - **minExperienceLevel**: The secondary level requirement.
+     * - **minimumCost**: The threshold a table's "enchanting level" must reach for this level to appear.
+     * - **maximumCost**: The threshold above which this enchantment level will no longer appear.
      *
-     * ### Level Availability Examples:
-     * | Min Cost (base, minLvl) | Max Cost (base, minLvl) | Available Levels in Table |
-     * |-------------------------|-------------------------|---------------------------|
-     * | 3, 9                    | 45, 9                   | Level 1-4                 |
-     * | 3, 9                    | 65, 9                   | Level 1-5                 |
-     * | 15, 9                   | 65, 9                   | Level 1-3                 |
-     * | 30, 9                   | 60, 9                   | Level 1-2                 |
+     * ### Standard Table (Max Level 30) Configuration:
+     * To limit the Enchanting Table to a specific maximum level while allowing higher levels
+     * via Anvils (e.g., Table max Level 4, total max Level 5), use values like:
+     * `minimumCost = of(9, 7)` -> Level 4 = 30 (Possible), Level 5 = 37 (Impossible in Table).
      */
 
     override val minimumCost: EnchantmentRegistryEntry.EnchantmentCost? = EnchantmentRegistryEntry.EnchantmentCost.of(
