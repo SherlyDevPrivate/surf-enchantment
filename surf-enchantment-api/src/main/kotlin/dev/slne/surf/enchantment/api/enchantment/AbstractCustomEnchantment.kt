@@ -30,6 +30,24 @@ abstract class AbstractCustomEnchantment(
     override val primaryItems: TagKey<ItemType>? = null,
     override val weight: @Range(from = 1, to = 1024) Int? = 1,
     override val maxLevel: @Range(from = 1, to = 255) Int? = 1,
+
+    /**
+     * The [minimumCost] and [maximumCost] parameters define which enchantment levels
+     * are offered within the Enchanting Table based on the player's experience level.
+     *
+     * Format: `EnchantmentRegistryEntry.EnchantmentCost.of(base, minExperienceLevel)`
+     * - **base**: The base cost (higher values increase rarity/difficulty to obtain high levels).
+     * - **minExperienceLevel**: The secondary level requirement.
+     *
+     * ### Level Availability Examples:
+     * | Min Cost (base, minLvl) | Max Cost (base, minLvl) | Available Levels in Table |
+     * |-------------------------|-------------------------|---------------------------|
+     * | 3, 9                    | 45, 9                   | Level 1-4                 |
+     * | 3, 9                    | 65, 9                   | Level 1-5                 |
+     * | 15, 9                   | 65, 9                   | Level 1-3                 |
+     * | 30, 9                   | 60, 9                   | Level 1-2                 |
+     */
+
     override val minimumCost: EnchantmentRegistryEntry.EnchantmentCost? = EnchantmentRegistryEntry.EnchantmentCost.of(
         0,
         0

@@ -42,7 +42,7 @@ class LumberjackEnchantmentImpl : AbstractCustomEnchantment(
         9
     ),
     maximumCost = EnchantmentRegistryEntry.EnchantmentCost.of(
-        65,
+        45,
         9
     ),
     tags = setOf(
