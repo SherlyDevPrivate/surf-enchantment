@@ -85,7 +85,8 @@ enum class CustomItemTypeTags(
         TagEntry.valueEntry(ItemTypeKeys.BOW),
         TagEntry.valueEntry(ItemTypeKeys.CROSSBOW),
         TagEntry.valueEntry(ItemTypeKeys.TRIDENT),
-        TagEntry.valueEntry(ItemTypeKeys.MACE)
+        TagEntry.valueEntry(ItemTypeKeys.MACE),
+        TagEntry.valueEntry(ItemTypeKeys.FISHING_ROD)
     ),
 
     VEIN_MINER_KEY(

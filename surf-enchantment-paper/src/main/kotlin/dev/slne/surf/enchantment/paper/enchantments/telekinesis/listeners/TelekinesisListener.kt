@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.ItemSpawnEvent
+import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.event.player.PlayerShearEntityEvent
 import org.bukkit.event.vehicle.VehicleDestroyEvent
 import org.bukkit.inventory.ItemStack
@@ -27,7 +28,6 @@ import org.bukkit.util.Vector
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.milliseconds
-
 
 object TelekinesisListener : Listener {
 
@@ -143,6 +143,26 @@ object TelekinesisListener : Listener {
         if (addDropsToInventory(player, drops, event, dropLocation)) {
             event.drops = emptyList()
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    fun onPlayerFish(event: PlayerFishEvent) {
+        if (event.isCancelled) return
+
+        val player = event.player
+        if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
+
+        if (event.state != PlayerFishEvent.State.CAUGHT_FISH) return
+
+        val drops = event.caught as? ItemStack ?: return
+        val dropLocation = event.hook.location.clone()
+
+        player.giveExp(event.expToDrop, true)
+        event.expToDrop = 0
+
+        addDropsToInventory(player, listOf(drops), event, dropLocation)
+
+        event.caught?.remove()
     }
 
     private fun addDropsToInventory(

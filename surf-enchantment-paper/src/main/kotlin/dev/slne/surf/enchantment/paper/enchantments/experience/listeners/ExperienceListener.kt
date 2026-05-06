@@ -27,7 +27,7 @@ object ExperienceListener : Listener {
         event.expToDrop = calculateDrops(event.expToDrop, level).toInt()
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun onFish(event: PlayerFishEvent) {
         if (event.state != PlayerFishEvent.State.CAUGHT_FISH) return
         val (level) = event.player.getThisActiveEnchantmentOrNull<ExperienceEnchantment>() ?: return
