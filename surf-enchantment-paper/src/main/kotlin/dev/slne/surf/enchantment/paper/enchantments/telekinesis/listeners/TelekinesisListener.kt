@@ -149,7 +149,7 @@ object TelekinesisListener : Listener {
     ): Boolean {
         val preEvent = PreTelekinesisItemEvent(
             player = player,
-            itemStacks = drops.toList()
+            itemStacks = drops.toMutableList()
         )
 
         if (!preEvent.callEvent()) {

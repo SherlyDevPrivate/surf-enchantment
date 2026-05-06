@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack
  */
 class PreTelekinesisItemEvent(
     val player: Player,
-    var itemStacks: List<ItemStack>
+    var itemStacks: MutableList<ItemStack>
 ) : Event(), Cancellable {
     private var cancelled = false
 
