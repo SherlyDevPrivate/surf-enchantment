@@ -38,6 +38,8 @@ object TelekinesisListener : Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBlockBreak(event: BlockBreakEvent) {
+        if (event.isCancelled) return
+
         val player = event.player
 
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
@@ -46,8 +48,10 @@ object TelekinesisListener : Listener {
         event.expToDrop = 0
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     fun onBlockDrop(event: BlockDropItemEvent) {
+        if (event.isCancelled) return
+
         val player = event.player
         if (!player.inventory.itemInMainHand.hasCustomEnchantment<TelekinesisEnchantment>()) return
 
