@@ -58,7 +58,7 @@ object TelekinesisListener : Listener {
         val dropLocation = event.block.location.clone().add(0.5, 0.5, 0.5)
         val drops = event.items.map { it.itemStack }
 
-        if (!addDropsToInventory(player, drops, event, dropLocation)) {
+        if (addDropsToInventory(player, drops, event, dropLocation)) {
             event.items.clear()
         }
     }
@@ -73,7 +73,7 @@ object TelekinesisListener : Listener {
         val dropLocation = event.entity.location.clone()
         val drops = event.drops.toList()
 
-        if (!addDropsToInventory(player, drops, event, dropLocation)) {
+        if (addDropsToInventory(player, drops, event, dropLocation)) {
             event.drops.clear()
         }
 
