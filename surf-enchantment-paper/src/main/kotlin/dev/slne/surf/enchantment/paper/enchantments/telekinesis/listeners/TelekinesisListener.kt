@@ -109,6 +109,7 @@ object TelekinesisListener : Listener {
             is Painting -> {
                 drops.add(ItemStack(Material.PAINTING))
             }
+            else -> return
         }
 
         if (addDropsToInventory(player, drops, event, dropLocation)) {
