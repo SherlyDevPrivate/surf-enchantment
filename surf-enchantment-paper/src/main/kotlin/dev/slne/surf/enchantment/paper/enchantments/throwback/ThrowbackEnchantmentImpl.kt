@@ -30,9 +30,8 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
         }
 
         line {
-            darkSpacer("Boosted das getroffene Monster um ")
-            variableValue("${level * THROWBACK_PER_LEVEL}%")
-            darkSpacer(" zu dir")
+            darkSpacer("Zieht das getroffene Monster mit Stärke ")
+            variableValue("${level * THROWBACK_PER_LEVEL}")
         }
     },
     supportedItems = CustomItemTypeTags.THROWBACK_KEY.tagKey,
