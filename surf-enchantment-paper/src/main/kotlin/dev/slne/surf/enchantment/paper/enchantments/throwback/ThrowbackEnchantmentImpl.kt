@@ -25,6 +25,8 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
             darkSpacer("Erhöht den verursachten Schaden um")
             appendSpace()
             variableValue(bonusDamage.toInt().toString())
+            appendSpace()
+            darkSpacer("Punkte")
         }
 
         line {
