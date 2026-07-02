@@ -21,11 +21,7 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
     rarity = Rarity.EPIC,
     description = { level ->
         line {
-            val bonusDamage = level * DAMAGE_BOOST_PER_LEVEL
-            darkSpacer("Erhöht den verursachten Schaden um")
-            appendSpace()
-            variableValue(bonusDamage.toInt().toString())
-            appendSpace()
+            variableValue(bonusDamage.toString().removeSuffix(".0"))
             darkSpacer("Punkte")
         }
 
