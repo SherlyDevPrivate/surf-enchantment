@@ -22,8 +22,9 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
     description = { level ->
         line {
             val bonusDamage = level * DAMAGE_BOOST_PER_LEVEL
+            darkSpacer("Erhöht den Schaden um ")
             variableValue(bonusDamage.toString().removeSuffix(".0"))
-            darkSpacer("Punkte")
+            darkSpacer(" Punkte")
         }
 
         line {
