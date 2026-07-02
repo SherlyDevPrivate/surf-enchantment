@@ -21,14 +21,16 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
     rarity = Rarity.EPIC,
     description = { level ->
         line {
-            val chance = level * BOOST_PER_LEVEL
+            val bonusDamage = level * DAMAGE_BOOST_PER_LEVEL
             darkSpacer("Erhöht den verursachten Schaden um")
             appendSpace()
-            variableValue("$chance%")
+            variableValue(bonusDamage.toInt().toString())
         }
 
         line {
-            darkSpacer("Boosted das getroffene Monster zu dir.")
+            darkSpacer("Boosted das getroffene Monster um ")
+            variableValue("${level * THROWBACK_PER_LEVEL}%")
+            darkSpacer(" zu dir")
         }
     },
     supportedItems = CustomItemTypeTags.THROWBACK_KEY.tagKey,
@@ -52,6 +54,7 @@ class ThrowbackEnchantmentImpl : AbstractCustomEnchantment(
     listeners = objectSetOf(ThrowbackListener)
 ), ThrowBackEnchantment {
     companion object {
-        const val BOOST_PER_LEVEL = 2
+        const val DAMAGE_BOOST_PER_LEVEL = 1.5
+        const val THROWBACK_PER_LEVEL = 5
     }
 }
